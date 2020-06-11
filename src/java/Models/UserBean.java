@@ -2,40 +2,28 @@
 package Models;
 
 import java.time.LocalDateTime;
-import java.util.*;
 
 public class UserBean {
 
-    private UUID _idUser;
+    private String _idUser;
     private String _name;
     private String _company;
     private String _email;
-    private int _permission;
+    private String _phone;
     private int _state;
     private LocalDateTime _dtReg;           
 
-    public UserBean(UUID _idUser, String _name, String _company, String _email, int _permission, int _state, LocalDateTime _dtReg) {
+    public UserBean(String _idUser, String _name, String _company, String _email, String _phone, int _state, LocalDateTime _dtReg) {
         this._idUser = _idUser;
         this._name = _name;
         this._company = _company;
         this._email = _email;
-        this._permission = _permission;
+        this._phone = _phone;
         this._state = _state;
         this._dtReg = _dtReg;
     }
 
-    //Constructors
-    public UserBean(UUID _idUser, String _name, String _email, int _permission, int _state, LocalDateTime _dtReg) {
-        this._idUser = _idUser;
-        this._name = _name;
-        this._email = _email;
-        this._permission = _permission;
-        this._state = _state;
-        this._dtReg = _dtReg;
-    }       
-    
-// métodos   
-    public UUID getIdUser() {
+    public String getIdUser() {
         return _idUser;
     }
 
@@ -51,8 +39,8 @@ public class UserBean {
         return _email;
     }
 
-    public int getPhone() {
-        return _permission;
+    public String getPhone() {
+        return _phone;
     }
 
     public int getState() {
@@ -62,8 +50,6 @@ public class UserBean {
     public LocalDateTime getDtReg() {
         return _dtReg;
     }
-
-    
 
     public void setName(String _name) {
         this._name = _name;
@@ -77,20 +63,17 @@ public class UserBean {
         this._email = _email;
     }
 
-    public void setPhone(int _permission) {
-        this._permission = _permission;
+    public void setPhone(String _phone) {
+        this._phone = _phone;
     }
 
     public void setState(int _state) {
         this._state = _state;
     }
-
-       
-
- 
+    
     public String addUser(){
         
-        return _idUser.toString();
+        return _idUser;
     }
     
 }
