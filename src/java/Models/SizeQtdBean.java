@@ -11,4 +11,28 @@ package Models;
  */
 public class SizeQtdBean {
     
+    private int _size;
+    private int _qtd;
+
+    public SizeQtdBean(int _size, int _qtd) {
+        this._size = _size;
+        this._qtd = _qtd;
+    }
+
+    public int getSize() {
+        return _size;
+    }
+
+    public int getQtd() {
+        return _qtd;
+    }
+
+    public void setSize(int _size) {
+        this._size = _size;
+    }
+
+    public void setQtd(int _qtd) {
+        this._qtd = _qtd;
+    }        
+    
 }

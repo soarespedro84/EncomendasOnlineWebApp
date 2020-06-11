@@ -2,28 +2,40 @@
 package Models;
 
 import java.time.LocalDateTime;
+import java.util.*;
 
 public class UserBean {
 
-    private String _idUser;
+    private UUID _idUser;
     private String _name;
     private String _company;
     private String _email;
-    private String _phone;
+    private int _permission;
     private int _state;
     private LocalDateTime _dtReg;           
 
-    public UserBean(String _idUser, String _name, String _company, String _email, String _phone, int _state, LocalDateTime _dtReg) {
+    public UserBean(UUID _idUser, String _name, String _company, String _email, int _permission, int _state, LocalDateTime _dtReg) {
         this._idUser = _idUser;
         this._name = _name;
         this._company = _company;
         this._email = _email;
-        this._phone = _phone;
+        this._permission = _permission;
         this._state = _state;
         this._dtReg = _dtReg;
     }
 
-    public String getIdUser() {
+    //Constructors
+    public UserBean(UUID _idUser, String _name, String _email, int _permission, int _state, LocalDateTime _dtReg) {
+        this._idUser = _idUser;
+        this._name = _name;
+        this._email = _email;
+        this._permission = _permission;
+        this._state = _state;
+        this._dtReg = _dtReg;
+    }       
+    
+// métodos   
+    public UUID getIdUser() {
         return _idUser;
     }
 
@@ -39,8 +51,8 @@ public class UserBean {
         return _email;
     }
 
-    public String getPhone() {
-        return _phone;
+    public int getPhone() {
+        return _permission;
     }
 
     public int getState() {
@@ -51,9 +63,7 @@ public class UserBean {
         return _dtReg;
     }
 
-    public void setIdUser(String _idUser) {
-        this._idUser = _idUser;
-    }
+    
 
     public void setName(String _name) {
         this._name = _name;
@@ -67,22 +77,20 @@ public class UserBean {
         this._email = _email;
     }
 
-    public void setPhone(String _phone) {
-        this._phone = _phone;
+    public void setPhone(int _permission) {
+        this._permission = _permission;
     }
 
     public void setState(int _state) {
         this._state = _state;
     }
 
-    public void setDtReg(LocalDateTime _dtReg) {
-        this._dtReg = _dtReg;
-    }
-    
-    
+       
+
+ 
     public String addUser(){
         
-        return _idUser;
+        return _idUser.toString();
     }
     
 }
