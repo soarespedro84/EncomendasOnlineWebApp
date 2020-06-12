@@ -5,6 +5,8 @@ import Models.UserBean;
 import Models.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,27 +45,24 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        //LOGIN
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        UserBean user = new UserBean();
-        user.setEmail(email);
-        user.setPassword(password);
+        UserBean userLog = new UserBean();
+        userLog.setEmail(email);
+        userLog.setPassword(password);       
         
-        
-        UserDao userDao = new UserDao();
+        UserDao _userDao = new UserDao();
         
         try {
-            int userValidation = userDao.authenticateUser(user);
+            int userValidation = _userDao.authenticateUser(userLog);
             HttpSession session = request.getSession();
             switch (userValidation) {
                 case 5:
                 System.out.println("Admin Control Panel");
-                
-                
                 session.setAttribute("admin", "Admin");
                 request.setAttribute("admin", email);
-                //request.setAttribute("role", login.getRole());
                 
                 request.getRequestDispatcher("adminDash.jsp").forward(request, response);
                 
@@ -94,16 +93,44 @@ public class UserController extends HttpServlet {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                     throw new AssertionError();
             }
-            
-            
-            
-            
         } catch (IOException e1) {
             e1.printStackTrace();
         }catch (Exception e2) {
             e2.printStackTrace();
-        }       
+        }
+        
+        //REGISTO
+        String nameReg = request.getParameter("nameReg");
+        String companyReg = request.getParameter("companyReg");
+        String emailReg = request.getParameter("emailReg");
+        String passwordReg=request.getParameter("passwordReg");
+        int permissionReg = Integer.parseInt(request.getParameter("permissionReg"));
+        
+        UserBean userReg = new UserBean();
+        userReg.setName(nameReg);
+        userReg.setCompany(companyReg);
+        userReg.setEmail(emailReg);
+        userReg.setPassword(passwordReg);
+        userReg.setPermission(permissionReg);
+        
+        UserDao _regDao = new UserDao();
+        String userIsRegistered=null;
+        
+        try{
+            userIsRegistered = _regDao.registerUser(userReg);
+        }catch (ClassNotFoundException ex){
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        if (userIsRegistered.equals("SUCCESS")) {
+            request.setAttribute("user", nameReg);
+            request.getRequestDispatcher("/products.jsp").forward(request, response);
+        }else{
+            request.setAttribute("errMessage", userIsRegistered);
+            
+            request.getRequestDispatcher("/error.html").forward(request, response);
+        }               
     }
+    
 }
 
 

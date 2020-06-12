@@ -75,7 +75,7 @@
                 >
               </div>
             </li>
-            <li class="nav-item px-2">
+            <li class="nav-item px-2 " hidden>
               <a href="carrinho.html" class="nav-link">
                 <i class="fas fa-shopping-cart"></i> Cart
               </a>

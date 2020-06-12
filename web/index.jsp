@@ -150,7 +150,7 @@
                 <h4>Account Login</h4>
               </div>
               <div class="card-body">
-                  <form action="LoginController" method="post">
+                  <form action="UserController" method="post">
                   <div class="form-group">
                     <input
                       type="email"

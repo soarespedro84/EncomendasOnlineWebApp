@@ -12,7 +12,7 @@ public class dbConnection {
     
     public static Connection createConnection(){
         Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/jsp001?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost:3306/db_amf_web_platform?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         String username ="root";//netbeansuser
         String password = "ordepana20Maio2012";//netbeansuser
         try {

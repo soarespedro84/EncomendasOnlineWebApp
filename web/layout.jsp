@@ -48,20 +48,20 @@
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-                <a href="products.jsp" class="nav-link" hidden>Products</a>
+                <a href="products.jsp" class="nav-link" >Products</a>
             </li>
             <li class="nav-item px-2" hidden>
               <a href="orders.html" class="nav-link" hidden>Orders</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown mr-3" hidden>
+            <li class="nav-item dropdown mr-3" >
               <a
                 href="#"
                 class="nav-link dropdown-toggle"
                 data-toggle="dropdown"
               >
-                <i class="fas fa-user"></i> Welcome Pedro
+                <i class="fas fa-user"></i> ${user}
               </a>
               <div class="dropdown-menu">
                 <a href="profile.html" class="dropdown-item">
