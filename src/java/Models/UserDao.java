@@ -11,9 +11,7 @@ public class UserDao {
     
     public int authenticateUser(UserBean user){
         String email = user.getEmail();
-        String password = user.getPassword();
-        int permission = user.getPermission();
-        String name = user.getName();
+        String password = user.getPassword();      
         
         Connection con = null;
         Statement stat = null;

@@ -55,7 +55,7 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown mr-3" >
+            <li class="nav-item dropdown mr-3" hidden>
               <a
                 href="#"
                 class="nav-link dropdown-toggle"

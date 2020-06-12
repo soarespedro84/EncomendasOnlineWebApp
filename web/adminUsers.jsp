@@ -66,7 +66,7 @@
                 class="nav-link dropdown-toggle"
                 data-toggle="dropdown"
               >
-                <i class="fas fa-user"></i> Welcome ${admin}
+                <i class="fas fa-user"></i> ${user}
               </a>
               <div class="dropdown-menu">
                 <a href="profile.html" class="dropdown-item">
@@ -274,6 +274,7 @@
               </div>
               <div class="card-body">
                   <form action="UserController" method="post" name="form" onsubmit="return formValidation()">
+                      <input type="hidden" name="command" value="REGISTER" />
                   <div class="form-group">
                     <input
                       type="text"

@@ -58,7 +58,7 @@
                 class="nav-link dropdown-toggle"
                 data-toggle="dropdown"
               >
-                <i class="fas fa-user"></i> Welcome ${user}
+                <i class="fas fa-user"></i> ${user}
               </a>
               <div class="dropdown-menu">
                 <a href="userProfile.jsp" class="dropdown-item">

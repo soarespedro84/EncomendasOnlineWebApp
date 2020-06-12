@@ -9,6 +9,7 @@
  
     <!-- CAROUSEL -->
     <section id="showcase">
+        
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li class="active" data-target="#myCarousel" data-slide-to="0"></li>
@@ -151,6 +152,7 @@
               </div>
               <div class="card-body">
                   <form action="UserController" method="post">
+                      <input type="hidden" name="command" value="LOGIN" />
                   <div class="form-group">
                     <input
                       type="email"

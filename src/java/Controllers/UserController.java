@@ -45,10 +45,41 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        try{
+            String theCommand = request.getParameter("command");
+            if (theCommand == null) {
+		theCommand = "LIST";
+            }			
+            switch (theCommand) {			 
+                case "LOGIN":
+                    loginUser(request, response);
+                    break;                            
+
+                case "REGISTER":
+                    registerUser(request, response);
+                    break;
+
+                case "UPDATE":
+                    //updateUser(request, response);
+                    break;
+
+                default:
+                    //listUsers(request, response);
+                }            
+        }catch (Exception ex) {
+            throw new ServletException(ex);
+        }
+    }
+        
         //LOGIN
+    protected void loginUser(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+        
+        HttpSession session = request.getSession();
+        
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        
+                
         UserBean userLog = new UserBean();
         userLog.setEmail(email);
         userLog.setPassword(password);       
@@ -57,11 +88,11 @@ public class UserController extends HttpServlet {
         
         try {
             int userValidation = _userDao.authenticateUser(userLog);
-            HttpSession session = request.getSession();
+            
             switch (userValidation) {
                 case 5:
                 System.out.println("Admin Control Panel");
-                session.setAttribute("admin", "Admin");
+                session.setAttribute("user", "Admin");
                 request.setAttribute("admin", email);
                 
                 request.getRequestDispatcher("adminDash.jsp").forward(request, response);
@@ -72,7 +103,7 @@ public class UserController extends HttpServlet {
                 
                 session.setMaxInactiveInterval(600);
                 session.setAttribute("user", email);
-                request.setAttribute("email", email);
+                request.setAttribute("user", email);
                 
                 request.getRequestDispatcher("products.jsp").forward(request, response);
                                 break;
@@ -98,8 +129,12 @@ public class UserController extends HttpServlet {
         }catch (Exception e2) {
             e2.printStackTrace();
         }
-        
+    }
+    
         //REGISTO
+    protected void registerUser(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
         String nameReg = request.getParameter("nameReg");
         String companyReg = request.getParameter("companyReg");
         String emailReg = request.getParameter("emailReg");
