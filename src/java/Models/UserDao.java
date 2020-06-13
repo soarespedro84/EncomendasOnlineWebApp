@@ -38,7 +38,7 @@ public class UserDao {
             
             while (rSet.next()) {
                 String idUserDB = rSet.getString("idUser");
-                String nameDB = rSet.getString("name");
+                String name = rSet.getString("name");
                 String companyDB = rSet.getString("company");         
                 String emailDB = rSet.getString("email");
                 int permissionDB=rSet.getInt("permission");
@@ -46,7 +46,7 @@ public class UserDao {
                 //LocalDateTime dtRegDB = rSet.("dtReg");
                 String passwordDB = rSet.getString("password");
 
-                userDB = new UserBean(idUserDB, nameDB, companyDB, emailDB, permissionDB, stateDB, passwordDB);
+                userDB = new UserBean(idUserDB, name, companyDB, emailDB, permissionDB, stateDB, passwordDB);
                 
             }
         }

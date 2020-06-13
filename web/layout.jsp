@@ -3,7 +3,9 @@
     Created on : 22 May 2020, 20:12:27
     Author     : psoar
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@page import="Models.UserBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +31,7 @@
     />
 
     <link rel="stylesheet" href="css/style.css" />
-    <title>ToWorkFor</title>
+    <title>AMF Web Platform</title>
   </head>
 
   <body class="bg-dark">
@@ -47,33 +49,43 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="navbar-nav">
+              <c:if test="${ContaAtiva.permission==5}">
               <li class="nav-item px-2">
               <a href="adminDash.jsp" class="nav-link">Control Panel</a>
-            </li>
-            <li class="nav-item px-2">
-                <a href="products.jsp" class="nav-link" >Products</a>
-            </li>
+            </li></c:if>
+            <c:if test="${ContaAtiva.permission==2}">
+              <li class="nav-item px-2">
+              <a href="adminClients.jsp" class="nav-link">Clientes</a>
+            </li></c:if>
+            <c:if test="${ContaAtiva.permission==1}">            
             <li class="nav-item px-2" >
               <a href="orders.html" class="nav-link" >Orders</a>
             </li>
+           </c:if>
+           <li class="nav-item px-2">
+                <a href="products.jsp" class="nav-link" >Products</a>
+            </li>
           </ul>
+ 
           <ul class="navbar-nav ml-auto">
-            
-            <li class="nav-item px-2" >
-              <a href="carrinho.html" class="nav-link">
-                <i class="fas fa-shopping-cart"></i> Cart
-              </a>
-            </li>            
-            <li class="nav-item">
-              <a href="#" class="nav-link" data-toggle="modal"
+            <c:if test="${empty ContaAtiva}">
+            <li class="nav-item">               
+                  <a href="#" class="nav-link" data-toggle="modal"
               data-target="#contactModal">
                 <i class="fas fa-envelope"></i> Contact us
-              </a>
+                  </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link" data-toggle="modal"
               data-target="#loginModal">
                 <i class="fas fa-user"></i> Login
+              </a>
+            </li>
+            </c:if>
+            <c:if test="${not empty ContaAtiva}">
+            <li class="nav-item px-2" >
+              <a href="carrinho.html" class="nav-link">
+                <i class="fas fa-shopping-cart"></i> Cart
               </a>
             </li>
             <li class="nav-item dropdown mr-3" >
@@ -82,19 +94,21 @@
                 class="nav-link dropdown-toggle"
                 data-toggle="dropdown"
               >
-                <i class="fas fa-user"></i> ${ContaAtiva}
+                <i class="fas fa-user"></i> ${ContaAtiva.name}
               </a>
               <div class="dropdown-menu">
                 <a href="profile.html" class="dropdown-item">
                   <i class="fa fa-user-circle"></i> Profile</a
                 >            
-              <a href="index.jsp" class="dropdown-item">
+              <a href="logout.jsp" class="dropdown-item">
                 <i class="fas fa-user-times"></i> Logout
               </a>
-           
               </div>
             </li>
-          </ul>
+           </c:if>
+          </ul>           
+              
+              
         </div>
       </div>
     </nav>

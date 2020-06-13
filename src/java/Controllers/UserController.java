@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,15 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        
+        if (session != null) {
+            session.invalidate();
+            request.setAttribute("errMsg", "Logout successfull");
+            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            rd.forward(request, response);
+            System.out.println("Logged Out");
+        }
     }
 
     
@@ -97,7 +106,7 @@ public class UserController extends HttpServlet {
         UserBean theUserBean = _userDao.authenticateUser(email, password);      
         
         if (theUserBean.getName()!= null) {
-            session.setAttribute("ContaAtiva", theUserBean.getName());
+            session.setAttribute("ContaAtiva", theUserBean);
             session.setMaxInactiveInterval(600);
             request.getRequestDispatcher("products.jsp").forward(request, response);
 
