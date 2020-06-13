@@ -14,14 +14,14 @@ public class UserBean {
     private LocalDateTime _dtReg;
     private String _password;
 
-    public UserBean(String _idUser, String _name, String _company, String _email, int _permission, int _state, LocalDateTime _dtReg, String _password) {
+    public UserBean(String _idUser, String _name, String _company, String _email, int _permission, int _state, /*LocalDateTime _dtReg,*/ String _password) {
         this._idUser = _idUser;
         this._name = _name;
         this._company = _company;
         this._email = _email;
         this._permission = _permission;
         this._state = _state;
-        this._dtReg = _dtReg;
+        //this._dtReg = _dtReg;
         this._password=_password;
     }
     

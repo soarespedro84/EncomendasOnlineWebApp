@@ -3,6 +3,7 @@ package Controllers;
 
 import Models.UserBean;
 import Models.UserDao;
+import Models.dbConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -16,6 +17,18 @@ import javax.servlet.http.HttpSession;
 
 public class UserController extends HttpServlet {
 
+    private UserDao _userDao;    
+    private dbConnection dbConn;
+    
+    public void init() throws ServletException{
+        super.init();
+        try {
+            _userDao = new UserDao(dbConn);
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -44,7 +57,8 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+     
         try{
             String theCommand = request.getParameter("command");
             if (theCommand == null) {
@@ -80,57 +94,17 @@ public class UserController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
                 
-        UserBean userLog = new UserBean();
-        userLog.setEmail(email);
-        userLog.setPassword(password);       
+        UserBean theUserBean = _userDao.authenticateUser(email, password);      
         
-        UserDao _userDao = new UserDao();
-        
-        try {
-            int userValidation = _userDao.authenticateUser(userLog);
-            
-            switch (userValidation) {
-                case 5:
-                System.out.println("Admin Control Panel");
-                session.setAttribute("user", "Admin");
-                request.setAttribute("admin", email);
-                
-                request.getRequestDispatcher("adminDash.jsp").forward(request, response);
-                
-                break;
-                case 2:
-                    System.out.println("Comercial Access");
-                
-                session.setMaxInactiveInterval(600);
-                session.setAttribute("user", email);
-                request.setAttribute("user", email);
-                
-                request.getRequestDispatcher("products.jsp").forward(request, response);
-                                break;
-                case 1:
-                    System.out.println("User Access");
-                
-                session.setMaxInactiveInterval(600);
-                session.setAttribute("user", email);
-                request.setAttribute("email", email);
-                
-                request.getRequestDispatcher("products.jsp").forward(request, response);
-                                break;
-                default:
-                    
-                System.out.println("Error = "+userValidation);
-                request.setAttribute("errMsg", userValidation);
-                
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-                    throw new AssertionError();
-            }
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }catch (Exception e2) {
-            e2.printStackTrace();
+        if (theUserBean.getName()!= null) {
+            session.setAttribute("ContaAtiva", theUserBean.getName());
+            session.setMaxInactiveInterval(600);
+            request.getRequestDispatcher("products.jsp").forward(request, response);
+
         }
     }
-    
+        
+        
         //REGISTO
     protected void registerUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
@@ -148,7 +122,7 @@ public class UserController extends HttpServlet {
         userReg.setPassword(passwordReg);
         userReg.setPermission(permissionReg);
         
-        UserDao _regDao = new UserDao();
+        UserDao _regDao = new UserDao(dbConn);
         String userIsRegistered=null;
         
         try{

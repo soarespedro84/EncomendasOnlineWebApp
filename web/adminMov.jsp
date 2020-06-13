@@ -7,88 +7,7 @@
 <%@ page import = "java.sql.*" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
-      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>ADMIN CONTROL PANEL</title>
-  </head>
-
-  <body class="bg-dark">
-     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-      <div class="container">
-        <a href="index.jsp" class="navbar-brand"
-          ><img src="/images/ToWorkFor - Logo.jpg" alt="" class="imgNav"
-        /></a>
-        <button
-          class="navbar-toggler"
-          data-toggle="collapse"
-          data-target="#navbar-collapse"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="navbar-nav">
-            <li class="nav-item px-2">
-              <a href="adminDash.jsp" class="nav-link">Control Panel</a>
-            </li>
-              <li class="nav-item px-2">
-              <a href="adminMov.jsp" class="nav-link">Orders</a>
-            </li>
-            <li class="nav-item px-2">
-                <a href="adminProduct.jsp" class="nav-link">Products</a>
-            </li>
-            <li class="nav-item px-2">
-                <a href="adminUsers.jsp" class="nav-link">Users</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown mr-3">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-              >
-                <i class="fas fa-user"></i> Welcome ${admin}
-              </a>
-              <div class="dropdown-menu">
-                <a href="profile.html" class="dropdown-item">
-                  <i class="fa fa-user-circle"></i> Profile</a
-                >
-                <a href="settings.html" class="dropdown-item">
-                  <i class="fa fa-cog"></i> Settings</a
-                >
-              </div>
-            </li>
-            <li class="nav-item px-2">
-              <a href="carrinho.html" class="nav-link">
-                <i class="fas fa-shopping-cart"></i> Cart
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="index.jsp" class="nav-link">
-                <i class="fas fa-user-times"></i> Logout
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+<jsp:include page="layout.jsp"/>
 
     <!-- HEADER  -->
 
@@ -97,7 +16,7 @@
         <div class="row">
           <div class="col-md-12 text-center ">
               
-              <h2>${admin} Movement Manager</h2>
+              <h2>Movement Manager</h2>
               
           </div>
         </div>
@@ -105,21 +24,26 @@
     </header>
               
     <!-- ACTIONS -->
-
-    <section id="actions" class="py-4 mb-4">
+  <section id="actions" class="py-4 mb-4">
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
-            <a
-              href="#"
-              class="btn btn-outline-light btn-block"
-              data-toggle="modal"
-              data-target="#addMovementModal"
-              ><i class="fas fa-plus"></i> Add Movement</a
-            >
+          <div class="col-md-3">
+            <form action="adminMov.jsp" method="get">
+                <div class="input-group">
+                    <input type="date" name="dtMov" class="form-control form-control-lg"/>
+                </div>
+            </form>
           </div>
-         
-        </div>
+          <div class="col-md-9">
+            <form action="adminMov.jsp" method="get">
+              <div class="input-group">
+                <input type="text" name="userSearch" class="form-control form-control-lg" placeholder="Company" />
+                <button type="submit" class="btn btn-lg btn-outline-light"><i class="fas fa-search"></i></button>
+              </div>
+            </form>            
+          </div>
+          
+       
       </div>
     </section>
 
@@ -129,9 +53,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-                <h4>Latest Movements</h4>
-              </div>
+              
               <table class="table table-striped">
                 <thead class="thead-dark">
                   <tr>

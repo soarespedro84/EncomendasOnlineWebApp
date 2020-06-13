@@ -6,45 +6,56 @@
 package Models;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import org.eclipse.jdt.internal.compiler.codegen.ConstantPool;
 
 public class UserDao {
     
-    public int authenticateUser(UserBean user){
-        String email = user.getEmail();
-        String password = user.getPassword();      
+    private dbConnection connection;
+    
+    public UserDao(dbConnection myConn){
+        connection=myConn;
+    }
+    
+    public UserBean authenticateUser(String email, String password) throws Exception{
+           
+        UserBean userDB = new UserBean();
         
         Connection con = null;
-        Statement stat = null;
+        PreparedStatement stat = null;
         ResultSet rSet= null;
         
-        String userEmail = "";
-        String userPassword = "";
-        int userPermission;
-        String userName="";
+        
         
         try{
-            con = dbConnection.createConnection();
-            stat = con.createStatement();
-            rSet=stat.executeQuery("SELECT email, password, permission, name FROM user");
+            con = connection.createConnection();
+            String sql = "SELECT * FROM user WHERE email=? and password=?";
+            stat = con.prepareStatement(sql);
+            stat.setString(1, email);
+            stat.setString(2, password); 
+            rSet=stat.executeQuery();
             
             while (rSet.next()) {
-                userEmail = rSet.getString(1);
-                userPassword = rSet.getString(2);
-                userPermission=rSet.getInt(3);
-                userName = rSet.getString(4);
+                String idUserDB = rSet.getString("idUser");
+                String nameDB = rSet.getString("name");
+                String companyDB = rSet.getString("company");         
+                String emailDB = rSet.getString("email");
+                int permissionDB=rSet.getInt("permission");
+                int stateDB = rSet.getInt("state");
+                //LocalDateTime dtRegDB = rSet.("dtReg");
+                String passwordDB = rSet.getString("password");
+
+                userDB = new UserBean(idUserDB, nameDB, companyDB, emailDB, permissionDB, stateDB, passwordDB);
                 
-                if (email.equals(userEmail) && password.equals(userPassword) && userPermission==5){
-                return 5;
-                }else if (email.equals(userEmail) && password.equals(userPassword) && userPermission==2) {
-                return 2;    
-                }else if (email.equals(userEmail) && password.equals(userPassword) && userPermission==1) {
-                return 1;     
-                }
             }
-        }catch (SQLException e) {
-            e.printStackTrace();
         }
-        return 0;
+        finally{
+            con.close();
+            stat.close();
+            rSet.close();
+        }
+        return userDB;
     }
     
      public String registerUser(UserBean userRegist) throws ClassNotFoundException{

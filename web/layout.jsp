@@ -47,34 +47,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="navbar-nav">
+              <li class="nav-item px-2">
+              <a href="adminDash.jsp" class="nav-link">Control Panel</a>
+            </li>
             <li class="nav-item px-2">
                 <a href="products.jsp" class="nav-link" >Products</a>
             </li>
-            <li class="nav-item px-2" hidden>
-              <a href="orders.html" class="nav-link" hidden>Orders</a>
+            <li class="nav-item px-2" >
+              <a href="orders.html" class="nav-link" >Orders</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown mr-3" hidden>
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-              >
-                <i class="fas fa-user"></i> ${user}
-              </a>
-              <div class="dropdown-menu">
-                <a href="profile.html" class="dropdown-item">
-                  <i class="fa fa-user-circle"></i> Profile</a
-                >
-                <a href="settings.html" class="dropdown-item">
-                  <i class="fa fa-cog"></i> Settings</a
-                >
-              </div>
-            </li>
-            <li class="nav-item px-2" hidden>
+            
+            <li class="nav-item px-2" >
               <a href="carrinho.html" class="nav-link">
                 <i class="fas fa-shopping-cart"></i> Cart
+              </a>
+            </li>            
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-toggle="modal"
+              data-target="#contactModal">
+                <i class="fas fa-envelope"></i> Contact us
               </a>
             </li>
             <li class="nav-item">
@@ -83,11 +76,23 @@
                 <i class="fas fa-user"></i> Login
               </a>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link" data-toggle="modal"
-              data-target="#contactModal">
-                <i class="fas fa-envelope"></i> Contact us
+            <li class="nav-item dropdown mr-3" >
+              <a
+                href="#"
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+              >
+                <i class="fas fa-user"></i> ${ContaAtiva}
               </a>
+              <div class="dropdown-menu">
+                <a href="profile.html" class="dropdown-item">
+                  <i class="fa fa-user-circle"></i> Profile</a
+                >            
+              <a href="index.jsp" class="dropdown-item">
+                <i class="fas fa-user-times"></i> Logout
+              </a>
+           
+              </div>
             </li>
           </ul>
         </div>
