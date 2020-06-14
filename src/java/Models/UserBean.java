@@ -25,6 +25,7 @@ public class UserBean {
         this._password=_password;
     }
     
+    
     public UserBean(){
         
     }

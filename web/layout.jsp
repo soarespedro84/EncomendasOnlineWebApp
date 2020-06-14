@@ -83,6 +83,12 @@
             </li>
             </c:if>
             <c:if test="${not empty ContaAtiva}">
+                <li class="nav-item">               
+                  <a href="#" class="nav-link" data-toggle="modal"
+              data-target="#contactModal">
+                <i class="fas fa-envelope"></i> Contact us
+                  </a>
+            </li>
             <li class="nav-item px-2" >
               <a href="carrinho.html" class="nav-link">
                 <i class="fas fa-shopping-cart"></i> Cart
@@ -101,7 +107,7 @@
                   <i class="fa fa-user-circle"></i> Profile</a
                 >            
               <a href="logout.jsp" class="dropdown-item">
-                <i class="fas fa-user-times"></i> Logout
+                <i class="fa fa-power-off"></i> Logout
               </a>
               </div>
             </li>
@@ -128,7 +134,114 @@
     </footer>
     
     
+    <!-- CONTACT MODAL -->
+
+    <div class="modal fade" id="contactModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="card bg-light">
+            <div class="card-header text-center">
+                <h4>Contact Us</h4>
+            </div>
+            <div class="card-body">
+                <form action="RegController" method="post" name="form" onsubmit="return formValidation()">
+                <div class="form-group">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>                  
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="company"
+                      placeholder="Company"
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>
+                  <div class="form-group pb-3">
+                    <textarea                      
+                      name="message"
+                      placeholder="How can we help?"
+                      class="form-control form-control-lg text-white bg-dark" rows="5"
+                      ></textarea>
+                  </div>
+                  <input
+                    type="submit"
+                    value="Send Message"
+                    class="btn btn-lg btn-outline-dark btn-block" data-dismiss="modal"
+                  />
+                </form>
+              </div>
+              <div class="card-footer text-muted text-center mt-2">
+                <h6>
+                  Already a member?
+                  <a href="#" class="text-dark" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login Now</a>
+                </h6>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
     
+
+    <!-- LOGIN MODAL -->
+
+    <div class="modal fade" id="loginModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="card bg-light">
+              <div class="card-header text-center">
+                <h4>Account Login</h4>
+              </div>
+              <div class="card-body">
+                  <form action="UserController" method="post">
+                      <input type="hidden" name="command" value="LOGIN" />
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>
+                  <div class="form-group pb-3">
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>
+                  <input
+                    type="submit"
+                    value="Login"
+                    class="btn btn-lg btn-outline-dark btn-block"
+                  />
+                </form>
+              </div>
+              <div class="card-footer text-muted text-center">
+                <h6>
+                  New user?
+                  <a href="#" class="text-dark" data-dismiss="modal" data-toggle="modal" data-target="#contactModal">Contact us</a>
+                </h6>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
     
     <script
       src="http://code.jquery.com/jquery-3.3.1.min.js"

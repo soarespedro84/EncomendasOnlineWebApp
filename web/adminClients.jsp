@@ -4,6 +4,7 @@
     Author     : psoar
 --%>
 
+<%@page import="Models.dbConnection"%>
 <%@ page import = "java.sql.*" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -41,7 +42,7 @@
                 <div class="input-group">
 
 
-    <input type="text" name="userSearch" class="form-control form-control-lg" placeholder="Search" />
+    <input type="text" name="companySearch" class="form-control form-control-lg" placeholder="Search" />
 <button type="submit" class="btn btn-lg btn-outline-light"><i class="fas fa-search"></i></button>
 </div></form>            
           </div>
@@ -49,7 +50,16 @@
         </div>
       </div>
     </section>
-
+<%
+            String company = request.getParameter("companySearch");
+            if (company != null && company != "") {
+                Connection conn = dbConnection.createConnection();
+                Statement stmt = conn.createStatement();
+                
+                String str = "SELECT * FROM company WHERE companyName = '" + company + "';";
+                
+                ResultSet rset = stmt.executeQuery(str);
+        %>     
     <!-- clients -->
     <section id="clients">
       <div class="container">
@@ -61,35 +71,32 @@
                 <thead class="thead-dark">
                   <tr>
                     <th>Company</th>
-                    <th>Email</th>
                     <th>NIF</th>
+                    <th>Address</th>
                     <th>Phone</th>
                     <th></th>
                   </tr>
                 </thead>
+                <% while (rset.next()) { %>
                 <tbody>
                   <tr>
-                    <td>Company One</td>
-                    <td>geral@companyone.com</td>
-                    <td>500155155</td>
-                    <td>+351222444333</td>
+                    <td><%= rset.getString("companyName")%></td>
+                <td><%= rset.getString("nif")%></td>
+                <td><%= rset.getString("address")%></td>
+                <td><%= rset.getString("phone")%></td>
                     <td>
                       <a href="details.html" class="btn btn-secondary"
                         ><i class="fas fa-angle-double-right"></i> Details</a
                       >
                     </td>
                   </tr>
-                  <tr>
-                    <td>Company Two</td>
-                    <td>geral@companytwo.com</td>
-                    <td>510235565</td>
-                    <td>+351239854752</td>
-                    <td>
-                      <a href="details.html" class="btn btn-secondary"
-                        ><i class="fas fa-angle-double-right"></i> Details</a
-                      >
-                    </td>
-                  </tr>
+                  <% 
+            }
+            rset.close();
+            stmt.close();
+            conn.close();            
+        
+            %>
                   
                 </tbody>
               </table>
@@ -97,7 +104,61 @@
           </div>                       
         </div>
       </div>
-    </section>          
+    </section>
+             <% }else{
+
+                Connection conn = dbConnection.createConnection();
+                Statement stmt = conn.createStatement();
+                
+                String str = "SELECT * FROM company ORDER BY companyName ASC;";
+                
+                ResultSet rset = stmt.executeQuery(str);
+        %>     
+            <!-- clients -->
+    <section id="clients">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Company</th>
+                    <th>NIF</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <% while (rset.next()) { %>
+                <tbody>
+                  <tr>
+                    <td><%= rset.getString("companyName")%></td>
+                <td><%= rset.getString("nif")%></td>
+                <td><%= rset.getString("address")%></td>
+                <td><%= rset.getString("phone")%></td>
+                    <td>
+                      <a href="details.html" class="btn btn-secondary"
+                        ><i class="fas fa-angle-double-right"></i> Details</a
+                      >
+                    </td>
+                  </tr>
+                  <% 
+            }
+            rset.close();
+            stmt.close();
+            conn.close();            
+}
+            %>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>                       
+        </div>
+      </div>
+    </section>
 
     <!-- FOOTER -->
     <footer id="main-footer" class="bg-dark text-white mt-1 p-1 fixed-bottom">

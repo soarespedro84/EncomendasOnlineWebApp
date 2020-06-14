@@ -5,9 +5,7 @@ import Models.UserBean;
 import Models.UserDao;
 import Models.dbConnection;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,28 +28,45 @@ public class UserController extends HttpServlet {
         }
     }
     
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    
 
    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+        
+        try{
+            String theCommand = request.getParameter("command");
+            if (theCommand == null) {
+		theCommand = "LIST";
+            }			
+            switch (theCommand) {			 
+                case "LOGIN":
+                    loginUser(request, response);
+                    break;                                                
+                case "REGISTER":
+                    registerUser(request, response);
+                    break;
+                case "LIST":
+                    listUser(request, response);
+                    break;
+                case "UPDATE":
+                    //updateUser(request, response);
+                    break;
+                case "DELETE":
+                    //updateUser(request, response);
+                    break;
+                    case "SEARCH":
+                    searchUser(request, response);
+                    break;
+                default:
+                    //listUsers(request, response);
+                }            
+        }catch (Exception ex) {
+            throw new ServletException(ex);
+        }
+        
         
         if (session != null) {
             session.invalidate();
@@ -66,7 +81,6 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
      
         try{
             String theCommand = request.getParameter("command");
@@ -76,16 +90,22 @@ public class UserController extends HttpServlet {
             switch (theCommand) {			 
                 case "LOGIN":
                     loginUser(request, response);
-                    break;                            
-
+                    break;                                                
                 case "REGISTER":
                     registerUser(request, response);
                     break;
-
+                case "LIST":
+                    listUser(request, response);
+                    break;
                 case "UPDATE":
                     //updateUser(request, response);
                     break;
-
+                case "DELETE":
+                    //updateUser(request, response);
+                    break;
+                case "SEARCH":
+                    searchUser(request, response);
+                    break;
                 default:
                     //listUsers(request, response);
                 }            
@@ -94,8 +114,8 @@ public class UserController extends HttpServlet {
         }
     }
         
-        //LOGIN
-    protected void loginUser(HttpServletRequest request, HttpServletResponse response)
+    //LOGIN
+    private void loginUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
         
         HttpSession session = request.getSession();
@@ -108,14 +128,17 @@ public class UserController extends HttpServlet {
         if (theUserBean.getName()!= null) {
             session.setAttribute("ContaAtiva", theUserBean);
             session.setMaxInactiveInterval(600);
-            request.getRequestDispatcher("products.jsp").forward(request, response);
-
+            if (theUserBean.getPermission()!=5) {
+                request.getRequestDispatcher("products.jsp").forward(request, response);
+            }else{
+                request.getRequestDispatcher("adminDash.jsp").forward(request, response);
+            }           
         }
     }
         
         
-        //REGISTO
-    protected void registerUser(HttpServletRequest request, HttpServletResponse response)
+    //REGISTO
+    private void registerUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
     
         String nameReg = request.getParameter("nameReg");
@@ -130,24 +153,39 @@ public class UserController extends HttpServlet {
         userReg.setEmail(emailReg);
         userReg.setPassword(passwordReg);
         userReg.setPermission(permissionReg);
-        
-        UserDao _regDao = new UserDao(dbConn);
-        String userIsRegistered=null;
-        
-        try{
-            userIsRegistered = _regDao.registerUser(userReg);
-        }catch (ClassNotFoundException ex){
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-        if (userIsRegistered.equals("SUCCESS")) {
-            request.setAttribute("user", nameReg);
-            request.getRequestDispatcher("/products.jsp").forward(request, response);
-        }else{
-            request.setAttribute("errMessage", userIsRegistered);
-            
-            request.getRequestDispatcher("/error.html").forward(request, response);
-        }               
+       
+        _userDao.registerUser(userReg);
+        request.setAttribute("user", nameReg);
+        request.getRequestDispatcher("/adminUsers.jsp").forward(request, response);
+                       
     }
+    
+    //LIST
+    private void listUser(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
+        List<UserBean> usersToView = _userDao.listUsers();
+       
+
+        request.setAttribute("userList", usersToView);
+        request.getRequestDispatcher("/adminUsers.jsp").forward(request, response);
+                       
+    }
+    
+    //SEARCH
+    private void searchUser(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
+        String name = request.getParameter("userSearch");
+        UserBean userToSearch = _userDao.searchUser(name);
+
+        request.setAttribute("userToList", userToSearch);
+        request.getRequestDispatcher("/adminUsers.jsp").forward(request, response);
+                       
+    }
+    
+    
+    //DELETE
     
 }
 

@@ -1,36 +1,38 @@
 
 package Models;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompanyDao {
-    public String registerUser(UserBean regist) throws ClassNotFoundException{
-        String name = regist.getName();
-        String username=regist.getCompany();
-        String email = regist.getEmail();
-        String password = regist.getPassword();
-        int role=regist.getPermission();
+    
+    private dbConnection connection;
+    
+    public CompanyDao(dbConnection myConn){
+        connection=myConn;
+    }
+    
+    public void addCompany(CompanyBean company, UserBean userC) throws Exception{
+        
         Connection con = null;
+        PreparedStatement prepStat = null;
         try{
             con = dbConnection.createConnection();
-            
-            //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jsp001?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","ordepana20Maio2012");            
-            String query = "INSERT INTO users VALUES(?,?,?,?,?)";
-            PreparedStatement prepStat = con.prepareStatement(query);
-            prepStat.setString(1, email);
-            prepStat.setString(2, password);
-            prepStat.setString(3, username);
-            prepStat.setString(4, name);
-            prepStat.setInt(5, role);
-            int i = prepStat.executeUpdate();
-            prepStat.close();
-            con.close();
-            if(i != 0) return "SUCCESS";
-        }catch (SQLException e) {
-            e.printStackTrace();
+            String sql = "INSERT INTO company (companyName, nif, address, phone, fk_comercial) VALUES(?,?,?,?)";
+            prepStat = con.prepareStatement(sql);
+            prepStat.setString(1, company.getCompanyName());
+            prepStat.setString(2, company.getNif());
+            prepStat.setString(3, company.getAddress());
+            prepStat.setString(4, company.getPhone());
+            prepStat.setString(5, userC.getName());
+            int i = prepStat.executeUpdate();                        
         }
-        return "Error!";
-    }
+        finally{
+        prepStat.close();
+            con.close();
+        }
+        
+    } 
+    
+ 
 }

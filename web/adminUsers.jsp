@@ -4,6 +4,7 @@
     Author     : psoar
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Models.dbConnection"%>
 <%@ page import = "java.sql.*" %>
 
@@ -49,28 +50,14 @@
         </div>
       </div>
     </section>
-<%
-            String[] users = request.getParameterValues("userSearch");
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String user = request.getParameter("userSearch");
-            if (user != null && user != "") {
-                Connection conn = dbConnection.createConnection();
-                Statement stmt = conn.createStatement();
-                
-                String str = "SELECT * FROM user WHERE name = '" + user + "';";
-                
-                //for debutting
-                ResultSet rset = stmt.executeQuery(str);
-        %>     
+    <c:forEach var="rset" items="${userList}">
     <!-- USERS -->
     <section id="movement">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-                <h4>Platform Users</h4>
-              </div>                
+              
               <table class="table table-striped">
                 <thead class="thead-dark">
                   <tr>
@@ -81,27 +68,22 @@
                     <th> </th>
                   </tr>
                 </thead>
-                <% while (rset.next()) { %>
+                
                 <tbody>
                     <tr>
-                <td><%= rset.getString("name")%></td>
-                <td><%= rset.getString("company")%></td>
-                <td><%= rset.getString("email")%></td>
-                <td><%= rset.getString("permission")%></td>
+                <td>${rset.name}</td>
+                <td>${rset.company}</td>
+                <td>${rset.email}</td>
+                <td>${rset.permission}</td>
+                
                 <td>
                       <a href="details.html" class="btn btn-secondary"
                         ><i class="fas fa-angle-double-right"></i> Details</a
                       >
                     </td>
-            </tr>             
-           <% 
-            }
-            rset.close();
-
-            stmt.close();
-            conn.close();            
-        
-            %>
+            </tr>  
+            </c:forEach>
+           
         
                 </tbody>
               </table>
@@ -110,62 +92,7 @@
         </div>
       </div>
     </section>
-            <% }else{
-
-                Connection conn = dbConnection.createConnection();
-                Statement stmt = conn.createStatement();
-                
-                String str = "SELECT * FROM user ORDER BY name ASC;";
-                
-                //for debutting
-                ResultSet rset = stmt.executeQuery(str);
-        %>     
-    <!-- USERS -->
-    <section id="movement">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-                             
-              <table class="table table-striped">
-                <thead class="thead-dark ">
-                  <tr>
-                    <th>Name</th>
-                    <th>Company</th>
-                    <th>Email</th>
-                    <th>Permission</th>
-                    <th> </th>
-                  </tr>
-                </thead>
-                <% while (rset.next()) { %>
-                <tbody>
-                    <tr>
-                <td><%= rset.getString("name")%></td>
-                <td><%= rset.getString("company")%></td>
-                <td><%= rset.getString("email")%></td>
-                <td><%= rset.getString("permission")%></td>
-                <td>
-                      <a href="details.html" class="btn btn-secondary"
-                        ><i class="fas fa-angle-double-right"></i> Details</a
-                      >
-                    </td>
-            </tr>             
-           <% 
-            }
-            rset.close();
-
-            stmt.close();
-            conn.close();            
-}
-            %>
-        
-                </tbody>
-              </table>
-            </div>
-          </div>                       
-        </div>
-      </div>
-    </section>
+          
 
     
         <!-- REGISTER MODAL -->
@@ -183,19 +110,12 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="permissionReg"
-                      placeholder="Permission"                      
-                      class="form-control form-control-lg text-white bg-dark"
-                    />
-                  </div><div class="form-group">
-                    <input
-                      type="text"
                       name="nameReg"
                       placeholder="Name"
                       class="form-control form-control-lg text-white bg-dark"
                     />
                   </div>
-                  <div class="form-group">
+                      <div class="form-group">
                     <input
                       type="text"
                       name="companyReg"
@@ -211,7 +131,7 @@
                       class="form-control form-control-lg text-white bg-dark"
                     />
                   </div>
-                  <div class="form-group">
+                      <div class="form-group">
                     <input
                       type="password"
                       name="passwordReg"
@@ -219,6 +139,16 @@
                       class="form-control form-control-lg text-white bg-dark"
                     />
                   </div>
+                      <div class="form-group">
+                    <input
+                      type="text"
+                      name="permissionReg"
+                      placeholder="Permission"                      
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>
+                  
+                  
                   <input
                     type="submit"
                     value="Register"

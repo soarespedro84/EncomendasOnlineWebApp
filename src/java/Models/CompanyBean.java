@@ -20,18 +20,18 @@ public class CompanyBean {
     private String _address;
     private String _email;
     private String _phone;
-    private UserBean _comercial;
+    private UserBean _fkcomercial;
     private int _state;
     private LocalDateTime _dtReg;           
 
-    public CompanyBean(UUID _idCompany, String _companyName, String _nif, String _address, String _email, String _phone, UserBean _comercial, int _state, LocalDateTime _dtReg) {
+    public CompanyBean(UUID _idCompany, String _companyName, String _nif, String _address, String _email, String _phone, UserBean _fkcomercial, int _state, LocalDateTime _dtReg) {
         this._idCompany = _idCompany;
         this._companyName = _companyName;
         this._nif = _nif;
         this._address = _address;
         this._email = _email;
         this._phone = _phone;
-        this._comercial = _comercial;
+        this._fkcomercial = _fkcomercial;
         this._state = _state;
         this._dtReg = _dtReg;
     }
@@ -61,7 +61,7 @@ public class CompanyBean {
     }
 
     public UserBean getComercial() {
-        return _comercial;
+        return _fkcomercial;
     }
 
     public int getState() {
@@ -96,8 +96,8 @@ public class CompanyBean {
         this._phone = _phone;
     }
 
-    public void setComercial(UserBean _comercial) {
-        this._comercial = _comercial;
+    public void setComercial(UserBean _fkcomercial) {
+        this._fkcomercial = _fkcomercial;
     }
 
     public void setState(int _state) {
