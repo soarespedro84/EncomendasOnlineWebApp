@@ -27,10 +27,7 @@ public class UserController extends HttpServlet {
             throw new ServletException(e);
         }
     }
-    
-    
 
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,7 +43,7 @@ public class UserController extends HttpServlet {
                     loginUser(request, response);
                     break;                                                
                 case "REGISTER":
-                    registerUser(request, response);
+                   //registerUser(request, response);
                     break;
                 case "LIST":
                     listUser(request, response);
@@ -55,19 +52,19 @@ public class UserController extends HttpServlet {
                     //updateUser(request, response);
                     break;
                 case "DELETE":
-                    //updateUser(request, response);
+                    //deleteUser(request, response);
                     break;
-                    case "SEARCH":
-                    searchUser(request, response);
+                case "SEARCH":
+                    //searchUser(request, response);
                     break;
                 default:
-                    //listUsers(request, response);
+                    listUser(request, response);
                 }            
         }catch (Exception ex) {
             throw new ServletException(ex);
         }
         
-        
+        //LOGOUT
         if (session != null) {
             session.invalidate();
             request.setAttribute("errMsg", "Logout successfull");
@@ -92,22 +89,22 @@ public class UserController extends HttpServlet {
                     loginUser(request, response);
                     break;                                                
                 case "REGISTER":
-                    registerUser(request, response);
-                    break;
-                case "LIST":
+                   // registerUser(request, response);
+                    break;               
+                 case "LIST":
                     listUser(request, response);
-                    break;
+                    break;   
                 case "UPDATE":
                     //updateUser(request, response);
                     break;
                 case "DELETE":
-                    //updateUser(request, response);
+                    //deleteUser(request, response);
                     break;
                 case "SEARCH":
-                    searchUser(request, response);
+                    //searchUser(request, response);
                     break;
                 default:
-                    //listUsers(request, response);
+                    //listUser(request, response);
                 }            
         }catch (Exception ex) {
             throw new ServletException(ex);
@@ -137,7 +134,7 @@ public class UserController extends HttpServlet {
     }
         
         
-    //REGISTO
+    /*/REGISTO
     private void registerUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
     
@@ -159,7 +156,7 @@ public class UserController extends HttpServlet {
         request.getRequestDispatcher("/adminUsers.jsp").forward(request, response);
                        
     }
-    
+    */
     //LIST
     private void listUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
@@ -172,7 +169,7 @@ public class UserController extends HttpServlet {
                        
     }
     
-    //SEARCH
+    /*/SEARCH
     private void searchUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
     
@@ -185,7 +182,7 @@ public class UserController extends HttpServlet {
     }
     
     
-    //DELETE
+    //DELETE*/
     
 }
 

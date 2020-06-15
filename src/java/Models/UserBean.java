@@ -2,35 +2,45 @@
 package Models;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class UserBean {
+    
+    //CONSTANTES
+    private int MAXSTRING = 128;
 
-    private String _idUser;
+    private UUID _idUser;
     private String _name;
-    private String _company;
+    private CompanyBean _company;
     private String _email;
     private int _permission;
     private int _state;
     private LocalDateTime _dtReg;
     private String _password;
-
-    public UserBean(String _idUser, String _name, String _company, String _email, int _permission, int _state, /*LocalDateTime _dtReg,*/ String _password) {
+    
+    
+    public UserBean(UUID _idUser, String _name, CompanyBean _company, String _email, int _permission, int _state, LocalDateTime _dtReg, String _password) {
         this._idUser = _idUser;
         this._name = _name;
         this._company = _company;
         this._email = _email;
         this._permission = _permission;
         this._state = _state;
-        //this._dtReg = _dtReg;
+        this._dtReg = _dtReg;
         this._password=_password;
     }
-    
-    
-    public UserBean(){
-        
+    public UserBean() {
+        this._idUser = UUID.randomUUID();
+        this._name = "";
+        this._company = new CompanyBean();
+        this._email = "";
+        this._permission = 0;
+        this._state = 0;
+        this._dtReg = LocalDateTime.now();
+        this._password="";
     }
-    
-    public String getIdUser() {
+
+    public UUID getIdUser() {
         return _idUser;
     }
 
@@ -38,7 +48,7 @@ public class UserBean {
         return _name;
     }
 
-    public String getCompany() {
+    public CompanyBean getCompany() {
         return _company;
     }
 
@@ -62,16 +72,19 @@ public class UserBean {
         return _password;
     }
     
-        
+    
+    // SETTERS
     public void setName(String _name) {
+        if(_name.length() > MAXSTRING) _name = _name.substring(0, MAXSTRING);
         this._name = _name;
     }
 
-    public void setCompany(String _company) {
+    public void setCompany(CompanyBean _company) {
         this._company = _company;
     }
 
     public void setEmail(String _email) {
+        if(_email.length() > MAXSTRING) _email = _email.substring(0, MAXSTRING);
         this._email = _email;
     }
 
@@ -84,12 +97,10 @@ public class UserBean {
     }
 
     public void setPassword(String _password) {
+        if(_password.length() > MAXSTRING) _password = _password.substring(0, MAXSTRING);
         this._password = _password;
-    }    
+    }  
        
-    public String addUser(){
-        
-        return _idUser;
-    }
+  
     
 }

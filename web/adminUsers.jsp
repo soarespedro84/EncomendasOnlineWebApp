@@ -11,7 +11,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="layout.jsp"/>
 
-
+    
     <header id="main-header" class="py-2 bg-dark text-light">
       <div class="container">
         <div class="row">
@@ -50,7 +50,7 @@
         </div>
       </div>
     </section>
-    <c:forEach var="rset" items="${userList}">
+    
     <!-- USERS -->
     <section id="movement">
       <div class="container">
@@ -68,23 +68,22 @@
                     <th> </th>
                   </tr>
                 </thead>
-                
+               
                 <tbody>
+                     <c:forEach var="u" items="${userList}">
                     <tr>
-                <td>${rset.name}</td>
-                <td>${rset.company}</td>
-                <td>${rset.email}</td>
-                <td>${rset.permission}</td>
-                
-                <td>
-                      <a href="details.html" class="btn btn-secondary"
-                        ><i class="fas fa-angle-double-right"></i> Details</a
-                      >
+                        <td>${u.name}</td>
+                        <td>${u.company}</td>
+                        <td>${u.email}</td>
+                        <td>${u.permission}</td>                
+                    <td>
+                      <c:url var="deleteLink" value="UserControllerServlet">
+						<c:param name="command" value="DELETE" />
+						<c:param name="userId" value="${tempUser.idUser}" />
+					</c:url>
                     </td>
-            </tr>  
-            </c:forEach>
-           
-        
+                    </tr>  
+                    </c:forEach>
                 </tbody>
               </table>
             </div>

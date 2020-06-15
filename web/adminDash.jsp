@@ -73,7 +73,8 @@
               <div class="card-header bg-light text-dark">
                 <h3>Users</h3>
               </div>
-                <a href="adminUsers.jsp">                
+                <a href="UserController">            
+                    <input type="hidden" name="command" value="LIST" />
                     <div class="card-body py-5 my-5">
                         <i class="fa fa-users fa-9x text-light"></i>               
                     </div>

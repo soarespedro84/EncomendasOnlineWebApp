@@ -18,7 +18,7 @@ public class CompanyDao {
         PreparedStatement prepStat = null;
         try{
             con = dbConnection.createConnection();
-            String sql = "INSERT INTO company (companyName, nif, address, phone, fk_comercial) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO company (companyName, nif, address, phone, ) VALUES(?,?,?,?)";
             prepStat = con.prepareStatement(sql);
             prepStat.setString(1, company.getCompanyName());
             prepStat.setString(2, company.getNif());

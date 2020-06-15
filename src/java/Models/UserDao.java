@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.eclipse.jdt.internal.compiler.codegen.ConstantPool;
 
 public class UserDao {
     
@@ -30,23 +29,23 @@ public class UserDao {
 
         try{
             con = connection.createConnection();
-            String sql = "SELECT * FROM user WHERE email=? and password=?";
+            String sql = "SELECT u.`idUser`, u.`name`, u.email, u.password, u.`state` as stateUser, u.`dtReg` as dtRegUser , c.* FROM db_amf_web_platform.`user` as u JOIN company as c ON c.`idCompany` = u.fk_company where u.email=? and u.password = ? ;";
             stat = con.prepareStatement(sql);
             stat.setString(1, email);
             stat.setString(2, password); 
             rSet=stat.executeQuery();
             
             while (rSet.next()) {
-                String idUserDB = rSet.getString("idUser");
+                UUID idUserDB = UUID.fromString("idUser");
                 String name = rSet.getString("name");
-                String companyDB = rSet.getString("fk_company");         
+                CompanyBean companyDB = (CompanyBean)rSet.getObject("companyName");
                 String emailDB = rSet.getString("email");
                 int permissionDB=rSet.getInt("permission");
                 int stateDB = rSet.getInt("state");
-                //LocalDateTime dtRegDB = rSet.("dtReg");
+                LocalDateTime dtRegDB = LocalDateTime.parse("dtReg");
                 String passwordDB = rSet.getString("password");
 
-                userDB = new UserBean(idUserDB, name, companyDB, emailDB, permissionDB, stateDB, passwordDB);                
+                userDB = new UserBean(idUserDB, name, companyDB, emailDB, permissionDB, stateDB, dtRegDB, passwordDB);                
             }
         }
         finally{
@@ -55,7 +54,7 @@ public class UserDao {
         return userDB;
     }
     
-     public void registerUser(UserBean userRegist) throws Exception{
+     /*public void registerUser(UserBean userRegist) throws Exception{
 
         Connection con = null;
         PreparedStatement prepStat=null;
@@ -73,7 +72,7 @@ public class UserDao {
         }finally{
             close(con, prepStat, null);
         }
-    }
+    }*/
      
      public List<UserBean> listUsers() throws Exception{
          
@@ -85,24 +84,28 @@ public class UserDao {
         
         try{
             con = connection.createConnection();
-            
-            //if (userName!= null && userName != "") {
-              //sql = "SELECT * FROM user WHERE name = '"+userName+"' ;";
-              //}else{
-             String sql = "SELECT * FROM user WHERE permission <> 5 ORDER BY name";                                            
-            //}
-            stat = con.createStatement();            
+            String sql = "SELECT u.`idUser`, u.`name`, u.email, u.password, u.`state` as stateUser, u.`dtReg` as dtRegUser , c.* FROM db_amf_web_platform.`user` as u JOIN company as c ON c.`idCompany` = u.fk_company;";                                            
+           
+                stat = con.createStatement();            
                 rSet=stat.executeQuery(sql); 
                 while (rSet.next()) {
-                    String idUser = rSet.getString("idUser");
-                    String name = rSet.getString("name");
-                    String company = rSet.getString("fk_company");         
-                    String email = rSet.getString("email");
-                    int permission=rSet.getInt("permission");
+                    UUID idCompany = UUID.fromString("idCompany");
+                    String companyName= rSet.getString("companyName");
+                    String nif=  rSet.getString("nif");
+                    String address =  rSet.getString("address");
+                    String phone = rSet.getString("phone");
                     int state = rSet.getInt("state");
-                    //LocalDateTime dtRegDB = rSet.("dtReg");
+                    CompanyBean company = new CompanyBean(idCompany, companyName, nif, address, phone, state, LocalDateTime.MIN);
+                    
+                    UUID idUser = UUID.fromString("idUser");
+                    String name = rSet.getString("name");
+                    String email = rSet.getString("email");
+                    
+                    int permission=rSet.getInt("permission");
+                    int stateU = rSet.getInt("stateUser");
+                    LocalDateTime dtRegUser = LocalDateTime.parse("dtRegUser");
                     String password = rSet.getString("password");
-                    UserBean userToList = new UserBean(idUser, name, company, email, permission, state, password);
+                    UserBean userToList = new UserBean(idUser, name, company, email, permission, stateU, dtRegUser, password);
                     userList.add(userToList);
                 }
                 return userList; 
@@ -113,7 +116,7 @@ public class UserDao {
      }
      
      
-     public UserBean searchUser(String userName) throws Exception{
+     /*public UserBean searchUser(String userName) throws Exception{
          
         
 
@@ -143,7 +146,7 @@ public class UserDao {
         finally{
             close(con, stat, rSet);
         }                
-     }
+     }*/
      
      
      private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
