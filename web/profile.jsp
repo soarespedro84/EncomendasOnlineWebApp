@@ -59,14 +59,7 @@
                       class="form-control form-control-lg text-white bg-dark" disabled
                     />
                   </div>
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      name="password"
-                      value="${ContaAtiva.password}"
-                      class="form-control form-control-lg text-white bg-dark" disabled
-                    />
-                  </div>
+                  
                   <div class="form-group">
                        <c:choose>         
                         <c:when test = "${ContaAtiva.permission==1}">
@@ -237,8 +230,6 @@
                    <form action="user" method="post">
                     <input type="hidden" name="command" value="PASSWORD"/>
                     <input type="hidden" name="userId" value="${ContaAtiva.idUser}"/>
-                    <input type="hidden" name="companyId" value="${ContaAtiva.company.idCompany}"/>
-
                   <div class="form-group">
                     <input
                       type="password"
@@ -276,6 +267,24 @@
           </div>
         </div>
       </div>
-                                                  
-                            
+                    
+                     <c:if test="${passOK==true}">
+        <script> 
+                $(document).ready(function() {
+                    $('#successAlert').modal('show');
+                    });
+                    setTimeout(function() {
+    $('#successAlert').modal('hide');
+  }, 2000);
+  
+        </script>
+        <c:remove var="passOK"/>
+    </c:if>
+<div class="modal fade" id="successAlert">
+      <div class="modal-dialog modal-lg">
+             <div class="alert alert-success text-center">
+                <strong>Password Updated</strong>
+            </div>
+      </div>
+</div>
                 

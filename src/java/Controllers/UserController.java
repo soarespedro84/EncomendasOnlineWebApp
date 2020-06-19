@@ -114,6 +114,8 @@ private void userDetails(HttpServletRequest request, HttpServletResponse respons
         request.getRequestDispatcher("/adminUsers.jsp").forward(request, response);
     }
     
+ 
+ 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -132,6 +134,9 @@ private void userDetails(HttpServletRequest request, HttpServletResponse respons
                     break;                              
                 case "UPDATE":
                     updateUser(request, response);
+                    break;                
+                case "PASSWORD":
+                    updatePassword(request, response);
                     break;
                 case "DELETE":
                     deleteUser(request, response);
@@ -146,7 +151,8 @@ private void userDetails(HttpServletRequest request, HttpServletResponse respons
             throw new ServletException(ex);
         }
     }
-        
+   
+    
     //LOGIN
     private void loginUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -200,25 +206,23 @@ private void userDetails(HttpServletRequest request, HttpServletResponse respons
        
     }
     
+    //UPDATE
+    
 private void updateUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {                
       
         String idUser = request.getParameter("userId");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
         int permission = Integer.parseInt(request.getParameter("permission"));
         int state = Integer.parseInt(request.getParameter("state"));
-        
         
         UserDao ud = new UserDao(dbConn);
         UserBean user = ud.getUserByID(idUser);
         user.setName(name);
         user.setEmail(email);
-        user.setPassword(password);
         user.setPermission(permission);
         user.setState(state);
-        //UserBean user = new UserBean(idUser, name, c, email, permission, state, dtReg, password);
         ud.updateUser(user);
                
         if (permission < 5) {
@@ -233,6 +237,28 @@ private void updateUser(HttpServletRequest request, HttpServletResponse response
     }
 }
 
+private void updatePassword(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+    String currentPassword=request.getParameter("passwordOld");
+    String newPassword=request.getParameter("passwordNew");
+    String checkPassword=request.getParameter("passwordCheck");
+    String idUser = request.getParameter("userId");
+    Boolean validatePass=false;
+    
+    if (newPassword.equals(checkPassword)) {
+        UserDao ud = new UserDao(dbConn);
+        validatePass=ud.validatePassword(idUser,currentPassword);
+        if (validatePass) {
+            ud.updatePassword(newPassword, idUser);
+            request.setAttribute("passOK", true);
+        }
+    }
+    request.getRequestDispatcher("/profile.jsp#successAlert").forward(request, response);
+}                
+      
+
+//DELETE
 private String deleteUser(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 

@@ -144,7 +144,7 @@
 
     <!-- PRODUCTS  -->
     
-    <section id="products">        
+    <section id="products mb-5">        
         <div class="container">
             <div class="card-deck mb-3 text-center">
                 <c:forEach var="item" items="${lstProduct}">
@@ -152,7 +152,6 @@
                         <div class="card border-light text-center bg-white text-dark mb-3">
                             <div class="card-header">
                                 <h4 class="card-title pricing-card-title">${item.getName()} <small class="text-muted">/ ${item.getRef()}</small></h4>
-
                             </div>
                             <img style="height: 250px; object-fit: cover; object-position: bottom;" src="images/produtos/${item.getFoto()}" class="img-thumbnail card-img-top" alt="">
                             <div class="card-body">

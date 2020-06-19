@@ -2,49 +2,54 @@
   height: 40px;
 }
 
+a:link {
+  text-decoration: none;
+}
+/*--index--*/
 .carousel-item {
   height: 90vh;
 }
+.dark-overlay{
+    position: absolute;
+    top:0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
 .carousel-image-1 {
-  background: url("../images/produtos/8A11.31.jpg");
+  background: url("../images/banner/3A01.730.JPG");
   background-size: cover;
   background-position: 0px;
-  scale: 90%;  
 }
 .carousel-image-2 {
-  background: url("../images/produtos/8A86.00.jpg");
+  background: url("../images/banner/6A03.12.JPG");
   background-size: cover;
   background-position: -50px;
-  scale: 90%;
 }
 .carousel-image-3 {
-  background: url("../images/produtos/8B86.00.jpg");
+  background: url("../images/banner/8A0022.jpg");
   background-size: cover;
   background-position: -50px ;
-  scale: 90%;
+  scale: 80%;
 }
 .carousel-image-4 {
-  background: url("../images/produtos/3A01.730.JPG");
+  background: url("../images/banner/8A0180.jpg");
   background-size: cover;
   background-position: -50px;
-  scale: 90%;
+  scale: 80%;
 }
 .carousel-image-5 {
-  background: url("../images/produtos/6A03.12.JPG");
+  background: url("../images/banner/8B86.00.jpg");
   background-size: cover;
   background-position: -50px;
-  scale: 90%;
 }
 .carousel-image-6 {
-  background: url("../images/produtos/8A01.21.JPG");
+  background: url("../images/banner/8A86.00.jpg");
   background-size: cover;
   background-position: -50px;
-  scale: 90%;
 }
-#products .card:hover{
-    transform: scale(1.05);
-    transition-duration: 0.5s;
-}
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   height: 100px;
@@ -63,6 +68,13 @@
   content: '<';
   font-size: 50px;
   color: black;
+}
+
+
+
+#products .card:hover{
+    transform: scale(1.05);
+    transition-duration: 0.5s;
 }
 .borderless td, .borderless th,  .borderless tr  {
     border: none;

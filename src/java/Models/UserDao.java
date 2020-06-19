@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.security.MessageDigest;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
 
 public class UserDao {
     
@@ -21,6 +24,35 @@ public class UserDao {
         connection=myConn;
     }        
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    
+    //Password Encrypt
+    public static String getMd5(String input) throws NoSuchAlgorithmException
+    { 
+        try { 
+            // Static getInstance method is called with hashing MD5 
+            MessageDigest md = MessageDigest.getInstance("MD5"); 
+  
+            // digest() method is called to calculate message digest 
+            //  of an input digest() return array of byte 
+            byte[] messageDigest = md.digest(input.getBytes()); 
+  
+            // Convert byte array into signum representation 
+            BigInteger no = new BigInteger(1, messageDigest); 
+  
+            // Convert message digest into hex value 
+            String hashtext = no.toString(16); 
+            while (hashtext.length() < 32) { 
+                hashtext = "0" + hashtext; 
+            } 
+            return hashtext; 
+        }  
+  
+        // For specifying wrong message digest algorithms 
+        catch (NoSuchAlgorithmException e) { 
+            throw new RuntimeException(e); 
+        } 
+    } 
+    
     public UserBean authenticateUser(String email, String password) throws Exception{
            
         UserBean userDB = new UserBean();
@@ -34,7 +66,7 @@ public class UserDao {
             String sql = "SELECT u.`idUser`, u.`name`, u.email, u.password, u.permission, u.`state` as stateUser, u.`dtReg` as dtRegUser , c.* FROM db_amf_web_platform.`user` as u JOIN company as c ON c.`idCompany` = u.fk_company where u.email=? and u.password = ? ;";
             stat = con.prepareStatement(sql);
             stat.setString(1, email);
-            stat.setString(2, password); 
+            stat.setString(2, getMd5(password)); 
             rSet=stat.executeQuery();
             
             while (rSet.next()) {
@@ -69,10 +101,11 @@ public class UserDao {
         return userDB;
     }
     
-    /*public boolean validatePassword(String idUser, String password) throws Exception{
+    public boolean validatePassword(String idUser, String currentPassword) throws Exception{
         Connection con = null;
         PreparedStatement prepStat = null;
         ResultSet rSet= null;
+        boolean check=false;
          try{
             con = connection.createConnection();
             String sql = "SELECT * FROM db_amf_web_platform.`user` where idUser=?;";
@@ -81,16 +114,31 @@ public class UserDao {
             rSet=prepStat.executeQuery();
             while (rSet.next()) {
             String passwordDB = rSet.getString("password");
-                if (password==passwordDB) {
-                    return true;
+               if (getMd5(currentPassword).equals(passwordDB)) {
+                    check = true;
                 }
-            }
-            
+            }            
          }finally{
             close(con, prepStat, null);
         }
-         return true;
-    }*/
+          return check;
+    }
+    
+     public void updatePassword(String newPassword, String idUser) throws Exception{
+        Connection con = null;
+        PreparedStatement prepStat = null;
+         try{
+            con = connection.createConnection();
+            String sql = "UPDATE user SET password=? WHERE idUser=?;";
+            prepStat = con.prepareStatement(sql);
+            prepStat.setString(1, getMd5(newPassword));
+            prepStat.setString(2, idUser);
+            prepStat.execute();                        
+         }finally{
+            close(con, prepStat, null);
+        }
+    }
+    
     
      public void registerUser(UserBean userRegist) throws Exception{
 
@@ -103,7 +151,7 @@ public class UserDao {
             prepStat.setString(1, userRegist.getName());
             prepStat.setString(2, userRegist.getCompany().getIdCompany().toString());
             prepStat.setString(3, userRegist.getEmail());
-            prepStat.setString(4, userRegist.getPassword());
+            prepStat.setString(4, getMd5(userRegist.getPassword()));
             prepStat.setInt(5, userRegist.getPermission());
             prepStat.executeUpdate();
             
@@ -248,14 +296,13 @@ public class UserDao {
         PreparedStatement prepStat=null;
         try{
             con = dbConnection.createConnection();
-            String sql = "update user set name=?, email=?, password=?, permission=?, state=? where idUser=?";
+            String sql = "update user set name=?, email=?, permission=?, state=? where idUser=?";
             prepStat = con.prepareStatement(sql);
             prepStat.setString(1, user.getName());
             prepStat.setString(2, user.getEmail());
-            prepStat.setString(3, user.getPassword());
-            prepStat.setInt(4, user.getPermission());
-            prepStat.setInt(5, user.getState());
-            prepStat.setString(6, user.getIdUser().toString());
+            prepStat.setInt(3, user.getPermission());
+            prepStat.setInt(4, user.getState());
+            prepStat.setString(5, user.getIdUser().toString());
 
             prepStat.executeUpdate();
             

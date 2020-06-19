@@ -15,7 +15,22 @@
     
     <header id="main-header" class="pt-3 mt-5 mb-3 bg-dark text-light">
       <div class="container">
-        <div class="row">
+        
+          <div class="row my-3">
+           <div class="col-md-3">
+                       <a href="adminDash.jsp" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-cog"></i> Admin Panel</a>
+                </div>     
+           <div class="col-md-3">
+                       <a href="user?route=LIST" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-users"></i> User List</a>
+                </div>
+                   <div class="col-md-3">
+                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-user-edit"></i> Edit User</a>
+                </div>
+                <div class="col-md-3">
+                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete User</a>
+                </div>
+               </div>
+          <div class="row">
           <div class="col-md-12 text-center ">
               
               <h2>${user.name} Details</h2>
@@ -57,14 +72,7 @@
                       class="form-control form-control-lg text-white bg-dark" disabled
                     />
                   </div>
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      name="password"
-                      value="${user.password}"
-                      class="form-control form-control-lg text-white bg-dark" disabled
-                    />
-                  </div>
+                  
                   <div class="form-group">
                        <c:choose>         
                         <c:when test = "${user.permission==1}">
@@ -102,20 +110,7 @@
           </div>
         </div>
       </div>
-       <div class="row my-3">
-           <div class="col-md-3">
-                       <a href="adminDash.jsp" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-cog"></i> Admin Panel</a>
-                </div>     
-           <div class="col-md-3">
-                       <a href="user?route=LIST" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-users"></i> User List</a>
-                </div>
-                   <div class="col-md-3">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-user-edit"></i> Edit User</a>
-                </div>
-                <div class="col-md-3">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete User</a>
-                </div>
-               </div>
+       
      </div>
     </section>
                       
@@ -158,14 +153,7 @@
                       class="form-control form-control-lg text-white bg-dark" 
                     />
                   </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      name="password"
-                      value="${user.password}"
-                      class="form-control form-control-lg text-white bg-dark" 
-                    />
-                  </div>
+                  
                   <div class="form-group">
                      <select class="form-control form-control-lg text-white bg-dark text-muted" id="permission" name="permission" value="${user.permission}" >
                          <c:choose>         

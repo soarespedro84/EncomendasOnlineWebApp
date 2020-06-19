@@ -15,6 +15,28 @@
     
     <header id="main-header" class="pt-3 my-5 bg-dark text-light">
       <div class="container">
+           <div class="row my-3">
+                     <div class="col-md-2">
+                       <a href="adminDash.jsp" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-cog m-0"></i> Admin Panel</a>
+                </div>    
+                    <div class="col-md-2">
+                       <a href="company?route=LIST" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-users"></i> Client List</a>
+                </div>     
+                    <div class="col-md-2">
+           
+      <button class="btn btn-lg btn-outline-light btn-block d-block " data-toggle="modal"  data-target="#RegUserModal"><i class="fas fa-user-plus"></i> Add Users</button>
+       </div>
+                <div class="col-md-2">
+                    <button class="btn btn-lg btn-outline-light btn-block d-block " data-toggle="modal" data-target="#ShowUsersModal"><i class="fas fa-users"></i> Show Users</button>
+      </div>
+       <div class="col-md-2">
+                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#editUserModal" ><i class="fas fa-user-edit"></i> Edit</a>
+                </div>
+                     
+                <div class="col-md-2">
+                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete</a>
+                </div>
+      </div>
         <div class="row">
           <div class="col-md-12 text-center ">
               
@@ -93,28 +115,7 @@
         </div>
       </div>
              
-                <div class="row my-3">
-                     <div class="col-md-2">
-                       <a href="adminDash.jsp" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-cog m-0"></i> Admin Panel</a>
-                </div>    
-                    <div class="col-md-2">
-                       <a href="company?route=LIST" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-users"></i> Client List</a>
-                </div>     
-                    <div class="col-md-2">
-           
-      <button class="btn btn-lg btn-outline-light btn-block d-block " data-toggle="modal"  data-target="#RegUserModal"><i class="fas fa-user-plus"></i> Add Users</button>
-       </div>
-                <div class="col-md-2">
-                    <button class="btn btn-lg btn-outline-light btn-block d-block " data-toggle="modal" data-target="#ShowUsersModal"><i class="fas fa-users"></i> Show Users</button>
-      </div>
-       <div class="col-md-2">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#editUserModal" ><i class="fas fa-user-edit"></i> Edit</a>
-                </div>
-                     
-                <div class="col-md-2">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete</a>
-                </div>
-      </div>
+               
       </div>
     </section>
     

@@ -13,7 +13,7 @@
     <!-- HEADER  -->
 <c:if test="${sessionScope.ContaAtiva == null}"><c:redirect url="index"/></c:if>
 
-    <header id="main-header" class="pt-5 my-5 bg-dark text-light mb-3">
+    <header id="main-header" class="pt-5 mt-5 mb-2 bg-dark text-light mb-3">
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center mb-5">

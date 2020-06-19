@@ -80,8 +80,8 @@
                             <c:param name="route" value="GetProduct" />
                             <c:param name="idProduct" value="${item.idProduct}" />
                          </c:url>
-                        <a href="#${item.getIdProduct()}" data-parent="#accordion" data-toggle="collapse">
-                          <div class="card-body bg-light text-dark">
+                          <a href="#${item.getIdProduct()}" id="prodListCollapse" data-parent="#accordion" data-toggle="collapse">
+                          <div class="card-body bg-light text-dark ">
                                 <div class="row text-center">
                                     <div class="col-md-2">
                                         <h5>${item.getRef()}</h5>
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="${item.getIdProduct()}" class="collapse row mb-3">
+                            <div id="${item.getIdProduct()}" class="collapse row mb-3 text-dark">
                                 <div class="col-md-4">
                                     <img id="foto" style="max-width: 80%; height: 250px; object-fit: cover; object-position: bottom;" class="img img-fluid" src="images/produtos/${item.getFoto()}"/>
                                 </div>
@@ -123,6 +123,16 @@
                                             <tr>
                                                 <th scope="row">Price</th>
                                                 <td colspan="3"  id="price">${item.getPrice()}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Sizes</th>
+                                                <td colspan="2"  id="price">${item.getInitSize()} - ${item.getFinSize()}</td>
+                                                <td colspan="1"  id="price"><a href="#" class="btn btn-secondary btn-block text-white" id="editProduct">EDIT</a></td>
+
+                                            </tr>
+                                            
+                                            <tr>
+                                              
                                             </tr>
                                         </tbody>
                                     </table>

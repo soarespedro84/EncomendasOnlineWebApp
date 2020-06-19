@@ -13,7 +13,7 @@
 
     <!-- HEADER  -->
 
-    <header id="main-header" class="py-2 bg-dark text-light">
+    <header id="main-header" class="py-3 mt-5 bg-dark text-light">
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center ">
@@ -26,7 +26,7 @@
     </header>
               
     <!-- ACTIONS -->
-  <section id="actions" class="py-4 mb-4">
+  <section id="actions" class="py-4 m5-4">
       <div class="container">
         <div class="row">
           <div class="col-md-3">
@@ -49,119 +49,43 @@
       </div>
     </section>
 
-    <!-- MOVEMENTS -->
+    <!-- MOVEMENTS Table-->
     <section id="movement">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
-              
-              <table class="table table-striped">
+            <div class="card">              
+              <table class="table table-striped text-center ">
                 <thead class="thead-dark">
                   <tr>
                     <th>Date</th>
-                    <th>User</th>
-                    <th>Company</th>
-                    <th>State</th>
+                    <th>Type</th>
+                    <th>Doc Ref</th>
+                    <th>Qty</th>
+                    <th>Value</th>
+                    <th>Related</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>10 de Maio 2020</td>
-                    <td>José Sousa</td>
-                    <td>Company One</td>
-                    <td>Processing</td>
-                    <td>
-                      <a href="details.html" class="btn btn-secondary"
+                    <td class="align-middle">10 de Maio 2020</td>
+                    <td class="align-middle">Order</td>
+                    <td class="align-middle">GR2020/12</td>
+                    <td class="align-middle">950</td>
+                    <td class="align-middle">31222.32 €</td>
+                    <td class="align-middle">Enc_32</td>
+
+                    <td class="align-middle">
+                      <a href="movDetails.jsp" class="btn btn-secondary"
                         ><i class="fas fa-angle-double-right"></i> Details</a
                       >
                     </td>
-                  </tr>
-                  <tr>
-                    <td>10 de Maio 2020</td>
-                    <td>José Sousa</td>
-                    <td>Company One</td>
-                    <td>Shipped</td>
-                    <td>
-                      <a href="details.html" class="btn btn-secondary"
-                        ><i class="fas fa-angle-double-right"></i> Details</a
-                      >
-                    </td>
-                  </tr>
+                  </tr>                  
                   
                 </tbody>
               </table>
             </div>
           </div>
             
-            
- <!-- SIDE DASHBOARD 
-
-          <div class="col-md-3">
-            <div class="card border-light text-center bg-dark text-white mb-3">
-              <div class="card-body">
-                <h3>Movements</h3>               
-                <a href="adminMov.jsp" class="btn btn-outline-light btn-sm"
-                  >View</a
-                >
-              </div>
-            </div>
-            <div class="card border-light text-center bg-dark text-white mb-3">
-              <div class="card-body">
-                <h3>Products</h3>
-                <a href="adminProduct.jsp" class="btn btn-outline-light btn-sm"
-                  >View</a
-                >
-              </div>
-            </div>
-            <div class="card border-light text-center bg-dark text-white mb-3">
-              <div class="card-body">
-                <h3>Users</h3>
-                <a href="adminUsers.jsp" class="btn btn-outline-light btn-sm"
-                  >View</a
-                >
-              </div>
-            </div>
-          </div>-->
-        </div>
-      </div>
-    </section>          
-
-    <!-- FOOTER -->
-    <footer id="main-footer" class="bg-dark text-white mt-1 p-1 fixed-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <p class="lead text-center">
-              Copyright &copy; <span id="year"></span>
-              Sergii e Pedro
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <script
-      src="http://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-      crossorigin="anonymous"
-    ></script>
-
-    <script>
-      // Get the current year for the copyright
-      $("#year").text(new Date().getFullYear());
-    </script>
-  </body>
-</html>
-
+  
