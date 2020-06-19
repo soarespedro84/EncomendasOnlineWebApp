@@ -1,8 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : 22 May 2020, 20:12:27
-    Author     : psoar
---%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page import="Models.UserBean"%>
@@ -33,6 +29,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>AMF Web Platform</title>
   </head>
+
   <body class="bg-dark">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -48,26 +45,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="navbar-nav">
-              <c:if test="${ContaAtiva.permission==5}">
-              <li class="nav-item px-2">
-              <a href="adminDash.jsp" class="nav-link"><i class="fas fa-cog"></i>  Admin Panel</a>
-            </li></c:if>
-            <c:if test="${ContaAtiva.permission==2}">
-              <li class="nav-item px-2">
-              <a href="company?route=LIST" class="nav-link"><i class="fa fa-handshake "></i> Clients</a>
-            </li>
-            <li class="nav-item px-2" >
-              <a href="orders.jsp" class="nav-link" ><i class="fas fa-receipt "></i> Orders</a>
-            </li>
-            </c:if>
-            <c:if test="${ContaAtiva.permission==1}">            
-            <li class="nav-item px-2" >
-              <a href="orders.jsp" class="nav-link"><i class="fas fa-receipt text-light"></i> Orders</a>
-            </li>
-           </c:if>
-           <li class="nav-item px-2">
-                <a href="products?route=LIST" class="nav-link" ><i class="fa fa-box-open"></i> Products</a>
-            </li>
+                <li class="nav-item px-2">
+                    <a href="products?route=LIST" class="nav-link" ><i class="fa fa-box-open"></i> Products</a>
+                </li>
+                <c:if test="${ContaAtiva.permission==5}">
+                <li class="nav-item px-2">
+                <a href="adminDash.jsp" class="nav-link"><i class="fas fa-cog"></i>  Admin Panel</a>
+              </li></c:if>
+              <c:if test="${ContaAtiva.permission==2}">
+                <li class="nav-item px-2">
+                <a href="company?route=LIST" class="nav-link"><i class="fa fa-handshake "></i> Clients</a>
+              </li>
+              <li class="nav-item px-2" >
+                <a href="orders.jsp" class="nav-link" ><i class="fas fa-receipt "></i> Orders</a>
+              </li>
+              </c:if>
+              <c:if test="${ContaAtiva.permission==1}">            
+              <li class="nav-item px-2" >
+                <a href="orders.jsp" class="nav-link"><i class="fas fa-receipt"></i> Orders</a>
+              </li>
+             </c:if>
+           
           </ul>
  
           <ul class="navbar-nav ml-auto">
@@ -96,7 +94,7 @@
             </li>
             </c:if>
             <li class="nav-item px-2 dropdown" >
-              <a href="carrinho.jsp" class="nav-link" data-toggle="dropdown" data-target="#dropCart">
+              <a href="movement?route=cart" class="nav-link" >
                 <i class="fas fa-shopping-cart"></i> Cart
               </a>
               <div class="dropdown-menu" id="dropCart">
@@ -119,7 +117,7 @@
                 </div>
                 <div class="row">
                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                                <button class="btn btn-outline-dark btn-block">Checkout</button>
+                            <a href="movement?route=cart" class="btn btn-outline-dark btn-block">Checkout</a>
                         </div>
                 </div>
             </div>  
@@ -133,7 +131,7 @@
                 <i class="fas fa-user"></i> ${ContaAtiva.name}
               </a>
               <div class="dropdown-menu">
-                <a href="profile.jsp" class="dropdown-item">                
+                <a href="profile.jsp" class="dropdown-item">
                   <i class="fa fa-user-circle"></i> Profile</a
                 >            
               <a href="logout.jsp" class="dropdown-item">

@@ -4,80 +4,229 @@
  * and open the template in the editor.
  */
 package Controllers;
+// Modelos
+import Models.ProductBean;
+import Models.ProductDao;
+import Models.UserBean;
+import Models.ItemCartBean;
+import Models.ItemDao;
+import Models.SizeQtdBean;
 
+// Java Servlet
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Sergio
- */
+// Ajax+JSON
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.*;
+import java.util.Map;
+import java.lang.Integer;
+import javax.servlet.http.HttpSession;
+
 public class MovementController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MovementController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MovementController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Route de request GET
+        try{
+            String route = request.getParameter("route");
+            		
+            switch (route) {			 
+                case "cart":
+                    getCart(request, response);
+                    break;                                                
+                case "addToCart":
+                    addToCart(request, response);
+                    break;
+                case "deleteInCart":
+                    deleteInCart(request, response);
+                break;
+                default:
+                    getCart(request, response);
+                }            
+        }catch (Exception ex) {
+            throw new ServletException(ex);
+        }
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
+    
+    
+    
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Route de request GET
+        try{
+            String route = request.getParameter("route");
+            		
+            switch (route) {                                           
+                case "addToCart":
+                    addToCart(request, response);
+                    break;
+                case "updateItemCart":
+                    updateItemCart(request, response);
+                break;
+                case "saveOrder":
+                    saveOrder(request, response);
+                break;
+                case "cart":
+                    getCart(request, response);
+                    break;
+                default:
+                    getCart(request, response);
+                }            
+        }catch (Exception ex) {
+            throw new ServletException(ex);
+        }
     }
+    
+    // Adicionar ao carrinho de compra via JSON
+    private void addToCart(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
+        try {
+            // Utilizador
+            UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
+            
+            // Produto
+            String idProduct = request.getParameter("idProduct");
+            ProductDao pd = new ProductDao ();
+            ProductBean product = pd.getProductById(idProduct);
+            
+            //Criar ItemBean
+            ItemCartBean item = new ItemCartBean(user, product);
+            
+            //Preencher tamanhos do item
+            for (int i = item.getProduct().getInitSize(); i <= item.getProduct().getFinSize(); i++) {               
+                try {
+                    int qtd = Integer.parseInt(request.getParameter(""+i));
+                    SizeQtdBean tempSizeQtdBean = new SizeQtdBean(i, qtd);
+                    item.addSize(tempSizeQtdBean);
+                } catch (Exception e) { }                
+            }
+            
+            //Guardar item em Cart
+            ItemDao id = new ItemDao();
+            String result = id.addItemToCart(item);
+            
+            if(result == null) result = product.getName();
+            
+            response.setContentType("application/json");
+            response.setHeader("Cache-Control", "no-cache");
+            Map<String, String> personMap = new HashMap<String, String>();
+            personMap.put("ok", result);
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(personMap);
+            response.getWriter().write(json);
+        } catch (Exception e) {
+            response.setContentType("application/json");
+            response.setHeader("Cache-Control", "no-cache");
+            Map<String, String> personMap = new HashMap<String, String>();
+            personMap.put("error", ""+e.getMessage());
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(personMap);
+            response.getWriter().write(json);
+        }
+        
+    }
+    
+    // Adicionar ao carrinho de compra via JSON
+    private void getCart(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
+        UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
+        ItemDao itd = new ItemDao();
+        ArrayList<ItemCartBean> lstItems = itd.listCart(user);
+        
+        request.setAttribute("lstItems", lstItems);
+        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+        
+    }
+    
+    // Update item em cart
+    private void updateItemCart(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+        
+        //Eliminar item antifo
+        String idCart = request.getParameter("idCart");        
+        ItemDao id = new ItemDao();        
+        String result = id.deliteItemFromCart(idCart);
+        
+        //Acrescentar novo
+        try {
+            //idCart
+            UUID uuidCart = UUID.fromString(idCart);
+            
+            // Utilizador
+            UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
+            
+            // Produto
+            String idProduct = request.getParameter("idProduct");
+            ProductDao pd = new ProductDao ();
+            ProductBean product = pd.getProductById(idProduct);
+            
+            //Criar ItemBean
+            ItemCartBean item = new ItemCartBean(uuidCart, user, product);
+            
+            //Preencher tamanhos do item
+            for (int i = item.getProduct().getInitSize(); i <= item.getProduct().getFinSize(); i++) {               
+                try {
+                    int qtd = Integer.parseInt(request.getParameter(""+i));
+                    SizeQtdBean tempSizeQtdBean = new SizeQtdBean(i, qtd);
+                    item.addSize(tempSizeQtdBean);
+                } catch (Exception e) { }                
+            }
+            
+            //Guardar item em Cart
+            result = id.addItemToCart(item);
+            
+            if(result == null) result = "OK!";
+            
+        } catch (Exception e) { }
+        
+        //getCart(request, response);
+        request.getRequestDispatcher("/movement?route=cart").forward(request, response);
+    }
+    
+    // Eliminar do Cart
+    private void deleteInCart(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
+        String idCart = request.getParameter("idCart");
+        
+        ItemDao id = new ItemDao();
+        
+        String result = id.deliteItemFromCart(idCart);
+        
+        
+        request.getRequestDispatcher("/movement?route=cart").forward(request, response);
+    }
+    
+    // Guardar encomenda
+    private void saveOrder(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
+        UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
+        ItemDao itd = new ItemDao();
+        
+        itd.deliteAllItemFromCart(user);
+        
+        request.getRequestDispatcher("/movement?route=cart").forward(request, response);
+        
+        
+    }
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -89,6 +89,7 @@ public class ProductController extends HttpServlet {
         request.getRequestDispatcher("/adminProduct.jsp").forward(request, response);   
                 
     }
+    
     private void searchProduct(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
         String str = request.getParameter("productSearch");

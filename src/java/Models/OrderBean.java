@@ -16,22 +16,29 @@ public class OrderBean extends MovementBean {
     final int LONGSTRING = 256;
     
     //ATRIBUTOS
+    private UserBean _user;
     private LocalDateTime _dtDelivery;
     private String _nrCliente; //SHORTSTRING
     
     //CONSTRUTORES:
     // carregar da DB
-    public OrderBean(LocalDateTime _dtDelivery, String _nrCliente) {
+    public OrderBean(UserBean _user, LocalDateTime _dtDelivery, String _nrCliente) {
+        this._user = _user;
         this._dtDelivery = _dtDelivery;
         this._nrCliente = _nrCliente;
     }
     // criar novo
     public OrderBean() {
-        this._dtDelivery = LocalDateTime.parse("1900-01-01T00:00:00");
+        this._user = new UserBean();
+        this._dtDelivery = LocalDateTime.now();
         this._nrCliente = _nrCliente;
     }
     
-    //GETTERS
+    //GETTERS    
+    public UserBean getUser() {
+        return _user;
+    }
+
     public LocalDateTime getDtDelivery() {
         return _dtDelivery;
     }
@@ -40,7 +47,11 @@ public class OrderBean extends MovementBean {
         return _nrCliente;
     }
     
-    //SETTERS
+    //SETTERS    
+    public void setUser(UserBean _user) {
+        this._user = _user;
+    }
+
     public void setDtDelivery(LocalDateTime _dtDelivery) {
         if(_dtDelivery.isBefore(LocalDateTime.now())) _dtDelivery = LocalDateTime.now(); //Preenchido por cliente
         this._dtDelivery = _dtDelivery;

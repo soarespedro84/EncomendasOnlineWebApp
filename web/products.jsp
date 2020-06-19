@@ -1,8 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : 8 May 2020, 22:21:55
-    Author     : psoar
---%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Models.dbConnection"%>
@@ -21,7 +16,7 @@
     }
     
     #productModal .modal-content{
-        width: 150%;
+        width: 140%;
         position: absolute;
         left: 50%;
         top: 50%;
@@ -36,7 +31,9 @@
 <script type="text/javascript">
     
     //Variavel global
-    var idProduct;
+    var tempidProduct;
+    var priceProduct;
+    var qtdProduct;
     
     // JSON to Model decoder
     function Model(obj) {
@@ -77,9 +74,18 @@
         $("#name").text(model.name);
         $("#color").text(model.color);
         $("#desc").text(model.desc);
-        $("#price").text(model.price);        
+        $("#price").text(Number(model.price).toFixed(2)+" €");
         $("#foto").attr("src","images/produtos/"+model.foto);
-        idProduct = model.idProduct;
+                
+        // Definir variavel global
+        tempidProduct = model.idProduct;
+        priceProduct = Number(model.price);
+        qtdProduct = 0;
+        
+        $("#total").html("<b>Qtd:</b> "+qtdProduct+" pairs | <b>Qtd:</b> "+(qtdProduct * priceProduct).toFixed(2)+" €");
+        
+        //console.log(model.price);
+        //console.log();
         
         // Limapr tabela dos tamanhos
         $("#tHead").children('th').remove();        
@@ -88,20 +94,35 @@
         // Preencher tabela dos tamanhos
         for(i = Number(model.init); i <= Number(model.fin); i++){
             $("#tHead").append('<th>'+i+'</th>');
-            $("#tBody").append("<td><input type='number' name='"+i+"' style='width:50px; text-align: center;' /></td>");
+            $("#tBody").append("<td><input onchange='upDateTotals()' class='orderSize' type='number' step='1' min='0' size=3 name='"+i+"' style='width:50px; text-align: center;' /></td>");
         }
+    }
+    
+    // Atualizar totais
+    function upDateTotals(){
+        //alert("ok")
+        var list = $('.orderSize');     
+        //console.log(list);
+        //console.log(list[0].value);
+        
+        qtdProduct = 0;
+        for (i=0; i<list.length; i++) {
+            qtdProduct += Number(list[i].value);
+        }
+        
+        $("#total").html("<b>Qnt: </b> "+qtdProduct+" pairs | <b>Amont: </b> "+(qtdProduct * priceProduct).toFixed(2)+" €");
     }
     
     // Encomendar produto
     $(document).on("click", "#addToCart", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-        //alert(idProduct);
+        //alert(tempidProduct);
         //alert($("input[name=40]").val());
         
         $.ajax({
             type: "POST",
-            url: "JS",
+            url: "movement",
             data:{"route":"addToCart",
-                  "idProduct":idProduct,
+                  "idProduct":tempidProduct,
                   "35":$("input[name=35]").val(),
                   "36":$("input[name=36]").val(),
                   "37":$("input[name=37]").val(),
@@ -118,10 +139,10 @@
                   "48":$("input[name=48]").val(),
                 },
             success: function(result){
-                alert("OK: " + result.route + " " + result.idProduct);
+                alert(result.ok + " Add to Cart.");
             },
-            error:function(error){
-                console.log("error",error);
+            error:function(result){
+                alert("error: "+ result.error);
             },
          });
     });
@@ -144,7 +165,7 @@
 
     <!-- PRODUCTS  -->
     
-    <section id="products mb-5">        
+    <section id="products">        
         <div class="container">
             <div class="card-deck mb-3 text-center">
                 <c:forEach var="item" items="${lstProduct}">
@@ -152,6 +173,7 @@
                         <div class="card border-light text-center bg-white text-dark mb-3">
                             <div class="card-header">
                                 <h4 class="card-title pricing-card-title">${item.getName()} <small class="text-muted">/ ${item.getRef()}</small></h4>
+
                             </div>
                             <img style="height: 250px; object-fit: cover; object-position: bottom;" src="images/produtos/${item.getFoto()}" class="img-thumbnail card-img-top" alt="">
                             <div class="card-body">
@@ -165,7 +187,7 @@
                                         <small class="text-muted">Size: ${item.getInitSize()} - ${item.getFinSize()}</small>
                                     </div>
                                 <c:if test="${ContaAtiva.permission >= 1}">
-                                    <small class="text-muted">Price: ${item.getPrice()}0 €</small>
+                                    <small class="text-muted">Price: ${String.format("%.2f", item.getPrice())} €</small>
                                 </c:if>
                                 </div>
                             </div>
@@ -220,7 +242,8 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <p>TOTAL: <b>Qtd:</b> 0 pares | <b>Qtd:</b> 0 €</p>
+                            <h3>TOTAL:</h3> 
+                            <p id="total"><b>Qnt: </b> 0 pairs | <b>Amont: </b> 0 €</p>
                             <div class="row mb-3 m-auto">
                                 <div class="col-md-6">
                                     
@@ -244,14 +267,14 @@
                         </table>
                     </div>
                     <div class="row mb-3 m-auto">
-                        <div class="col-md-3"> </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-dark btn-block btn-outline-dark btn-block" href="#" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                        <div class="col-md-2"> </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-lg btn-dark btn-block btn-outline-dark btn-block" href="#" data-dismiss="modal" aria-hidden="true">Cancel</a>
                         </div>
-                        <div class="col-md-3">
-                            <a id="addToCart" onclick="" class="btn btn-dark btn-block btn-outline-dark btn-block" href="#" data-dismiss="modal" aria-hidden="true">Add to Cart</a>
+                        <div class="col-md-4">
+                            <a id="addToCart" onclick="" class="btn btn-lg btn-dark btn-block btn-outline-dark btn-block" href="#" data-dismiss="modal" aria-hidden="true">Add to Cart</a>
                         </div>
-                        <div class="col-md-3"> </div>
+                        <div class="col-md-2"> </div>
                     </div>
                     
                 </div>
@@ -265,4 +288,60 @@
         </div>
     </div>
 </div>
-  
+    
+    <!-- CONTACT MODAL -->
+
+    <div class="modal fade" id="contactModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="card bg-light">
+            <div class="card-header text-center">
+                <h4>Contact Us</h4>
+            </div>
+            <div class="card-body">
+                <form action="RegController" method="post" name="form" onsubmit="return formValidation()">
+                <div class="form-group">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>                  
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="company"
+                      placeholder="Company"
+                      class="form-control form-control-lg text-white bg-dark"
+                    />
+                  </div>
+                  <div class="form-group pb-3">
+                    <textarea                      
+                      name="message"
+                      placeholder="How can we help?"
+                      class="form-control form-control-lg text-white bg-dark" rows="5"
+                      ></textarea>
+                  </div>
+                  <input
+                    type="submit"
+                    value="Send Message"
+                    class="btn btn-lg btn-outline-dark btn-block" data-dismiss="modal"
+                  />
+                </form>
+              </div>
+              
+            </div>
+        </div>
+      </div>
+    </div>
+
+    
