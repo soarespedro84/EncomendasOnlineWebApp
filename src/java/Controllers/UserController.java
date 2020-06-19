@@ -42,11 +42,11 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         HttpSession session = request.getSession(false);
         
         try{
-            String theCommand = request.getParameter("command");
-            if (theCommand == null) {
-		theCommand = "LIST";
+            String route = request.getParameter("command");
+            if (route == null) {
+		route = "LIST";
             }			
-            switch (theCommand) {			 
+            switch (route) {			 
                                                                        
                 case "LIST":
                     listUser(request, response);
@@ -202,7 +202,7 @@ private void userDetails(HttpServletRequest request, HttpServletResponse respons
         
        
         _userDao.registerUser(userReg);
-        listUser(request, response);
+        request.getRequestDispatcher("adminDash.jsp").forward(request, response);
        
     }
     
@@ -269,11 +269,9 @@ private String deleteUser(HttpServletRequest request, HttpServletResponse respon
         System.out.println("Error = "+estado);
         request.setAttribute("errMsg", estado);
         listUser(request, response);
-
-        //request.getRequestDispatcher("detailsUser.jsp#deleteError").forward(request, response);        
     }else{
         System.out.println("Success");
-        listUser(request, response);
+        request.getRequestDispatcher("/adminDash.jsp").forward(request, response);
     }
     
     return estado;
