@@ -64,7 +64,7 @@
                     <input
                         type="submit"
                         name="deleteYes"
-                        value="Save Order"
+                        value="Place Order"
                         class="btn btn-lg btn-outline-success btn-block"
                       /> 
                 </div>
@@ -81,7 +81,7 @@
         <div class="card">
 
           <table class="table table-striped text-center">
-            <thead class="thead-dark">
+            <thead class="bg-info text-white">
                 <tr>
                     <th style="">Foto</th>
                     <th>Model</th>

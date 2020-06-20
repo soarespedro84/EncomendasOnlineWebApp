@@ -179,7 +179,7 @@
                             <div class="card-body">
                                 <p class="card-text align-middel left">${item.getColor()} ${item.getDescription()}</p>                                
                             <c:if test="${ContaAtiva.permission >= 1}">
-                                <a class="btn btn-lg btn-block btn-outline-secondary" onclick="getProduct('${item.getIdProduct().toString()}')" href="#" data-toggle="modal" data-target="#productModal">Order</a>
+                                <a class="btn btn-lg btn-block btn-outline-info" onclick="getProduct('${item.getIdProduct().toString()}')" href="#" data-toggle="modal" data-target="#productModal">Order</a>
                            </c:if>
                                 <br>
                                 <div class="d-flex justify-content-between align-items-center">

@@ -207,7 +207,7 @@
                   <input
                     type="submit"
                     value="Send Message"
-                    class="btn btn-lg btn-outline-dark btn-block" data-dismiss="modal"
+                    class="btn btn-lg btn-info btn-block" data-dismiss="modal"
                   />
                 </form>
               </div>
@@ -250,7 +250,7 @@
                   <input
                     type="submit"
                     value="Login"
-                    class="btn btn-lg btn-outline-dark btn-block" 
+                    class="btn btn-lg btn-info btn-block" 
                   />
                 </form>
               </div>

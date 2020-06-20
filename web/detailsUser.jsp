@@ -18,16 +18,16 @@
         
           <div class="row my-3">
            <div class="col-md-3">
-                       <a href="adminDash.jsp" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-cog"></i> Admin Panel</a>
+                       <a href="adminDash.jsp" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-cog"></i> Admin Panel</a>
                 </div>     
            <div class="col-md-3">
-                       <a href="user?route=LIST" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-users"></i> User List</a>
+                       <a href="user?route=LIST" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-users"></i> User List</a>
                 </div>
                    <div class="col-md-3">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-user-edit"></i> Edit User</a>
+                       <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-user-edit"></i> Edit User</a>
                 </div>
                 <div class="col-md-3">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete User</a>
+                       <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete User</a>
                 </div>
                </div>
           <div class="row">
@@ -116,10 +116,10 @@
                       
                       
     <!-- EDIT USER MODAL -->
-     <div class="modal fade" id="editUserModal">
+     <div class="modal fade " id="editUserModal">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <div class="card">
+          <div class="card ">
               <div class="card-header text-center"> 
                   <h3>Edit ${user.name}</h3>
               </div>
@@ -183,7 +183,7 @@
                       type="text"
                       name="dtReg"
                       value="${user.dtReg}"
-                      class="form-control form-control-lg text-white bg-dark" 
+                      class="form-control form-control-lg text-white bg-dark" disabled
                     />
                   </div>
                   <div class="form-group">                    
@@ -206,7 +206,7 @@
                       <input
                     type="submit"
                     value="Update"
-                    class="btn btn-lg btn-outline-dark btn-block"
+                    class="btn btn-lg btn-info btn-block"
                   />
                   
                </form>
@@ -223,7 +223,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="card">
-              <div class="card-header text-center"> 
+              <div class="card-header bg-danger text-center text-white"> 
                   <h3>Delete ${user.name}?</h3>
               </div>
                 <div class="card-body">                 

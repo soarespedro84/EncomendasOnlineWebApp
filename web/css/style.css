@@ -1,6 +1,11 @@
 .imgNav {
   height: 40px;
 }
+#adminboard .card-body:hover{
+    transform: scale(1.05);
+    transition-duration: 0.5s;
+
+}
 
 a:link {
   text-decoration: none;

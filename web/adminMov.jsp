@@ -55,8 +55,8 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">              
-              <table class="table table-striped text-center ">
-                <thead class="thead-dark">
+              <table class="table table-striped text-center">
+                <thead class=" bg-info">
                   <tr>
                     <th>Date</th>
                     <th>Type</th>
@@ -77,7 +77,7 @@
                     <td class="align-middle">Enc_32</td>
 
                     <td class="align-middle">
-                      <a href="movDetails.jsp" class="btn btn-secondary"
+                      <a href="movDetails.jsp" class="btn btn-info"
                         ><i class="fas fa-angle-double-right"></i> Details</a
                       >
                     </td>

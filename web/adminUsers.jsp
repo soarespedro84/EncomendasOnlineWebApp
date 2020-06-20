@@ -32,7 +32,7 @@
             <div class="col-md-3">
                   <a
               href="adminDash.jsp"
-              class="btn btn-outline-light btn-lg btn-block"              
+              class="btn btn-info btn-lg btn-block"              
               ><i class="fas fa-cog"></i> Admin Panel</a
                   ></div>
             <div class="col-md-9">
@@ -56,7 +56,7 @@
             <div class="card">
               
               <table class="table table-striped text-center">
-                <thead class="thead-dark">
+                <thead class="bg-info text-white">
                   <tr>
                     <th>Name</th>
                     <th>Company</th>
@@ -76,7 +76,7 @@
                         <td class="align-middle">${u.email}</td>
                         <td class="align-middle">
                           
-                            <a href="${tempLink}" class="btn btn-secondary">
+                            <a href="${tempLink}" class="btn btn-info">
                                
 
                                 <i class="fas fa-angle-double-right"></i> Details

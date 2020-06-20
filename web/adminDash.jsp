@@ -27,7 +27,7 @@
               
    
     <!-- BOARD -->
-    <section id="movement">
+    <section id="adminboard">
       <div class="container">
         <div class="row">
           <div class="col-md-3">

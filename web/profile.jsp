@@ -14,7 +14,7 @@
 
     <!-- HEADER  -->
 
-    <header id="main-header" class="pt-5 bg-dark text-light">
+    <header id="main-header" class="pt-3 mt-5 mb-3 bg-dark text-light">
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center my-3">
@@ -100,10 +100,10 @@
        <div class="row my-3">
 
                    <div class="col-md-6">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-user-edit"></i> Edit Info</a>
+                       <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-user-edit"></i> Edit Info</a>
                 </div>
                 <div class="col-md-6">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#changePassModal" ><i class="fas fa-user-shield"></i> Change Password</a>
+                       <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#changePassModal" ><i class="fas fa-user-shield"></i> Change Password</a>
                 </div>
                </div>
      </div>
@@ -207,7 +207,7 @@
                       <input
                     type="submit"
                     value="Update"
-                    class="btn btn-lg btn-outline-dark btn-block"
+                    class="btn btn-lg btn-info btn-block"
                   />
                   
                </form>
@@ -257,7 +257,7 @@
                       <input
                     type="submit"
                     value="Change Password"
-                    class="btn btn-lg btn-outline-dark btn-block"
+                    class="btn btn-lg btn-success btn-block"
                   />
                   
                </form>

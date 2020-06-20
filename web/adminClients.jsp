@@ -34,7 +34,7 @@
             <div class="col-md-3">
                   <a
               href="adminDash.jsp"
-              class="btn btn-outline-light btn-lg btn-block"              
+              class="btn btn-info btn-lg btn-block"              
               ><i class="fas fa-cog"></i> Admin Panel</a
                   ></div>
             <div class="col-md-6">
@@ -49,7 +49,7 @@
             <div class="col-md-3">
                   <a
               href="#"
-              class="btn btn-outline-light btn-lg btn-block"
+              class="btn btn-info btn-lg btn-block"
               data-toggle="modal"
               data-target="#RegUserModal"
               ><i class="fas fa-plus"></i> Add Client</a
@@ -66,7 +66,7 @@
             <div class="card">
               
               <table class="table table-striped text-center">
-                <thead class="thead-dark">
+                <thead class="bg-info text-white">
                   <tr>
                     <th>Company</th>
                     <th>NIF</th>
@@ -87,7 +87,7 @@
                         <td class="align-middle">${c.address}</td>
                         <td class="align-middle">${c.phone}</td>                
                         <td>
-                            <a href="${tempLink}" class="btn btn-secondary">
+                            <a href="${tempLink}" class="btn btn-info">
                                 <i class="fas fa-angle-double-right"></i> Details
                             </a>
                         </td>

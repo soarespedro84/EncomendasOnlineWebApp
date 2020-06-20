@@ -13,28 +13,28 @@
 <c:if test="${sessionScope.ContaAtiva == null}"><c:redirect url="index"/></c:if>
 
     
-    <header id="main-header" class="pt-3 my-5 bg-dark text-light">
+    <header id="main-header" class="pt-3 mt-5 mb-3 bg-dark text-light">
       <div class="container">
-           <div class="row my-3">
+           <div class="row my-4">
                      <div class="col-md-2">
-                       <a href="adminDash.jsp" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-cog m-0"></i> Admin Panel</a>
+                       <a href="adminDash.jsp" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-cog m-0"></i> Admin Panel</a>
                 </div>    
                     <div class="col-md-2">
-                       <a href="company?route=LIST" class="btn btn-lg btn-outline-light btn-block d-block"><i class="fas fa-users"></i> Client List</a>
+                       <a href="company?route=LIST" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-users"></i> Client List</a>
                 </div>     
                     <div class="col-md-2">
            
-      <button class="btn btn-lg btn-outline-light btn-block d-block " data-toggle="modal"  data-target="#RegUserModal"><i class="fas fa-user-plus"></i> Add Users</button>
+      <button class="btn btn-lg btn-info btn-block d-block " data-toggle="modal"  data-target="#RegUserModal"><i class="fas fa-user-plus"></i> Add Users</button>
        </div>
                 <div class="col-md-2">
-                    <button class="btn btn-lg btn-outline-light btn-block d-block " data-toggle="modal" data-target="#ShowUsersModal"><i class="fas fa-users"></i> Show Users</button>
+                    <button class="btn btn-lg btn-info btn-block d-block " data-toggle="modal" data-target="#ShowUsersModal"><i class="fas fa-users"></i> Show Users</button>
       </div>
        <div class="col-md-2">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#editUserModal" ><i class="fas fa-user-edit"></i> Edit</a>
+                       <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#editUserModal" ><i class="fas fa-user-edit"></i> Edit</a>
                 </div>
                      
                 <div class="col-md-2">
-                       <a href="#" class="btn btn-lg btn-outline-light btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete</a>
+                       <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete</a>
                 </div>
       </div>
         <div class="row">
@@ -177,7 +177,7 @@
                     <button
                     type="submit"
                     value="Add User" 
-                    class="btn btn-lg btn-outline-dark btn-block"
+                    class="btn btn-lg btn-info btn-block"
                     >Add User</button>
                   </div>
                </form>
@@ -221,7 +221,7 @@
                         <td class="align-middle">${u.name}</td>
                         <td class="align-middle">${u.email}</td>
                         <td class="align-middle">
-                            <a href="${tempLink}" class="btn btn-secondary">
+                            <a href="${tempLink}" class="btn btn-info">
                                 <i class="fas fa-angle-double-right"></i> Details
                             </a>
                         </td>
@@ -266,8 +266,8 @@
                     <input
                       type="text"
                       name="nif"
-                      value="${company.nif}"
-                      class="form-control form-control-lg text-white bg-dark" 
+                      placeholder="${company.nif}"
+                      class="form-control form-control-lg text-white bg-dark" disabled
                     />
                   </div>
                   <div class="form-group">
@@ -291,7 +291,7 @@
                     <input
                       type="text"
                       name="dtReg"
-                      value="${company.dtReg}"
+                      placeholder="${company.dtReg}"
                       class="form-control form-control-lg text-white bg-dark" disabled
                     />
                   </div>
@@ -315,7 +315,7 @@
                       <input
                     type="submit"
                     value="Update"
-                    class="btn btn-lg btn-outline-dark btn-block"
+                    class="btn btn-lg btn-info btn-block"
                   />
                   
                </form>
@@ -332,7 +332,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="card">
-              <div class="card-header text-center"> 
+              <div class="card-header text-center bg-danger text-white"> 
                   <h3>Delete ${company.companyName}?</h3>
               </div>
                 <div class="card-body">                 

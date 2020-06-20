@@ -8,6 +8,7 @@ import Models.ProductDao;
 import Models.UserBean;
 import Models.UserDao;
 import Models.dbConnection;
+import java.awt.event.ContainerAdapter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -224,8 +225,9 @@ private void updateUser(HttpServletRequest request, HttpServletResponse response
         user.setPermission(permission);
         user.setState(state);
         ud.updateUser(user);
-               
-        if (permission < 5) {
+        
+        UserBean userInSession = (UserBean)request.getSession().getAttribute("ContaAtiva");
+            if (userInSession.getPermission() < 5) {
                     request.setAttribute("ContaAtiva", user);
 
                 request.getRequestDispatcher("/profile.jsp").forward(request, response);

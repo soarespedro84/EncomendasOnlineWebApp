@@ -33,7 +33,7 @@
           <div class="col-md-3">
                   <a
               href="#"
-              class="btn btn-outline-light btn-lg btn-block"
+              class="btn btn-info btn-lg btn-block"
               data-toggle="modal"
               data-target="#addProductModal"
               ><i class="fas fa-plus"></i> Add Product</a
@@ -59,7 +59,7 @@
           <div class="col-md-12">
               <div id="accordion">
                   <div class="card text-dark">
-                   <div class="card-header bg-secondary text-white">
+                   <div class="card-header bg-info text-white">
                         <div class="row text-center">
                         <div class="col-md-2">
                             <h5>Ref</h5>
