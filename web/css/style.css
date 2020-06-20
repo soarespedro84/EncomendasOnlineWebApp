@@ -1,10 +1,20 @@
 .imgNav {
   height: 40px;
 }
+
+.vertical-center{
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+  margin-top: 11%;
+  
+  
+  
+}
+
 #adminboard .card-body:hover{
     transform: scale(1.05);
     transition-duration: 0.5s;
-
 }
 
 a:link {
@@ -12,7 +22,7 @@ a:link {
 }
 /*--index--*/
 .carousel-item {
-  height: 90vh;
+  height: 100vh;
 }
 .dark-overlay{
     position: absolute;
@@ -20,7 +30,7 @@ a:link {
     left: 0px;
     height: 100%;
     width: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
 }
 .carousel-image-1 {
   background: url("../images/banner/3A01.730.JPG");
@@ -64,13 +74,13 @@ a:link {
 
 .carousel-control-next-icon:after
 {
-  content: '>';
+  content: '';
   font-size: 50px;
   color: black;
 }
 
 .carousel-control-prev-icon:after {
-  content: '<';
+  content: '';
   font-size: 50px;
   color: black;
 }

@@ -150,7 +150,7 @@
 
     <!-- HEADER  -->
 
-    <header id="main-header" class="py-2 bg-dark text-light">
+    <header id="main-header" class="py-3 mt-5 bg-dark text-light">
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center my-3">
