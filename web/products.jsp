@@ -204,7 +204,7 @@
    
 <!--MODALS-->
 <!-- Product Modal -->          
-<div class="modal fade" id="productModal" style="with">
+<div class="modal fade" id="productModal" >
     <div class="modal-dialog modal-lg">
       <div id='buyProductResult' class="modal-content">
             <div class="modal-header">
@@ -243,7 +243,7 @@
                                 </tbody>
                             </table>
                             <h3>TOTAL:</h3> 
-                            <p id="total"><b>Qnt: </b> 0 pairs | <b>Amont: </b> 0 €</p>
+                            <p id="total"><b>Qnt: </b> 0 pairs | <b>Amount: </b> 0 €</p>
                             <div class="row mb-3 m-auto">
                                 <div class="col-md-6">
                                     
