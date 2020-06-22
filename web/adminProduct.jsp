@@ -40,7 +40,7 @@
                   ></div>
             <div class="col-md-9">
                 <form action="products" method="get">
-                  <input type="hidden" name="route" value="SEARCH"/>
+                  <input type="hidden" name="route" value="search"/>
                 <div class="input-group">
                     <input type="text" name="productSearch" class="form-control form-control-lg" placeholder="Search" />
                 <button type="submit" class="btn btn-lg btn-outline-light"><i class="fas fa-search"></i></button>

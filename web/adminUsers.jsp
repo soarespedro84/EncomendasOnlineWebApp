@@ -37,7 +37,7 @@
                   ></div>
             <div class="col-md-9">
                 <form action="user" method="get">
-                        <input type="hidden" name="command" value="SEARCH"/>
+                        <input type="hidden" name="command" value="search"/>
                     <div class="input-group">
                         <input type="text" name="userSearch" class="form-control form-control-lg" placeholder="Search" />
                         <button type="submit" class="btn btn-lg btn-outline-light"><i class="fas fa-search"></i></button>

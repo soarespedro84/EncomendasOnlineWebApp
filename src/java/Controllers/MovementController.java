@@ -18,10 +18,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 
 // Ajax+JSON
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +34,13 @@ import java.util.*;
 import java.util.Map;
 import java.lang.Integer;
 import javax.servlet.http.HttpSession;
+import org.json.simple.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import org.apache.tomcat.jni.SSLContext;
 
 public class MovementController extends HttpServlet {
 
@@ -43,7 +55,10 @@ public class MovementController extends HttpServlet {
             switch (route) {			 
                 case "cart":
                     getCart(request, response);
-                    break;                                                
+                    break;
+                case "getItemsCart":
+                    getItemsCart(request, response);
+                    break; 
                 case "addToCart":
                     addToCart(request, response);
                     break;
@@ -56,11 +71,7 @@ public class MovementController extends HttpServlet {
         }catch (Exception ex) {
             throw new ServletException(ex);
         }
-    }
-    
-    
-    
-    
+    }    
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -106,7 +117,7 @@ public class MovementController extends HttpServlet {
             //Criar ItemBean
             ItemCartBean item = new ItemCartBean(user, product);
             
-            //Preencher tamanhos do item
+            //Preencher tamanhos do jsonObj
             for (int i = item.getProduct().getInitSize(); i <= item.getProduct().getFinSize(); i++) {               
                 try {
                     int qtd = Integer.parseInt(request.getParameter(""+i));
@@ -115,7 +126,7 @@ public class MovementController extends HttpServlet {
                 } catch (Exception e) { }                
             }
             
-            //Guardar item em Cart
+            //Guardar jsonObj em Cart
             ItemDao id = new ItemDao();
             String result = id.addItemToCart(item);
             
@@ -142,7 +153,7 @@ public class MovementController extends HttpServlet {
         
     }
     
-    // Adicionar ao carrinho de compra via JSON
+    // Página Cart
     private void getCart(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
     
@@ -155,11 +166,51 @@ public class MovementController extends HttpServlet {
         
     }
     
-    // Update item em cart
+    // GET ITEMS BY JSON
+    private void getItemsCart(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
+        UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
+        ItemDao itd = new ItemDao();
+        ArrayList<ItemCartBean> lstItems = itd.listCart(user);
+        
+        // Preparar JSON
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        //response.setHeader("Cache-Control", "no-cache");
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                
+        //Map<String, String> outLst = new HashMap<String, String>();
+        JsonArray outLst = new JsonArray();
+        
+        for (ItemCartBean item : lstItems) {
+            JsonObject jsonObj = new JsonObject();
+            
+            jsonObj.addProperty("foto", item.getProduct().getFoto());
+            jsonObj.addProperty("name", item.getProduct().getName());
+            jsonObj.addProperty("ref", item.getProduct().getRef());
+            jsonObj.addProperty("totalAmount", item.getAmountTotal());
+            jsonObj.addProperty("totalQtd", item.getQtdTotal());
+            
+            outLst.add(jsonObj);
+        }
+          
+        //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = new Gson().toJson(outLst);
+        response.getWriter().write(json);
+        
+       
+        //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        //String json = "Teste";
+        //response.getWriter().write(json); 
+    }
+    
+    // Update jsonObj em cart
     private void updateItemCart(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
         
-        //Eliminar item antifo
+        //Eliminar jsonObj antifo
         String idCart = request.getParameter("idCart");        
         ItemDao id = new ItemDao();        
         String result = id.deliteItemFromCart(idCart);
@@ -180,7 +231,7 @@ public class MovementController extends HttpServlet {
             //Criar ItemBean
             ItemCartBean item = new ItemCartBean(uuidCart, user, product);
             
-            //Preencher tamanhos do item
+            //Preencher tamanhos do jsonObj
             for (int i = item.getProduct().getInitSize(); i <= item.getProduct().getFinSize(); i++) {               
                 try {
                     int qtd = Integer.parseInt(request.getParameter(""+i));
@@ -189,7 +240,7 @@ public class MovementController extends HttpServlet {
                 } catch (Exception e) { }                
             }
             
-            //Guardar item em Cart
+            //Guardar jsonObj em Cart
             result = id.addItemToCart(item);
             
             if(result == null) result = "OK!";

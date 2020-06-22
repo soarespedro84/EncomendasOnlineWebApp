@@ -28,125 +28,6 @@
     }
 </style>
 
-<script type="text/javascript">
-    
-    //Variavel global
-    var tempidProduct;
-    var priceProduct;
-    var qtdProduct;
-    
-    // JSON to Model decoder
-    function Model(obj) {
-        for(var prop in obj){
-            this[prop] = obj[prop];
-        }
-    }
-    
-    //Buscar produto
-    function getProduct(idProduct){
-        
-        //AJAX configure
-        var processData = 'JSON';
-        var route = "GetProduct";
-        $.ajax({  
-            type: "GET",  
-            url: "products",  
-            data: "route="+route+"&idProduct="+idProduct+"&processData="+processData,  
-            success: function(result){
-                //alert(result.name);
-                
-                var m = new Model(result);
-                //alert("Modelo: "+m.name);
-                
-                showProduct(m);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert("Error status code: "+xhr.status);
-                alert("Error details: "+ thrownError);
-            }
-        });
-    }
-    
-    // Preencher formulário
-    function showProduct(model){
-        // window.alert("Classe: "+model.ref);
-        $("#ref").text(model.ref);
-        $("#name").text(model.name);
-        $("#color").text(model.color);
-        $("#desc").text(model.desc);
-        $("#price").text(Number(model.price).toFixed(2)+" €");
-        $("#foto").attr("src","images/produtos/"+model.foto);
-                
-        // Definir variavel global
-        tempidProduct = model.idProduct;
-        priceProduct = Number(model.price);
-        qtdProduct = 0;
-        
-        $("#total").html("<b>Qtd:</b> "+qtdProduct+" pairs | <b>Qtd:</b> "+(qtdProduct * priceProduct).toFixed(2)+" €");
-        
-        //console.log(model.price);
-        //console.log();
-        
-        // Limapr tabela dos tamanhos
-        $("#tHead").children('th').remove();        
-        $("#tBody").children('td').remove();
-        
-        // Preencher tabela dos tamanhos
-        for(i = Number(model.init); i <= Number(model.fin); i++){
-            $("#tHead").append('<th>'+i+'</th>');
-            $("#tBody").append("<td><input onchange='upDateTotals()' class='orderSize' type='number' step='1' min='0' size=3 name='"+i+"' style='width:50px; text-align: center;' /></td>");
-        }
-    }
-    
-    // Atualizar totais
-    function upDateTotals(){
-        //alert("ok")
-        var list = $('.orderSize');     
-        //console.log(list);
-        //console.log(list[0].value);
-        
-        qtdProduct = 0;
-        for (i=0; i<list.length; i++) {
-            qtdProduct += Number(list[i].value);
-        }
-        
-        $("#total").html("<b>Qnt: </b> "+qtdProduct+" pairs | <b>Amont: </b> "+(qtdProduct * priceProduct).toFixed(2)+" €");
-    }
-    
-    // Encomendar produto
-    $(document).on("click", "#addToCart", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-        //alert(tempidProduct);
-        //alert($("input[name=40]").val());
-        
-        $.ajax({
-            type: "POST",
-            url: "movement",
-            data:{"route":"addToCart",
-                  "idProduct":tempidProduct,
-                  "35":$("input[name=35]").val(),
-                  "36":$("input[name=36]").val(),
-                  "37":$("input[name=37]").val(),
-                  "38":$("input[name=38]").val(),
-                  "39":$("input[name=39]").val(),
-                  "40":$("input[name=40]").val(),
-                  "41":$("input[name=41]").val(),
-                  "42":$("input[name=42]").val(),
-                  "43":$("input[name=43]").val(),
-                  "44":$("input[name=44]").val(),
-                  "45":$("input[name=45]").val(),
-                  "46":$("input[name=46]").val(),
-                  "47":$("input[name=47]").val(),
-                  "48":$("input[name=48]").val(),
-                },
-            success: function(result){
-                alert(result.ok + " Add to Cart.");
-            },
-            error:function(result){
-                alert("error: "+ result.error);
-            },
-         });
-    });
-</script>
 
     <!-- HEADER  -->
 
@@ -162,7 +43,25 @@
       </div>
     </header>
     
+<!-- ACTIONS -->
 
+    <section id="actions" class="py-4 mb-4">
+      <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="products" method="get">
+                  <input type="hidden" name="route" value="search"/>
+                <div class="input-group">
+                    <input type="text" name="productSearch" class="form-control form-control-lg" placeholder="Search" />
+                <button type="submit" class="btn btn-lg btn-outline-light"><i class="fas fa-search"></i></button>
+                </div>
+                </form>            
+          </div>
+          
+        </div>
+      </div>
+    </section>
+    
     <!-- PRODUCTS  -->
     
     <section id="products">        

@@ -30,7 +30,11 @@
     <title>AMF Web Platform</title>
   </head>
 
-  <body class="bg-dark">
+  <body class="bg-dark"
+    <c:if test="${not empty ContaAtiva}">
+        onload="getItemsCart()"
+    </c:if>
+  >
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
       <div class="container">
         <a href="index.jsp" class="navbar-brand"
@@ -46,7 +50,7 @@
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="navbar-nav">
                 <li class="nav-item px-2">
-                    <a href="products?route=LIST" class="nav-link" ><i class="fa fa-box-open"></i> Products</a>
+                    <a href="products?route=list" class="nav-link" ><i class="fa fa-box-open"></i> Products</a>
                 </li>
                 <c:if test="${ContaAtiva.permission==5}">
                 <li class="nav-item px-2">
@@ -54,7 +58,7 @@
               </li></c:if>
               <c:if test="${ContaAtiva.permission==2}">
                 <li class="nav-item px-2">
-                <a href="company?route=LIST" class="nav-link"><i class="fa fa-handshake "></i> Clients</a>
+                <a href="company?route=list" class="nav-link"><i class="fa fa-handshake "></i> Clients</a>
               </li>
               <li class="nav-item px-2" >
                 <a href="orders.jsp" class="nav-link" ><i class="fas fa-receipt "></i> Orders</a>
@@ -94,26 +98,48 @@
             </li>
             </c:if>
             <li class="nav-item px-2 dropdown" >
-              <a href="movement?route=cart" class="nav-link" >
+              <a id="layoutCart" href="#" class="nav-link" data-toggle="dropdown" data-target="#dropCart">
                 <i class="fas fa-shopping-cart"></i> Cart
+                <span id="nrCartItems" class="badge badge-pill badge-info"></span>
               </a>
               <div class="dropdown-menu" id="dropCart">
                 <div class="row total-header-section">
-                        <div class="col-lg-6 col-sm-6 col-6">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-info">3</span>
-                        </div>
-                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                                <p>Total: <span class="text-info">$2,978.24</span></p>
-                        </div>
+                    <div class="col-lg-6 col-sm-6 col-6">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span id="nrCartItemsIn" class="badge badge-pill badge-info">3</span>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                            <p>Total: <span id ="totalAmount" class="text-info">0.00 €</span></p>
+                    </div>
                 </div>
-                <div class="row cart-detail">
-                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                            <img src="images/produtos/8A0021.jpg">
-                        </div>
-                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                <p>Sony DSC-RX100M..</p>
-                                <span class="price text-info"> $250.22</span> <span class="count"> Quantity:01</span>
-                        </div>
+                <div class="row cart-detail" style="max-height: 425px; overflow: auto;">
+                    <table class="table text-center" >  
+                        <tbody id="lstItemsCart">
+                            <tr>
+                                <td class="align-middle">
+                                    <img style="max-width: 80px; height: 70px; object-fit: cover; object-position: bottom" 
+                                         src="images/produtos/8A0021.jpg"
+                                         class="img-thumbnail card-img-top" alt=""
+                                    >
+                                </td>
+                                <td>
+                                    <p>Sony DSC-RX100M..</p>
+                                    <span class="price text-info"> $250.22</span> <span class="count"> Quantity:01</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">
+                                    <img style="max-width: 80px; height: 70px; object-fit: cover; object-position: bottom" 
+                                         src="images/produtos/8A0021.jpg"
+                                         class="img-thumbnail card-img-top" alt=""
+                                    >
+                                </td>
+                                <td>
+                                    <p>Sony DSC-RX100M..</p>
+                                    <span class="price text-info"> $250.22</span> <span class="count"> Quantity:01</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
                 </div>
                 <div class="row">
                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
@@ -289,12 +315,13 @@
       integrity="sha256-Y1rRlwTzT5K5hhCBfAFWABD4cU13QGuRN6P5apfWzVs="
       crossorigin="anonymous"
     ></script>
+    
+    <script src="js/script.js"> </script>
 
     <script>
-      $("#year").text(new Date().getFullYear());
-
-
+        
     </script>
+    
   </body>
 </html>
 

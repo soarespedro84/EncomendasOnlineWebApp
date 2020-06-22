@@ -15,14 +15,7 @@
     <section id="showcase" class="">
         
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
-       <!--<ol class="carousel-indicators mb-5">
-          <li class="active" data-target="#myCarousel" data-slide-to="0"></li>
-          <li data-target="#myCarousel" data-slide-to="1"></li>
-          <li data-target="#myCarousel" data-slide-to="2"></li>
-          <li data-target="#myCarousel" data-slide-to="3"></li>
-          <li data-target="#myCarousel" data-slide-to="4"></li>
-          <li data-target="#myCarousel" data-slide-to="5"></li>
-        </ol>-->
+    
         <div class="carousel-inner bg-white">
           <div class="carousel-item carousel-image-1 active"></div>
           <div class="carousel-item carousel-image-2">         
@@ -46,7 +39,7 @@
       <p class="lead display-4 mb-5">Your Safety Shoes Online Platform</p>
     
       
-      <a class="btn btn-outline-light btn-lg mx-2" href="products?route=LIST" role="button">Check Our Products</a>
+      <a class="btn btn-outline-light btn-lg mx-2" href="products?route=list" role="button">Check Our Products</a>
       <c:if test="${empty ContaAtiva}">
               <a href="#" class="btn btn-outline-light btn-lg mx-2" data-dismiss="modal" data-toggle="modal" data-target="#loginModal" >Login Now</a>
               <h6 class="my-3">
@@ -67,6 +60,14 @@
         </a>
       </div>
     </section>
+    
+    <script>
+        $(".carousel").carousel({
+        interval: 3000,
+        pause: 'false' 
+      });
+
+    </script>
 
     
     <c:if test="${LoginOK==true}">

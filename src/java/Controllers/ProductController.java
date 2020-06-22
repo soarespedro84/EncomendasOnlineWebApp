@@ -7,6 +7,7 @@ package Controllers;
 // Modelos
 import Models.ProductBean;
 import Models.ProductDao;
+import Models.UserBean;
 
 // Java Servlet
 import java.io.IOException;
@@ -38,16 +39,13 @@ public class ProductController extends HttpServlet {
             String route = request.getParameter("route");
             		
             switch (route) {			 
-                case "LIST":
+                case "list":
                     listProduct(request, response);
-                    break;
-                case "ADMINLIST":
-                    listAdminProduct(request, response);
-                    break;        
+                    break;              
                 case "GetProduct":
                    getProduct(request, response);
                     break;
-                case "SEARCH":
+                case "search":
                     searchProduct(request, response);
                 default:
                     //listUser(request, response);
@@ -71,24 +69,24 @@ public class ProductController extends HttpServlet {
     
         ProductDao pd = new ProductDao();
         List<ProductBean> lstProduct = pd.listProduct(1);
-        
-       
-        request.setAttribute("lstProduct", lstProduct);
-        request.getRequestDispatcher("/products.jsp").forward(request, response);   
+        UserBean userInSession = (UserBean)request.getSession().getAttribute("ContaAtiva");
+        if (userInSession == null) {
+                    request.setAttribute("lstProduct", lstProduct);
+
+            request.getRequestDispatcher("/products.jsp").forward(request, response);       
+
+        }else if (userInSession.getPermission() == 5) {
+                    request.setAttribute("lstProduct", lstProduct);
+
+                request.getRequestDispatcher("/adminProduct.jsp").forward(request, response);
+            }else{                    
+                    request.setAttribute("lstProduct", lstProduct);
+
+                request.getRequestDispatcher("/products.jsp").forward(request, response);       
+            } 
                 
     }
-    //LIST ADMIN
-    private void listAdminProduct(HttpServletRequest request, HttpServletResponse response)
-		throws Exception {        
     
-        ProductDao pd = new ProductDao();
-        List<ProductBean> lstProduct = pd.listProduct(1);
-        
-       
-        request.setAttribute("lstProduct", lstProduct);
-        request.getRequestDispatcher("/adminProduct.jsp").forward(request, response);   
-                
-    }
     
     private void searchProduct(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
@@ -96,7 +94,15 @@ public class ProductController extends HttpServlet {
         ProductDao pd=new ProductDao();
         List<ProductBean> lstProduct = pd.search(str);
         request.setAttribute("lstProduct", lstProduct);
-        request.getRequestDispatcher("/adminProduct.jsp").forward(request, response);
+        UserBean userInSession = (UserBean)request.getSession().getAttribute("ContaAtiva");
+        if (userInSession == null) {
+            request.getRequestDispatcher("/products.jsp").forward(request, response);       
+
+        }else if (userInSession.getPermission() == 5) {
+                request.getRequestDispatcher("/adminProduct.jsp").forward(request, response);
+            }else{                    
+                request.getRequestDispatcher("/products.jsp").forward(request, response);       
+            }
     }
     
     //GET PRODUCT BY JSON

@@ -58,7 +58,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 case "USER_DETAILS":
                     userDetails(request, response);
                     break;
-                case "SEARCH":
+                case "search":
                     search(request, response);
                     break;
                 case "UPDATE":

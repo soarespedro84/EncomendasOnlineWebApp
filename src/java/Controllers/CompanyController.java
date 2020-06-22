@@ -42,7 +42,7 @@ public class CompanyController extends HttpServlet {
                 case "LIST":
                     listCompanies(request, response);
                     break;               
-                 case "SEARCH":
+                 case "search":
                     searchCompany(request, response);
                     break;                                
                 default:
