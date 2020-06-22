@@ -27,7 +27,7 @@
               
     <!-- ACTIONS -->
 
-    <section id="actions" class="py-4 mb-4">
+    <section id="actions" class="py-2 mb-3">
       <div class="container">
         <div class="row">
           <div class="col-md-3">
@@ -39,15 +39,11 @@
               ><i class="fas fa-plus"></i> Add Product</a
                   ></div>
             <div class="col-md-9">
-                <form action="products" method="get">
-                  <input type="hidden" name="route" value="search"/>
                 <div class="input-group">
-                    <input type="text" name="productSearch" class="form-control form-control-lg" placeholder="Search" />
-                <button type="submit" class="btn btn-lg btn-outline-light"><i class="fas fa-search"></i></button>
+                    <input id="productListSearch" onkeyup="productSearch()" type="text" name="productListSearch" class="form-control form-control-lg" placeholder="Fill in some value to search">
+                    <button id="productListClera" onclick="productSearchClear()" class="btn btn-lg btn-outline-light" hidden="true" ><i class="fas fa-eraser"></i></button>
                 </div>
-                </form>            
           </div>
-          
         </div>
       </div>
     </section>
@@ -55,7 +51,7 @@
     <!-- Products -->
     <section id="productList mb-5 pb-5">
       <div class="container">
-        <div class="row">
+        <div class="row" >
           <div class="col-md-12">
               <div id="accordion">
                   <div class="card text-dark">
@@ -75,13 +71,14 @@
                         </div>
                         </div>
                     </div>
+                      
                       <c:forEach var="item" items="${lstProduct}">
                          <c:url var="tempLink" value="products">
                             <c:param name="route" value="GetProduct" />
                             <c:param name="idProduct" value="${item.idProduct}" />
                          </c:url>
-                          <a href="#${item.getIdProduct()}" id="prodListCollapse" data-parent="#accordion" data-toggle="collapse">
-                          <div class="card-body bg-light text-dark ">
+                          <a href="#${item.getIdProduct()}" id="productListContente" data-parent="#accordion" data-toggle="collapse">
+                          <div class="card-body bg-light text-dark " >
                                 <div class="row text-center">
                                     <div class="col-md-2">
                                         <h5>${item.getRef()}</h5>

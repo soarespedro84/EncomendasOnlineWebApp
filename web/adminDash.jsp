@@ -48,8 +48,7 @@
               <div class="card-header bg-light text-dark">
                 <h3>Products</h3>
               </div>
-                  <a href="products?route=list">
-                      
+                  <a href="products?route=adminlist">
                     <div class="card-body py-5 my-5">
                         <i class="fa fa-box-open fa-9x text-light"></i>               
                     </div>

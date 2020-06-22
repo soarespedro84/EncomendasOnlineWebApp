@@ -5,7 +5,7 @@
 
  $(".carousel").carousel({
         interval: 2000,
-        pause: "false"
+        pause: "hover"
       });
 
 //lightbox init
@@ -138,6 +138,26 @@ $(document).on("click", "#addToCart", function() { // When HTML DOM "click" even
      });
 });
 
+function productSearch(){
+    var div = $('#productListContente > div');
+    //console.log(div);
+    var filtrar = $("#productListSearch").val().toUpperCase();
+    //console.log(filtrar);
+    if(filtrar.length == 0) document.getElementById("productListClera").setAttribute("hidden", true);
+    else document.getElementById("productListClera").removeAttribute("hidden");
+    
+    for (var i = 0; i < div.length; i++) {
+        //console.log(tr[i]);
+        var txtValue = div[i].textContent || div[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filtrar) > -1) div[i].style.display = "";
+        else div[i].style.display = "none";
+    }
+}
+
+function productSearchClear(){
+    $("#productListSearch").val("");
+    productSearch();
+}
  
 
 
@@ -156,7 +176,7 @@ function getItemsCart(){
         url: "movement",  
         data: "route="+route,  
         success: function(result){
-            console.log(result);
+            //console.log(result);
             /*
             var lstItems = [];
             result.forEach(function(item) {
@@ -176,15 +196,23 @@ function getItemsCart(){
 function showItemCart(lstItems){
     
     var totalAmount = 0;
-    if(lstItems.length == 0) $("#nrCartItems").text("");
-    else $("#nrCartItems").text(lstItems.length);
+    if(lstItems.length == 0){
+        $("#nrCartItems").text("");
+        $("#layoutCart").attr("data-toggle", "");
+        $("#layoutCart").attr("data-target", "");
+    }
+    else{
+        $("#nrCartItems").text(lstItems.length);
+        $("#layoutCart").attr("data-toggle", "dropdown");
+        $("#layoutCart").attr("data-target", "#dropCart");
+    }
     $("#nrCartItemsIn").text(lstItems.length);
     
     $("#lstItemsCart").children('tr').remove();
     
     for( var i=0; i<lstItems.length; i++){
         totalAmount += Number(lstItems[i].totalAmount);
-        console.log(lstItems[i]);   
+        //console.log(lstItems[i]);   
         $("#lstItemsCart").append("\
             <tr> \n\
                 <td class='align-middle'> \n\

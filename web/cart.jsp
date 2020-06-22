@@ -10,27 +10,34 @@
 <c:if test="${sessionScope.ContaAtiva == null}"><c:redirect url="index"/></c:if>
 
 <script>
-    function update(ref , price){
-        //Mostrar mutões
-        document.getElementById("s"+ref).removeAttribute("hidden");
-        document.getElementById("c"+ref).removeAttribute("hidden");
-        document.getElementById("d"+ref).setAttribute("hidden", true);
-        
-        //Atualizar totais
-        var list = document.getElementsByClassName(ref);;
-        //console.log(list);
-        var total = 0;
-        for (i=0; i<list.length; i++) {
-            total += Number(list[i].value);
-        }
-        //alert(total);
-        document.getElementById("q"+ref).innerHTML = ""+total+" €";
-        document.getElementById("a"+ref).innerHTML = ""+(total*price).toFixed(2)+" €";
-        console.log(output);
-        //$("'#qtd_"+ref+"'").text(total);
-        //$("'#val_"+ref+"'").text((total*price).toFixed(2)+" €");
-        
+    /*--------------------------CART LIST--------------------------*/
+function updateItemCart(ref , price){
+    //Mostrar mutões
+    document.getElementById("s"+ref).removeAttribute("hidden");
+    document.getElementById("c"+ref).removeAttribute("hidden");
+    document.getElementById("d"+ref).setAttribute("hidden", true);
+
+    //Atualizar totais
+    var list = document.getElementsByClassName(ref);;
+    //console.log(list);
+    var total = 0;
+    for (i=0; i<list.length; i++) {
+        total += Number(list[i].value);
     }
+    //alert(total);
+    document.getElementById("q"+ref).innerHTML = ""+total;
+    document.getElementById("a"+ref).innerHTML = ""+(total*price).toFixed(2)+" €";
+    console.log(output);
+    //$("'#qtd_"+ref+"'").text(total);
+    //$("'#val_"+ref+"'").text((total*price).toFixed(2)+" €");
+
+}
+
+function deliteItemCart(name, id){
+    $("#deliteItemName").text("Delite "+name+" from Cart?");
+    $("#deliteItemId").val(id);
+    //$('input[name=sitebg]').val('000000');
+}
 </script>    
 
 
@@ -61,12 +68,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <input
-                        type="submit"
-                        name="deleteYes"
-                        value="Place Order"
-                        class="btn btn-lg btn-outline-success btn-block"
-                      /> 
+                    <input name="deleteYes" value="Place Order" class="btn btn-lg btn-outline-success btn-block" />
                 </div>
             </div>
         </div>
@@ -101,7 +103,7 @@
                     <th>48</th>
                     <th>Total Qnt</th>
                     <th>Amount</th>
-                    <th width="30px"></th>
+                    <th width="115"></th>
                 </tr>
             </thead>
             <tbody>
@@ -117,7 +119,7 @@
                     <td class="align-middle">${item.getProduct().getName()} <small class="text-muted">/ ${item.getProduct().getRef()}</small></td>
                 <c:forEach var = "i" begin = "35" end = "48">
                     <td class="align-middle">
-                        <input type='number' name="${i}" onchange="update('${item.getProduct().getRef()}', ${item.getProduct().getPrice()})" class="${item.getProduct().getRef()}"
+                        <input type='number' name="${i}" onchange="updateItemCart('${item.getProduct().getRef()}', ${item.getProduct().getPrice()})" class="${item.getProduct().getRef()}"
                             step="1" min="0" size=3 style='width:40px; text-align: center;'
                             value="<c:if test='${item.getQtdBySize(i) != null}'>${item.getQtdBySize(i).getQtd()}</c:if>"
                             <c:if test='${i < item.getProduct().getInitSize() || i > item.getProduct().getFinSize()}'>disabled</c:if>
@@ -130,7 +132,10 @@
                     <td class="align-middle">
                         <button type="submit" hidden="true" id="s${item.getProduct().getRef()}" class="btn btn-success" ><i class="far fa-save"></i></button>
                         <a href="movement?route=cart=${item.getIdItemCart().toString()}" hidden="true" id="c${item.getProduct().getRef()}" class="btn btn-warning" ><i class="far fa-window-close"></i></a>
-                        <a href="movement?route=deleteInCart&idCart=${item.getIdItemCart().toString()}" id="d${item.getProduct().getRef()}" class="btn btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                        <a href="#" id="d${item.getProduct().getRef()}" class="btn btn-danger" data-toggle="modal" data-target="#deleteItemModal"
+                           onclick="deliteItemCart('${item.getProduct().getName()}', '${item.getIdItemCart().toString()}')">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
                     </td>           
                 </tr>
             </form>
@@ -142,3 +147,30 @@
     </div>
   </div>
 </section>
+
+<!-- DELETE USER MODAL -->
+<div class="modal fade" id="deleteItemModal">
+ <div class="modal-dialog modal-md">
+   <div class="modal-content">
+     <div class="card">
+            <div class="card-header bg-danger text-center text-white"> 
+                <h3 id ="deliteItemName">Delete NAME</h3>
+            </div>
+            <div class="card-body">                 
+                <form action="movement" method="GET" >
+                    <input type="hidden" name="route" value="deleteInCart"/>
+                    <input id="deliteItemId" type="hidden" name="idCart" value="ID"/>
+                    <div class="row my-3">
+                        <div class="col-md-6">
+                            <input type="submit" name="deleteYes" value="Confirm" class="btn btn-lg btn-outline-success btn-block" />
+                        </div>
+                        <div class="col-md-6">
+                            <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-lg btn-outline-danger btn-block" />
+                        </div>
+                   </div>
+                </form>
+            </div>             
+        </div>
+     </div>
+   </div>
+</div>

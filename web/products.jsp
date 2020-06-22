@@ -29,76 +29,72 @@
 </style>
 
 
-    <!-- HEADER  -->
+<!-- HEADER  -->
 
-    <header id="main-header" class="py-3 mt-5 bg-dark text-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-center my-3">
-              
-              <h2>Check Our Products</h2>
-              
-          </div>
-        </div>
+<header id="main-header" class=" mt-5 bg-dark text-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center my-2">
+          <h2>Our Products</h2>
       </div>
-    </header>
-    
+    </div>
+  </div>
+</header>
+
 <!-- ACTIONS -->
 
-    <section id="actions" class="py-4 mb-4">
-      <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <form action="products" method="get">
-                  <input type="hidden" name="route" value="search"/>
-                <div class="input-group">
-                    <input type="text" name="productSearch" class="form-control form-control-lg" placeholder="Search" />
-                <button type="submit" class="btn btn-lg btn-outline-light"><i class="fas fa-search"></i></button>
-                </div>
-                </form>            
-          </div>
-          
+<section id="actions" class="">
+  <div class="container">
+    <div class="row mb-4 text-center">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <input id="productListSearch" onkeyup="productSearch()" type="text" name="productListSearch" class="form-control form-control-lg" placeholder="Fill in some value to search">
+                <button id="productListClera" onclick="productSearchClear()" class="btn btn-lg btn-outline-light" hidden="true" ><i class="fas fa-eraser"></i></button>
+            </div>
         </div>
-      </div>
-    </section>
-    
-    <!-- PRODUCTS  -->
-    
-    <section id="products">        
-        <div class="container">
-            <div class="card-deck mb-3 text-center">
-                <c:forEach var="item" items="${lstProduct}">
-                    <div class="col-md-4">
-                        <div class="card border-light text-center bg-white text-dark mb-3">
-                            <div class="card-header">
-                                <h4 class="card-title pricing-card-title">${item.getName()} <small class="text-muted">/ ${item.getRef()}</small></h4>
+        <div class="col-md-3"></div>
+    </div>
+  </div>
+</section>
 
-                            </div>
-                            <img style="height: 250px; object-fit: cover; object-position: bottom;" src="images/produtos/${item.getFoto()}" class="img-thumbnail card-img-top" alt="">
-                            <div class="card-body">
-                                <p class="card-text align-middel left">${item.getColor()} ${item.getDescription()}</p>                                
-                            <c:if test="${ContaAtiva.permission >= 1}">
-                                <a class="btn btn-lg btn-block btn-outline-info" onclick="getProduct('${item.getIdProduct().toString()}')" href="#" data-toggle="modal" data-target="#productModal">Order</a>
-                           </c:if>
-                                <br>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <small class="text-muted">Size: ${item.getInitSize()} - ${item.getFinSize()}</small>
-                                    </div>
-                                <c:if test="${ContaAtiva.permission >= 1}">
-                                    <small class="text-muted">Price: ${String.format("%.2f", item.getPrice())} €</small>
-                                </c:if>
+<!-- PRODUCTS  -->
+
+<section id="products">        
+    <div class="container">
+        <div id='productListContente' class="card-deck mb-3 text-center">
+            <c:forEach var="item" items="${lstProduct}">
+                <div class="col-md-4">
+                    <div class="card border-light text-center bg-white text-dark mb-3">
+                        <div class="card-header">
+                            <h4 class="card-title pricing-card-title">${item.getName()} <small class="text-muted">/ ${item.getRef()}</small></h4>
+
+                        </div>
+                        <img style="height: 250px; object-fit: cover; object-position: bottom;" src="images/produtos/${item.getFoto()}" class="img-thumbnail card-img-top" alt="">
+                        <div class="card-body">
+                            <p class="card-text align-middel left">${item.getColor()} ${item.getDescription()}</p>                                
+                        <c:if test="${ContaAtiva.permission >= 1}">
+                            <a class="btn btn-lg btn-block btn-outline-info" onclick="getProduct('${item.getIdProduct().toString()}')" href="#" data-toggle="modal" data-target="#productModal">Order</a>
+                       </c:if>
+                            <br>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <small class="text-muted">Size: ${item.getInitSize()} - ${item.getFinSize()}</small>
                                 </div>
+                            <c:if test="${ContaAtiva.permission >= 1}">
+                                <small class="text-muted">Price: ${String.format("%.2f", item.getPrice())} €</small>
+                            </c:if>
                             </div>
                         </div>
                     </div>
-                </c:forEach>
+                </div>
+            </c:forEach>
 
-            </div>
         </div>
+    </div>
 
-    </section>        
-              
+</section>        
+
   
    
 <!--MODALS-->
@@ -188,59 +184,59 @@
     </div>
 </div>
     
-    <!-- CONTACT MODAL -->
+<!-- CONTACT MODAL -->
 
-    <div class="modal fade" id="contactModal">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="card bg-light">
-            <div class="card-header text-center">
-                <h4>Contact Us</h4>
-            </div>
-            <div class="card-body">
-                <form action="RegController" method="post" name="form" onsubmit="return formValidation()">
-                <div class="form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Name"
-                      class="form-control form-control-lg text-white bg-dark"
-                    />
-                  </div>                  
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      class="form-control form-control-lg text-white bg-dark"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      name="company"
-                      placeholder="Company"
-                      class="form-control form-control-lg text-white bg-dark"
-                    />
-                  </div>
-                  <div class="form-group pb-3">
-                    <textarea                      
-                      name="message"
-                      placeholder="How can we help?"
-                      class="form-control form-control-lg text-white bg-dark" rows="5"
-                      ></textarea>
-                  </div>
-                  <input
-                    type="submit"
-                    value="Send Message"
-                    class="btn btn-lg btn-outline-dark btn-block" data-dismiss="modal"
-                  />
-                </form>
-              </div>
-              
-            </div>
+<div class="modal fade" id="contactModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="card bg-light">
+        <div class="card-header text-center">
+            <h4>Contact Us</h4>
         </div>
-      </div>
+        <div class="card-body">
+            <form action="RegController" method="post" name="form" onsubmit="return formValidation()">
+            <div class="form-group">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  class="form-control form-control-lg text-white bg-dark"
+                />
+              </div>                  
+              <div class="form-group">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  class="form-control form-control-lg text-white bg-dark"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="Company"
+                  class="form-control form-control-lg text-white bg-dark"
+                />
+              </div>
+              <div class="form-group pb-3">
+                <textarea                      
+                  name="message"
+                  placeholder="How can we help?"
+                  class="form-control form-control-lg text-white bg-dark" rows="5"
+                  ></textarea>
+              </div>
+              <input
+                type="submit"
+                value="Send Message"
+                class="btn btn-lg btn-outline-dark btn-block" data-dismiss="modal"
+              />
+            </form>
+          </div>
+
+        </div>
     </div>
+  </div>
+</div>
 
     
