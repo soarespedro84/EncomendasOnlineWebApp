@@ -14,6 +14,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+// Ajax+JSON
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.PrintWriter;
+import javax.servlet.http.HttpSession;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class CompanyController extends HttpServlet {
 
@@ -44,7 +52,10 @@ public class CompanyController extends HttpServlet {
                     break;               
                  case "search":
                     searchCompany(request, response);
-                    break;                                
+                    break;  
+                case "companySsuggestions":
+                    companySsuggestions(request, response);
+                    break;
                 default:
                     //listCompanies(request, response);
                 }            
@@ -72,6 +83,35 @@ public class CompanyController extends HttpServlet {
         request.setAttribute("companyList", companyList);
         request.getRequestDispatcher("/adminClients.jsp").forward(request, response);
     }
+    //LIST
+    private void companySsuggestions(HttpServletRequest request, HttpServletResponse response)
+               throws Exception {        
+
+        List<CompanyBean> companiesToView = _companyDao.listCompanies();
+
+        // Preparar JSON
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        //response.setHeader("Cache-Control", "no-cache");
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                
+        //Map<String, String> outLst = new HashMap<String, String>();
+        JsonArray outLst = new JsonArray();
+        
+        for (CompanyBean item : companiesToView) {
+            JsonObject jsonObj = new JsonObject();
+            
+            jsonObj.addProperty("id", item.getIdCompany().toString());
+            jsonObj.addProperty("name", item.getCompanyName());
+            
+            outLst.add(jsonObj);
+        }
+          
+        //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = new Gson().toJson(outLst);
+        response.getWriter().write(json);
+   }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

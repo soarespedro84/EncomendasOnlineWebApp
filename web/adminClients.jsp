@@ -31,11 +31,20 @@
      <section id="actions" class="py-2 mb-3">
       <div class="container">
         <div class="row">
+        <c:if test="${ContaAtiva.permission==5}">
             <div class="col-md-3">
                   <a
               href="adminDash.jsp"
               class="btn btn-info btn-lg btn-block"              
               ><i class="fas fa-cog"></i> Admin Panel</a
+                  ></div>
+        <div class="col-md-3">
+                  <a
+              href="#"
+              class="btn btn-info btn-lg btn-block"
+              data-toggle="modal"
+              data-target="#RegUserModal"
+              ><i class="fas fa-plus"></i> Add Client</a
                   ></div>
             <div class="col-md-6">
                 <form action="company" method="get">
@@ -46,14 +55,19 @@
                 </div>
                 </form>            
             </div>
-            <div class="col-md-3">
-                  <a
-              href="#"
-              class="btn btn-info btn-lg btn-block"
-              data-toggle="modal"
-              data-target="#RegUserModal"
-              ><i class="fas fa-plus"></i> Add Client</a
-                  ></div>
+        </c:if>
+        <c:if test="${ContaAtiva.permission==2}">
+            <div class="col-md-12">
+                <form action="company" method="get">
+                <input type="hidden" name="command" value="search"/>
+                <div class="input-group">
+                    <input type="text" name="companySearch" class="form-control form-control-lg" placeholder="Search" />
+                    <button type="submit" class="btn btn-lg btn-outline-light"><i class="fas fa-search"></i></button>
+                </div>
+                </form>            
+            </div>
+        </c:if>
+
         </div>
       </div>
     </section>
@@ -144,7 +158,7 @@
                     <button
                     type="submit"
                     value="Add Client" 
-                    class="btn btn-lg btn-outline-dark btn-block"
+                    class="btn btn-lg btn-info btn-block"
                     >Add Client</button></div>
                </form>
                </div>

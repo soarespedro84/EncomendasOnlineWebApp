@@ -9,36 +9,19 @@
 <!-- HEADER  -->
 <c:if test="${sessionScope.ContaAtiva == null}"><c:redirect url="index"/></c:if>
 
-<script>
-    /*--------------------------CART LIST--------------------------*/
-function updateItemCart(ref , price){
-    //Mostrar mutões
-    document.getElementById("s"+ref).removeAttribute("hidden");
-    document.getElementById("c"+ref).removeAttribute("hidden");
-    document.getElementById("d"+ref).setAttribute("hidden", true);
-
-    //Atualizar totais
-    var list = document.getElementsByClassName(ref);;
-    //console.log(list);
-    var total = 0;
-    for (i=0; i<list.length; i++) {
-        total += Number(list[i].value);
+<style>
+    .ui-widget {
+        background-color: whitesmoke;
+        align-content: center;
+        margin-right: 60%;
+        list-style-type: none;
     }
-    //alert(total);
-    document.getElementById("q"+ref).innerHTML = ""+total;
-    document.getElementById("a"+ref).innerHTML = ""+(total*price).toFixed(2)+" €";
-    console.log(output);
-    //$("'#qtd_"+ref+"'").text(total);
-    //$("'#val_"+ref+"'").text((total*price).toFixed(2)+" €");
-
-}
-
-function deliteItemCart(name, id){
-    $("#deliteItemName").text("Delite "+name+" from Cart?");
-    $("#deliteItemId").val(id);
-    //$('input[name=sitebg]').val('000000');
-}
-</script>    
+    
+    .ui-menu-item a {        
+        background-color: #fff;
+        list-style-type: none;
+    }
+</style>
 
 
 <header id="main-header" class="py-3 mt-5 bg-dark text-light">
@@ -51,29 +34,7 @@ function deliteItemCart(name, id){
     </div>
 </header>
               
-<!-- ACTIONS -->
 
- <section id="actions" class="py-4 mb-4">
-    <form action="movement" method="POST">
-    <input type="hidden" name="route" value="saveOrder"/>
-        <div class="container">
-            <div class="row">
-                <label for="delDate" class="text-light col-form-label align-middle"> <h4>Delivery Date:</h4></label>
-                <div class="input-group col-md-3">
-                    <input name="dtDelivery" class="form-control form-control-lg" type="date" value="" id="delDate" required>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <input type="text" name="nrCliente" class="form-control form-control-lg" placeholder="Order number" required />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <input name="deleteYes" value="Place Order" class="btn btn-lg btn-outline-success btn-block" />
-                </div>
-            </div>
-        </div>
-    </form>   
-</section>
 
 <!-- ORDER ITEMS -->
 <section id="clients" class="mb-5">
@@ -147,6 +108,59 @@ function deliteItemCart(name, id){
     </div>
   </div>
 </section>
+
+<!-- ACTIONS -->     
+<section id="actions mb-5 pb-5" onload="getCompanysSuggestion()">
+ <div class="container" >
+   <div class="row" >
+     <div class="col-md-12">
+         <div id="accordion">
+             <a href="#confirmOrderCollapse" class="btn btn-lg btn-outline-info text-white btn-block" id="" data-parent="#accordion" data-toggle="collapse"><i class="fa fa-check"></i> Confirm</a>        
+             <div id="confirmOrderCollapse" class="collapse my-3 text-dark">
+             <form action="movement" method="POST">
+               <input type="hidden" name="route" value="saveOrder"/>
+               <div class="container">
+                   <div class="row mb-3">
+                       <div class="col-md-2">
+                           <label for="delDate" class="text-light col-form-label align-middle"> <h4>Delivery Date:</h4></label></div>
+                       <div class="col-md-2">
+                       <div class="input-group">
+                           <input name="dtDelivery" class="form-control form-control-lg" type="date" value="" id="delDate" required>
+                       </div>
+                           </div>
+                       <div class="col-md-2">
+                           <div class="input-group">
+                               <input type="text" name="nrCliente" class="form-control form-control-lg" placeholder="Order number" required />
+                           </div>
+                       </div>
+                       <c:if test="${ContaAtiva.permission > 1}">        
+                       <div class="col-md-6">
+                           <div class="input-group" >
+                                <select class="form-control form-control-lg text-white bg-dark" id="" name="idCompany" >
+                                    <option selected >Choose company</option>
+                                    <c:forEach var="c" items="${companyList}">
+                                    <option value="${c.getIdCompany().toString()}">${c.getCompanyName()}</option>
+                                  </c:forEach>
+                               </select> 
+                               
+                           </div>
+                       </div>                        
+                       </c:if>
+                </div>
+               <div class="row">
+                   <div class="col-md-12">
+                      <input type="submit" name="deleteYes" value="Place Order" class="btn btn-lg btn-outline-success btn-block" />
+                   </div>
+               </div>
+            </div>
+           </form>
+           </div>
+       </div>
+     </div>
+  </div>
+</div>
+</section>
+
 
 <!-- DELETE USER MODAL -->
 <div class="modal fade" id="deleteItemModal">

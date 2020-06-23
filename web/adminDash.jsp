@@ -48,7 +48,7 @@
               <div class="card-header bg-light text-dark">
                 <h3>Products</h3>
               </div>
-                  <a href="products?route=adminlist">
+                  <a href="products?route=ADMINLIST">
                     <div class="card-body py-5 my-5">
                         <i class="fa fa-box-open fa-9x text-light"></i>               
                     </div>
@@ -77,7 +77,7 @@
                 <h3>Users</h3>
               </div>
                 <a href="user">            
-                    <input type="hidden" name="command" value="LIST" />
+                    <input type="hidden" name="command" value="list" />
                     <div class="card-body py-5 my-5">
                         <i class="fa fa-users fa-9x text-light"></i>               
                     </div>

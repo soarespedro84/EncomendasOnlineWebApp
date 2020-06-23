@@ -5,12 +5,19 @@
  */
 package Controllers;
 // Modelos
+import Models.CompanyBean;
+import Models.CompanyDao;
+import Models.ItemBean;
 import Models.ProductBean;
 import Models.ProductDao;
 import Models.UserBean;
 import Models.ItemCartBean;
 import Models.ItemDao;
+import Models.MovementBean;
+import Models.MovementDao;
+import Models.OrderBean;
 import Models.SizeQtdBean;
+import Models.dbConnection;
 
 // Java Servlet
 import java.io.IOException;
@@ -20,34 +27,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
+import java.util.*;
 
 // Ajax+JSON
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.*;
-import java.util.Map;
-import java.lang.Integer;
 import javax.servlet.http.HttpSession;
-import org.json.simple.JSONArray;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import org.apache.tomcat.jni.SSLContext;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MovementController extends HttpServlet {
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    
+    dbConnection dbConn = new dbConnection();
+    CompanyDao _companyDao = new CompanyDao(dbConn);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        if(request.getSession().getAttribute("ContaAtiva") == null){
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
         // Route de request GET
         try{
             String route = request.getParameter("route");
@@ -76,6 +81,10 @@ public class MovementController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        if(request.getSession().getAttribute("ContaAtiva") == null){
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
         // Route de request GET
         try{
             String route = request.getParameter("route");
@@ -160,7 +169,10 @@ public class MovementController extends HttpServlet {
         UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
         ItemDao itd = new ItemDao();
         ArrayList<ItemCartBean> lstItems = itd.listCart(user);
-        
+         
+        List<CompanyBean> companyList = _companyDao.listCompanies();     
+        request.setAttribute("companyList", companyList);
+
         request.setAttribute("lstItems", lstItems);
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
         
@@ -268,11 +280,33 @@ public class MovementController extends HttpServlet {
     // Guardar encomenda
     private void saveOrder(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
-    
         UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
         ItemDao itd = new ItemDao();
         
+  
+        ArrayList<ItemCartBean> lstItems = itd.listCart(user);
+        ArrayList<ItemBean> lst = new ArrayList<ItemBean>(lstItems);
+        
+        String idCompany= request.getParameter("idCompany");
+        LocalDateTime dtDelivery=LocalDateTime.parse(request.getParameter("dtDelivery"), formatter);
+        String nrCliente= request.getParameter("nrCliente");
+       
+       
+        CompanyBean company = new CompanyDao(dbConn).getCompanyByID(idCompany);
+        OrderBean order = new OrderBean(user, dtDelivery, nrCliente, company, lst);
+       
+        MovementDao movement = new MovementDao();
+        movement.createMovement(company); 
+        movement.placeOrder(order);
+        
+       
+        //passar dentro do movimentoDAO e gravar na tabela Movimento
+        //cada elemento item list -> 
+            //for each item lista de tamanhos -> gravar id order + id produto + tamanho +  (ver tabela item)
+        
         itd.deliteAllItemFromCart(user);
+       
+       
         
         request.getRequestDispatcher("/movement?route=cart").forward(request, response);
         

@@ -6,6 +6,8 @@
 package Models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.UUID;
 
 
 public class OrderBean extends MovementBean {
@@ -21,18 +23,21 @@ public class OrderBean extends MovementBean {
     private String _nrCliente; //SHORTSTRING
     
     //CONSTRUTORES:
-    // carregar da DB
-    public OrderBean(UserBean _user, LocalDateTime _dtDelivery, String _nrCliente) {
+    //Add Order
+    public OrderBean(UserBean _user, LocalDateTime _dtDelivery, String _nrCliente, CompanyBean _cliente, ArrayList<ItemBean> _lstItems) {
+        super(_cliente, _lstItems);
         this._user = _user;
         this._dtDelivery = _dtDelivery;
         this._nrCliente = _nrCliente;
     }
-    // criar novo
-    public OrderBean() {
-        this._user = new UserBean();
-        this._dtDelivery = LocalDateTime.now();
+    //Ler da BD
+    public OrderBean(UserBean _user, LocalDateTime _dtDelivery, String _nrCliente, UUID _idMovement, CompanyBean _cliente, ArrayList<ItemBean> _lstItems, int state, LocalDateTime dtReg) {
+        super(_idMovement, _cliente, _lstItems, state, dtReg);
+        this._user = _user;
+        this._dtDelivery = _dtDelivery;
         this._nrCliente = _nrCliente;
     }
+    
     
     //GETTERS    
     public UserBean getUser() {

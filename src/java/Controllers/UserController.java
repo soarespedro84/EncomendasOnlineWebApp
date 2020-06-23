@@ -45,11 +45,11 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         try{
             String route = request.getParameter("command");
             if (route == null) {
-		route = "LIST";
+		route = "list";
             }			
             switch (route) {			 
                                                                        
-                case "LIST":
+                case "list":
                     listUser(request, response);
                     break;
                 case "DETAILS":
@@ -124,7 +124,7 @@ private void userDetails(HttpServletRequest request, HttpServletResponse respons
         try{
             String route = request.getParameter("command");
             if (route == null) {
-		route = "LIST";
+		route = "list";
             }			
             switch (route) {			 
                 case "LOGIN":
@@ -270,7 +270,7 @@ private String deleteUser(HttpServletRequest request, HttpServletResponse respon
     if (estado == "") {
         System.out.println("Error = "+estado);
         request.setAttribute("errMsg", estado);
-        listUser(request, response);
+        request.getRequestDispatcher("/adminDash.jsp").forward(request, response);
     }else{
         System.out.println("Success");
         request.getRequestDispatcher("/adminDash.jsp").forward(request, response);

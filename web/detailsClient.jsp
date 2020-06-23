@@ -16,27 +16,34 @@
     <header id="main-header" class="pt-3 mt-5 mb-3 bg-dark text-light">
       <div class="container">
            <div class="row my-4">
+           <c:if test="${ContaAtiva.permission==5}">
                      <div class="col-md-2">
                        <a href="adminDash.jsp" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-cog m-0"></i> Admin Panel</a>
-                </div>    
+                </div>
+                     </c:if>
                     <div class="col-md-2">
                        <a href="company?route=LIST" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-users"></i> Client List</a>
                 </div>     
+               <div class="col-md-2">
+                    <button class="btn btn-lg btn-info btn-block d-block " data-toggle="modal" data-target="#ShowUsersModal"><i class="fas fa-users"></i> Show Users</button>
+      </div>
+                          <c:if test="${ContaAtiva.permission==5}">
+
                     <div class="col-md-2">
            
       <button class="btn btn-lg btn-info btn-block d-block " data-toggle="modal"  data-target="#RegUserModal"><i class="fas fa-user-plus"></i> Add Users</button>
        </div>
-                <div class="col-md-2">
-                    <button class="btn btn-lg btn-info btn-block d-block " data-toggle="modal" data-target="#ShowUsersModal"><i class="fas fa-users"></i> Show Users</button>
-      </div>
+                
        <div class="col-md-2">
                        <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#editUserModal" ><i class="fas fa-user-edit"></i> Edit</a>
                 </div>
                      
                 <div class="col-md-2">
                        <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete</a>
-                </div>
+                </div>  </c:if>
       </div>
+                                                 
+
         <div class="row">
           <div class="col-md-12 text-center ">
               
@@ -166,12 +173,12 @@
                           />
                         </div>
                         <div class="form-group">
-                     <select class="form-control form-control-lg text-white bg-dark text-muted" id="permission" name="permissionReg" value="${user.permission}" >
+                     <select class="form-control form-control-lg text-white bg-dark" id="permission" name="permissionReg" value="${user.permission}" >
                          <option selected >Set Permission</option>                                                
                          <option value="1">User</option>
                         <option value="2">Comercial</option>
                         <option value="5">Administrator</option>
-                    </select>
+                    </select> 
                   </div>
                   <div class="form-group">
                     <button
@@ -266,7 +273,7 @@
                     <input
                       type="text"
                       name="nif"
-                      placeholder="${company.nif}"
+                      value="${company.nif}"
                       class="form-control form-control-lg text-white bg-dark" disabled
                     />
                   </div>

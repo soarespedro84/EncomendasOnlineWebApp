@@ -72,7 +72,7 @@ function showProduct(model){
     priceProduct = Number(model.price);
     qtdProduct = 0;
 
-    $("#total").html("<b>Qtd:</b> "+qtdProduct+" pairs | <b>Qtd:</b> "+(qtdProduct * priceProduct).toFixed(2)+" €");
+    $("#total").html("");
 
     //console.log(model.price);
     //console.log();
@@ -100,7 +100,15 @@ function upDateTotals(){
         qtdProduct += Number(list[i].value);
     }
 
-    $("#total").html("<b>Qnt: </b> "+qtdProduct+" pairs | <b>Amont: </b> "+(qtdProduct * priceProduct).toFixed(2)+" €");
+    //$("#total").html("<b>Qnt: </b> "+qtdProduct+" pairs | <b>Amont: </b> "+(qtdProduct * priceProduct).toFixed(2)+" €");
+    $("#total").html("\
+        <th scope='row'> \n\
+            <h4>TOTAL:</h4> \n\
+        </th> \n\
+        <td colspan='3'  id='price'> \n\
+            <b><span class = 'count'>"+qtdProduct+" pares </span> | <span class = 'price text-info'>"+(qtdProduct * priceProduct).toFixed(2)+" € </span></b> \n\
+        </td> \n\
+    ");
 }
 
 // Encomendar produto
@@ -160,8 +168,58 @@ function productSearchClear(){
 }
  
 
+/*--------------------------CART LIST--------------------------*/
+function updateItemCart(ref , itemPrice){
+    //Mostrar mutões
+    document.getElementById("s"+ref).removeAttribute("hidden");
+    document.getElementById("c"+ref).removeAttribute("hidden");
+    document.getElementById("d"+ref).setAttribute("hidden", true);
 
- 
+    //Atualizar totais
+    var list = document.getElementsByClassName(ref);
+    //console.log(list);
+    var total = 0;
+    for (var i = 0; i < list.length; i++){
+        total += Number(list[i].value);
+    }
+    //alert(total);
+    document.getElementById("q"+ref).innerHTML = ""+total;
+    document.getElementById("a"+ref).innerHTML = ""+(total * itemPrice).toFixed(2)+"€";
+}
+
+function deliteItemCart(name, id){
+    $("#deliteItemName").text("Delite "+name+" from Cart?");
+    $("#deliteItemId").val(id);
+}
+
+function getCompanysSuggestion(){
+    console.log("Entrei");
+    //AJAX configure
+    var processData = 'JSON';
+    var route = "companySsuggestions";
+    $.ajax({  
+        type: "GET",  
+        url: "company",  
+        data: "command="+route,
+        success: function(result){
+            console.log(result);
+            
+            var availableTags = [];
+            result.forEach(function(item) {
+                console.log(item.name);
+                availableTags.push(item.name);
+            });
+            $("#companyName").autocomplete({
+              source: availableTags
+            });
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log("Error status code: "+xhr.status);
+            console.log("Error details: "+ thrownError);
+        }
+    });
+}
 
 /*--------------------------LAYOUT--------------------------*/
 $("#year").text(new Date().getFullYear());

@@ -37,12 +37,16 @@ public class ProductController extends HttpServlet {
         // Route de request GET
         try{
             String route = request.getParameter("route");
-            		
+            
+            if(request.getSession().getAttribute("ContaAtiva") == null && route==null){
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            }
+            
             switch (route) {			 
                 case "list":
                     listProduct(request, response);
                     break;
-                case "adminlist":
+                case "ADMINLIST":
                     listAdminProduct(request, response);
                     break;        
                 case "GetProduct":
@@ -62,7 +66,10 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         // Route de request POST
+        
+        if(request.getSession().getAttribute("ContaAtiva") == null){
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
          
     }
     
@@ -73,11 +80,11 @@ public class ProductController extends HttpServlet {
         ProductDao pd = new ProductDao();
         List<ProductBean> lstProduct = pd.listProduct(1);
         
-            request.setAttribute("lstProduct", lstProduct);
-                request.getRequestDispatcher("/products.jsp").forward(request, response);       
-            
+       
+        request.setAttribute("lstProduct", lstProduct);
+        request.getRequestDispatcher("/products.jsp").forward(request, response);   
+                
     }
-    
     //LIST ADMIN
     private void listAdminProduct(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
@@ -90,10 +97,10 @@ public class ProductController extends HttpServlet {
         request.getRequestDispatcher("/adminProduct.jsp").forward(request, response);   
                 
     }
-
+    
     private void searchProduct(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {        
-        String str = request.getParameter("productListSearch");
+        String str = request.getParameter("productSearch");
         ProductDao pd=new ProductDao();
         List<ProductBean> lstProduct = pd.search(str);
         request.setAttribute("lstProduct", lstProduct);

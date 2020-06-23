@@ -31,7 +31,7 @@
 
 <!-- HEADER  -->
 
-<header id="main-header" class=" mt-5 bg-dark text-light">
+<header id="main-header" class="py-1 mt-5 bg-dark text-light">
   <div class="container">
     <div class="row">
       <div class="col-md-12 text-center my-2">
@@ -43,7 +43,7 @@
 
 <!-- ACTIONS -->
 
-<section id="actions" class="">
+<section id="actions" class="py-2">
   <div class="container">
     <div class="row mb-4 text-center">
         <div class="col-md-3"></div>
@@ -135,16 +135,11 @@
                                         <th scope="row">Price</th>
                                         <td colspan="3"  id="price">€ 59.99</td>
                                     </tr>
+                                    <tr id="total">
+                                        
+                                    </tr>
                                 </tbody>
                             </table>
-                            <h3>TOTAL:</h3> 
-                            <p id="total"><b>Qnt: </b> 0 pairs | <b>Amount: </b> 0 €</p>
-                            <div class="row mb-3 m-auto">
-                                <div class="col-md-6">
-                                    
-                                </div>
-                                <div class="col-md-6"> </div>
-                            </div>
                         </div>
                     </div>
                     <div class="table-responsive">

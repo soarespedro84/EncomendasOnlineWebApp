@@ -39,6 +39,13 @@ public class MovementBean {
         this._state = 0;
         this._dtReg = LocalDateTime.now();
     }
+     public MovementBean(CompanyBean _cliente, ArrayList<ItemBean> _lstItems) {
+        this._idMovement = UUID.randomUUID();
+        this._cliente = _cliente;
+        this._lstItems = _lstItems;
+        this._state = 0;
+        this._dtReg = LocalDateTime.now();
+    }
     
     //GETTERS
     public UUID getIdMovement() {

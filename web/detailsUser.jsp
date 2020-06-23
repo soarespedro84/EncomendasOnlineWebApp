@@ -17,18 +17,20 @@
       <div class="container">
         
           <div class="row my-3">
+           <c:if test="${ContaAtiva.permission==5}">
            <div class="col-md-3">
                        <a href="adminDash.jsp" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-cog"></i> Admin Panel</a>
-                </div>     
+                </div></c:if>     
            <div class="col-md-3">
-                       <a href="user?route=LIST" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-users"></i> User List</a>
+                       <a href="user?route=list" class="btn btn-lg btn-info btn-block d-block"><i class="fas fa-users"></i> User List</a>
                 </div>
+            <c:if test="${ContaAtiva.permission==5}">
                    <div class="col-md-3">
                        <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-user-edit"></i> Edit User</a>
                 </div>
                 <div class="col-md-3">
                        <a href="#" class="btn btn-lg btn-info btn-block d-block" data-toggle="modal" data-target="#deleteUserModal" ><i class="fas fa-user-times"></i> Delete User</a>
-                </div>
+                </div></c:if>
                </div>
           <div class="row">
           <div class="col-md-12 text-center ">

@@ -97,6 +97,8 @@
                   </a>
             </li>
             </c:if>
+                        <!-----------------CART------------------>
+
             <li class="nav-item px-2 dropdown" >
               <a id="layoutCart" href="#" class="nav-link" data-toggle="dropdown" data-target="#dropCart">
                 <i class="fas fa-shopping-cart"></i> Cart
@@ -236,8 +238,7 @@
                     class="btn btn-lg btn-info btn-block" data-dismiss="modal"
                   />
                 </form>
-              </div>
-              
+              </div>              
             </div>
         </div>
       </div>
@@ -289,16 +290,14 @@
             </div>
         </div>
       </div>
-    </div>
-
-    
-    
+    </div>    
     
     <script
       src="http://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
       integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -309,6 +308,7 @@
       integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
       crossorigin="anonymous"
     ></script>
+
     <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"
@@ -318,9 +318,6 @@
     
     <script src="js/script.js"> </script>
 
-    <script>
-        
-    </script>
     
   </body>
 </html>
