@@ -18,8 +18,8 @@ import java.util.UUID;
 
 public class ProductDao {
     
+//Formatação da Data
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    
     // Listar produtos por estado
     public List<ProductBean> listProduct(int State) throws Exception{
          
@@ -146,9 +146,7 @@ public class ProductDao {
             close(con, stat, rSet);
         }                
      }
-    
-    
-    
+
     private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
         try {
             if (myRs != null) myRs.close();

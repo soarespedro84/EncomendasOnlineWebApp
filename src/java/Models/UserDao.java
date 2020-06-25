@@ -138,7 +138,6 @@ public class UserDao {
         }
     }
     
-    
      public void registerUser(UserBean userRegist) throws Exception{
 
         Connection con = null;
@@ -158,8 +157,6 @@ public class UserDao {
             close(con, prepStat, null);
         }
     }
-     
-    
      
      public List<UserBean> listUsers() throws Exception{
          
