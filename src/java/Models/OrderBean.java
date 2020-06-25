@@ -5,6 +5,7 @@
  */
 package Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -19,20 +20,21 @@ public class OrderBean extends MovementBean {
     
     //ATRIBUTOS
     private UserBean _user;
-    private LocalDateTime _dtDelivery;
+    private LocalDate _dtDelivery;
     private String _nrCliente; //SHORTSTRING
     
     //CONSTRUTORES:
     //Add Order
-    public OrderBean(UserBean _user, LocalDateTime _dtDelivery, String _nrCliente, CompanyBean _cliente, ArrayList<ItemBean> _lstItems) {
+    public OrderBean(UserBean _user, LocalDate _dtDelivery, String _nrCliente, CompanyBean _cliente, ArrayList<ItemBean> _lstItems) {
         super(_cliente, _lstItems);
         this._user = _user;
         this._dtDelivery = _dtDelivery;
         this._nrCliente = _nrCliente;
     }
+    
     //Ler da BD
-    public OrderBean(UserBean _user, LocalDateTime _dtDelivery, String _nrCliente, UUID _idMovement, CompanyBean _cliente, ArrayList<ItemBean> _lstItems, int state, LocalDateTime dtReg) {
-        super(_idMovement, _cliente, _lstItems, state, dtReg);
+    public OrderBean(UserBean _user, LocalDate _dtDelivery, String _nrCliente, UUID _idMovement, CompanyBean _cliente, int state, LocalDateTime dtReg) {
+        super(_idMovement, _cliente, state, dtReg);
         this._user = _user;
         this._dtDelivery = _dtDelivery;
         this._nrCliente = _nrCliente;
@@ -44,7 +46,7 @@ public class OrderBean extends MovementBean {
         return _user;
     }
 
-    public LocalDateTime getDtDelivery() {
+    public LocalDate getDtDelivery() {
         return _dtDelivery;
     }
 
@@ -57,8 +59,7 @@ public class OrderBean extends MovementBean {
         this._user = _user;
     }
 
-    public void setDtDelivery(LocalDateTime _dtDelivery) {
-        if(_dtDelivery.isBefore(LocalDateTime.now())) _dtDelivery = LocalDateTime.now(); //Preenchido por cliente
+    public void setDtDelivery(LocalDate _dtDelivery) {
         this._dtDelivery = _dtDelivery;
     }
 

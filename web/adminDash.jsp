@@ -35,7 +35,7 @@
               <div class="card-header bg-light text-dark">
                 <h3>Movements</h3>
               </div>
-                <a href="adminMov.jsp">
+                <a href="movement?route=listOrder">
                     <div class="card-body py-5 my-5">
                         <i class="fas fa-receipt fa-9x text-light"></i>
                     </div>

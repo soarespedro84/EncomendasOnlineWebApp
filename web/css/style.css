@@ -5,11 +5,7 @@
 .vertical-center{
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one :-)       */
-  
   margin-top: 11%;
-  
-  
-  
 }
 
 #adminboard .card-body:hover{
@@ -162,3 +158,4 @@ input[type=number] {
   border:10px solid transparent;
   border-bottom-color:#fff; 
 }
+

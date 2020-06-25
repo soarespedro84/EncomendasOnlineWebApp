@@ -37,11 +37,12 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MovementController extends HttpServlet {
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     dbConnection dbConn = new dbConnection();
     CompanyDao _companyDao = new CompanyDao(dbConn);
@@ -69,6 +70,9 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     break;
                 case "deleteInCart":
                     deleteInCart(request, response);
+                break;
+                case "listOrder":
+                    listOrder(request, response);
                 break;
                 default:
                     getCart(request, response);
@@ -102,6 +106,9 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 case "cart":
                     getCart(request, response);
                     break;
+                case "listOrder":
+                    listOrder(request, response);
+                break;
                 default:
                     getCart(request, response);
                 }            
@@ -169,10 +176,21 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
         ItemDao itd = new ItemDao();
         ArrayList<ItemCartBean> lstItems = itd.listCart(user);
-         
+        
+        int totalQtd=0;
+        double totalAmount=0.0;
+        
+        for (ItemCartBean item : lstItems) {
+            totalQtd+=item.getQtdTotal();
+            totalAmount+=item.getAmountTotal();
+        }
+        
+        request.setAttribute("totalQtd", totalQtd);
+        request.setAttribute("totalAmount", totalAmount);
+        
         List<CompanyBean> companyList = _companyDao.listCompanies();     
         request.setAttribute("companyList", companyList);
-
+        
         request.setAttribute("lstItems", lstItems);
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
         
@@ -282,36 +300,72 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 		throws Exception {        
         UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
         ItemDao itd = new ItemDao();
+          
+        String idCompany= request.getParameter("idCompany");
+        LocalDate dtDelivery=LocalDate.parse(request.getParameter("dtDelivery"), formatter);
+        String nrCliente= request.getParameter("nrCliente");
         
-  
+        CompanyBean company;
+        if (user.getPermission()>1 ) {
+           company = new CompanyDao(dbConn).getCompanyByID(idCompany);
+
+        }else{
+           company = user.getCompany();
+        }
+                
         ArrayList<ItemCartBean> lstItems = itd.listCart(user);
         ArrayList<ItemBean> lst = new ArrayList<ItemBean>(lstItems);
         
-        String idCompany= request.getParameter("idCompany");
-        LocalDateTime dtDelivery=LocalDateTime.parse(request.getParameter("dtDelivery"), formatter);
-        String nrCliente= request.getParameter("nrCliente");
-       
-       
-        CompanyBean company = new CompanyDao(dbConn).getCompanyByID(idCompany);
         OrderBean order = new OrderBean(user, dtDelivery, nrCliente, company, lst);
        
         MovementDao movement = new MovementDao();
-        movement.createMovement(company); 
-        movement.placeOrder(order);
+        String result = movement.createMovement(order);
         
+        List<CompanyBean> companyList = _companyDao.listCompanies();    
+        
+        if (result==null) {            
+            itd.deliteAllItemFromCart(user);
+             
+            request.setAttribute("companyList", companyList);
+            request.getRequestDispatcher("movement?route=listOrder").forward(request, response);
+        }else{
+            request.setAttribute("erro", result);
+            //página de ERRO
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
        
-        //passar dentro do movimentoDAO e gravar na tabela Movimento
-        //cada elemento item list -> 
-            //for each item lista de tamanhos -> gravar id order + id produto + tamanho +  (ver tabela item)
-        
-        itd.deliteAllItemFromCart(user);
-       
-       
-        
-        request.getRequestDispatcher("/movement?route=cart").forward(request, response);
-        
-        
     }
+    
+    // Página Movements
+    private void listOrder(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+    
+        UserBean user = (UserBean)request.getSession().getAttribute("ContaAtiva");
+        String idCompany= request.getParameter("idCompany");
+        
+        CompanyBean company;
+        if (idCompany==null) {           
+            company = user.getCompany();
+        }else{
+            company = new CompanyDao(dbConn).getCompanyByID(idCompany);
+        }
+         
+        List<CompanyBean> companyList = _companyDao.listCompanies(); 
+        request.setAttribute("companyList", companyList);
+        
+        MovementDao mov = new MovementDao();        
+        ArrayList<OrderBean> orderList = mov.listOrder(company);
+       
+        request.setAttribute("orderList", orderList);
+        
+        if (user.getPermission() < 5) {
+            request.getRequestDispatcher("/movement.jsp").forward(request, response); 
+        }else{
+            request.getRequestDispatcher("/movement.jsp").forward(request, response);           
+        }
+    }
+    
+    
     @Override
     public String getServletInfo() {
         return "Short description";

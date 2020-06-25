@@ -174,8 +174,10 @@ function updateItemCart(ref , itemPrice){
     document.getElementById("s"+ref).removeAttribute("hidden");
     document.getElementById("c"+ref).removeAttribute("hidden");
     document.getElementById("d"+ref).setAttribute("hidden", true);
+    document.getElementById("confirmOrder").setAttribute("hidden", true);
 
-    //Atualizar totais
+
+  confirmOrder  //Atualizar totais
     var list = document.getElementsByClassName(ref);
     //console.log(list);
     var total = 0;

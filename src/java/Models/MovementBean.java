@@ -24,10 +24,10 @@ public class MovementBean {
     
     //CONSTRUTORES:
     // carregar da DB
-    public MovementBean(UUID _idMovement, CompanyBean _cliente, ArrayList<ItemBean> _lstItems, int state, LocalDateTime dtReg) {
+    public MovementBean(UUID _idMovement, CompanyBean _cliente, int state, LocalDateTime dtReg) {
         this._idMovement = _idMovement;
         this._cliente = _cliente;
-        this._lstItems = _lstItems;
+        this._lstItems = new ArrayList<ItemBean>();
         this._state = state;
         this._dtReg = dtReg;
     }
@@ -39,7 +39,8 @@ public class MovementBean {
         this._state = 0;
         this._dtReg = LocalDateTime.now();
     }
-     public MovementBean(CompanyBean _cliente, ArrayList<ItemBean> _lstItems) {
+    
+    public MovementBean(CompanyBean _cliente, ArrayList<ItemBean> _lstItems) {
         this._idMovement = UUID.randomUUID();
         this._cliente = _cliente;
         this._lstItems = _lstItems;
@@ -80,6 +81,22 @@ public class MovementBean {
     public void setState(int state) {
         this._state = state;
     }
-
+    
+    public int getTotalQtd(){
+        int totalQtd=0;
+        for (ItemBean _lstItem : _lstItems) {
+            totalQtd+=_lstItem.getQtdTotal();
+        }
+        return totalQtd;
+    }
+    
+    public double getTotalAmount(){
+        double totalAmount=0.0;
+        for (ItemBean _lstItem : _lstItems) {
+            totalAmount += _lstItem.getAmountTotal();
+        }
+        
+        return totalAmount;
+    }
     
 }

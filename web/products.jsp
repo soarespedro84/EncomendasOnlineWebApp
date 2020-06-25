@@ -159,10 +159,10 @@
                     <div class="row mb-3 m-auto">
                         <div class="col-md-2"> </div>
                         <div class="col-md-4">
-                            <a class="btn btn-lg btn-dark btn-block btn-outline-dark btn-block" href="#" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                            <a class="btn btn-lg btn-outline-info btn-block" href="#" data-dismiss="modal" aria-hidden="true">Cancel</a>
                         </div>
                         <div class="col-md-4">
-                            <a id="addToCart" onclick="" class="btn btn-lg btn-dark btn-block btn-outline-dark btn-block" href="#" data-dismiss="modal" aria-hidden="true">Add to Cart</a>
+                            <a id="addToCart" onclick="" class="btn btn-lg btn-outline-info btn-block" href="#" data-dismiss="modal" aria-hidden="true">Add to Cart</a>
                         </div>
                         <div class="col-md-2"> </div>
                     </div>

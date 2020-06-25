@@ -37,7 +37,7 @@
 
 
 <!-- ORDER ITEMS -->
-<section id="clients" class="mb-5">
+<section id="clients" class="mb-4">
     <div class="" style="margin: 0 5%">
     <div class="row">
       <div class="col-md-12">
@@ -110,39 +110,52 @@
 </section>
 
 <!-- ACTIONS -->     
-<section id="actions mb-5 pb-5" onload="getCompanysSuggestion()">
+<section id="actions" class="mb-5 pb-5" onload="getCompanysSuggestion()">
  <div class="container" >
-   <div class="row" >
+     <div class="row" >
+         <div class="col-md-4">
+             <label class="count text-light"><h4>Quantity: ${totalQtd} </h4> </label>
+         </div>
+         <div class="col-md-4">
+            <label class="count text-light"><h4>Total Amount: ${String.format("%.2f", totalAmount)} € </h4> </label>
+
+         </div>
+         <div class="col-md-4">
+             <a href="#confirmOrderCollapse" class="btn btn-lg btn-outline-info text-white btn-block" id="confirmOrder" data-parent="#accordion" data-toggle="collapse"><i class="fa fa-check"></i> Confirm</a>
+         </div>
+     </div>
+     
+
+     
+     <div class="row" >
      <div class="col-md-12">
-         <div id="accordion">
-             <a href="#confirmOrderCollapse" class="btn btn-lg btn-outline-info text-white btn-block" id="" data-parent="#accordion" data-toggle="collapse"><i class="fa fa-check"></i> Confirm</a>        
+         <div id="accordion">                     
              <div id="confirmOrderCollapse" class="collapse my-3 text-dark">
              <form action="movement" method="POST">
                <input type="hidden" name="route" value="saveOrder"/>
                <div class="container">
                    <div class="row mb-3">
                        <div class="col-md-2">
-                           <label for="delDate" class="text-light col-form-label align-middle"> <h4>Delivery Date:</h4></label></div>
+                           <label for="delDate" class="text-light col-form-label align-middle"><h5>Delivery Date:</h5></label></div>
                        <div class="col-md-2">
                        <div class="input-group">
-                           <input name="dtDelivery" class="form-control form-control-lg" type="date" value="" id="delDate" required>
+                           <input id="dtDelivery" name="dtDelivery" style="font-size: 16px" class="form-control form-control-lg" type="date" value="" id="delDate" required>
                        </div>
                            </div>
                        <div class="col-md-2">
                            <div class="input-group">
-                               <input type="text" name="nrCliente" class="form-control form-control-lg" placeholder="Order number" required />
+                               <input type="text" name="nrCliente" style="font-size: 16px" class="form-control form-control-lg" placeholder="Order number" required />
                            </div>
                        </div>
                        <c:if test="${ContaAtiva.permission > 1}">        
                        <div class="col-md-6">
                            <div class="input-group" >
-                                <select class="form-control form-control-lg text-white bg-dark" id="" name="idCompany" >
+                                <select style="font-size: 16px" class="form-control form-control-lg text-white bg-dark" id="" name="idCompany" >
                                     <option selected >Choose company</option>
                                     <c:forEach var="c" items="${companyList}">
                                     <option value="${c.getIdCompany().toString()}">${c.getCompanyName()}</option>
                                   </c:forEach>
-                               </select> 
-                               
+                               </select>                                
                            </div>
                        </div>                        
                        </c:if>

@@ -29,15 +29,38 @@
 
     <section id="actions" class="py-2 mb-3">
       <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="col-md-9">
-                <div class="input-group">
-                    <input id="productListSearch" onkeyup="productSearch()" type="text" name="productListSearch" class="form-control form-control-lg" placeholder="Fill in some value to search">
-                    <button id="productListClera" onclick="productSearchClear()" class="btn btn-lg btn-outline-light" hidden="true" ><i class="fas fa-eraser"></i></button>
-                </div>
+        <div class="row mb-3">
+          <div class="col-md-12 ">
+            <div class="input-group">
+                <input id="productListSearch" onkeyup="productSearch()" type="text" name="productListSearch" class="form-control form-control-lg" placeholder="Fill in some value to search">
+                <button id="productListClera" onclick="productSearchClear()" class="btn btn-lg btn-outline-light" hidden="true" ><i class="fas fa-eraser"></i></button>
+            </div>             
           </div>
         </div>
+        <div class="row">
+       
+        <c:if test="${ContaAtiva.permission > 1}">
+          <div class="col-md-12">
+            <form action="movement" method="POST" >
+                <input type="hidden" name="route" value="listOrder"/>                
+                    <div class="input-group" >
+                        <div class="col-md-8">
+                            <select class="form-control form-control-lg text-white bg-dark" id="" name="idCompany" >
+                                <option selected >Choose company</option>
+                                <c:forEach var="c" items="${companyList}">
+                                <option value="${c.getIdCompany().toString()}">${c.getCompanyName()}</option>
+                                </c:forEach>
+                            </select> 
+                        </div>
+                        <div class="col-md-4">                    
+                            <input type="submit" name="" value="Select" class="btn btn-lg btn-outline-info btn-block" />
+                        </div>
+                    </div>
+            </form>
+          </div>
+        </c:if>
+        </div>
+
       </div>
     </section>
 
@@ -52,95 +75,104 @@
                          <div class="row text-center">
                              <div class="col-md-3">
                                  <h5>Date</h5>
-                             </div>
+                             </div>                             
+                             <div class="col-md-1">
+                                 <h5>Ref</h5>
+                             </div>                            
                              <div class="col-md-2">
-                                 <h5>Number</h5>
+                                 <h5>Delivery Date</h5>
                              </div>
+                            <div class="col-md-2">
+                                 <h5>Company</h5>
+                             </div>                             
                              <div class="col-md-2">
-                                 <h5>Items</h5>
+                                 <h5>Ordered By</h5>
                              </div>
-                             <div class="col-md-2">
-                                 <h5>Price</h5>
-                             </div>
-                                 <div class="col-md-3">
-                                 <h5>User</h5>
+                              <div class="col-md-2">
+                                 <h5>Total</h5>
                              </div>
                          </div>
                      </div>
                       
-                      <c:forEach var="item" items="${lstItems}">
+                      <c:forEach var="ordItem" items="${orderList}">
                          <c:url var="tempLink" value="products">
                             <c:param name="route" value="GetProduct" />
-                            <c:param name="idProduct" value="${item.idOrder}" />
+                            <c:param name="idMovement" value="${ordItem.getLstItems()}" />
                          </c:url>
-                        <a href="#${item.getIdProduct()}" id="productListContente" data-parent="#accordion" data-toggle="collapse">
+                         
+                        <a href="#${ordItem.idMovement}" id="productListContente" data-parent="#accordion" data-toggle="collapse">
                             <div class="card-body bg-light text-dark " >
                                 <div class="row text-center">
                                     <div class="col-md-3">
-                                        <h5>${item.getRef()}</h5>
+                                        <h5>${ordItem.dtReg}</h5>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h5>${ordItem.nrCliente}</h5>
+                                    </div>                                    
+                                    <div class="col-md-2">
+                                        <h5>${ordItem.dtDelivery}</h5>
                                     </div>
                                     <div class="col-md-2">
-                                        <h5>${item.getName()}</h5>
+                                        <h5>${ordItem.user.company.companyName}</h5>
+                                    </div>
+                                     <div class="col-md-2">
+                                        <h5>${ordItem.user.name}</h5>
                                     </div>
                                     <div class="col-md-2">
-                                        <h5>${item.getDescription()}</h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h5>${item.getPrice()} €</h5>
-                                    </div>
-                                     <div class="col-md-3">
-                                        <h5>${item.getUser().getName()} €</h5>
+                                        <h5>${String.format("%.2f", ordItem.totalAmount)} €</h5>
                                     </div>
                                 </div>
                             </div>
-                        </a>
-                            <div id="${item.getIdProduct()}" class="collapse row mb-3 text-dark">
-                              <div class="row text-center">
-                                <div class="col-md-3">
-                                    <h5>Date</h5>
-                                </div>
-                                <div class="col-md-2">
-                                    <h5>Number</h5>
-                                </div>
-                                <div class="col-md-2">
-                                    <h5>Items</h5>
-                                </div>
-                                <div class="col-md-2">
-                                    <h5>Price</h5>
-                                </div>
-                                    <div class="col-md-3">
-                                    <h5>User</h5>
-                                </div>
-                              </div>
-                              <c:forEach var="item" items="${lstItems}">
-                                <c:url var="tempLink" value="products">
-                                    <c:param name="route" value="GetProduct" />
-                                    <c:param name="idProduct" value="${item.idOrder}" />
-                                </c:url>
-                          
-                                <div class="card-body bg-light text-dark " >
-                                      <div class="row text-center">
-                                          <div class="col-md-3">
-                                              <h5>${item.getRef()}</h5>
-                                          </div>
-                                          <div class="col-md-2">
-                                              <h5>${item.getName()}</h5>
-                                          </div>
-                                          <div class="col-md-2">
-                                              <h5>${item.getDescription()}</h5>
-                                          </div>
-                                          <div class="col-md-2">
-                                              <h5>${item.getPrice()} €</h5>
-                                          </div>
-                                           <div class="col-md-3">
-                                              <h5>${item.getUser().getName()} €</h5>
-                                          </div>
-                                      </div>
-                                  </div>
-                             </c:forEach>
-                            </div>
+                            <div id="${ordItem.idMovement}" class="collapse card-body bg-light text-dark text-center">
+                                <div class="row bg-dark text-light">                                    
+                                    <div class="col-md-2">
+                                        <h5>Ref</h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h5>Model</h5>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h5>€/Uni</h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5>Sizes</h5>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h5>Qty</h5>
+                                    </div>
+                                     <div class="col-md-2">
+                                        <h5>Total Price</h5>
+                                    </div>
+                                    
+                                     
+                                 </div>
+                                <c:forEach var="item" items="${ordItem.getLstItems()}">
+                                 <div class="row bg-secondary text-white"  style="font-size: 16px">
+                                     <div class="col-md-2">
+                                        <h5>${item.product.ref} </h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h5>${item.product.name} </h5>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h5>€ ${item.product.price}</h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5> <c:forEach var="sizeItem" items="${item.getLstSizes()}"><span>${sizeItem.size}</span><span>, </span></c:forEach></h5>
+                                    </div>  
+                                    <div class="col-md-1">
+                                        <h5>${item.getQtdTotal()}</h5>
+                                    </div>                                    
+                                     <div class="col-md-2">
+                                        <h5>€ ${String.format("%.2f", item.getAmountTotal())}</h5>
+                                    </div>                                    
+                                                                                                           
+                                 </div>
+                                </c:forEach>                                
+                            </div>                                                                            
+                        </a>                                                                  
                       </c:forEach>
-              </div>
+                    </div>
              </div>
           </div>
         </div>
