@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `db_amf_web_platform` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `db_amf_web_platform`;
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
--- Host: localhost    Database: db_amf_web_platform
+-- Host: 127.0.0.1    Database: db_amf_web_platform
 -- ------------------------------------------------------
--- Server version	8.0.19
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +25,7 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `fk_idMovement` char(36) NOT NULL,
   `fk_user` char(36) NOT NULL,
-  `dtDelivery` datetime NOT NULL,
+  `dtDelivery` date NOT NULL,
   `nrCliente` varchar(45) NOT NULL,
   PRIMARY KEY (`fk_idMovement`),
   KEY `fk_order_user1_idx` (`fk_user`),
@@ -42,6 +40,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES ('044205a7-7a6e-49b4-aa95-82174788f721','b46a03be-b21b-11ea-828b-0a002700000b','2020-07-02','rm123'),('19e86f19-dea4-4e4b-9773-6a5d4886cd74','b46a03be-b21b-11ea-828b-0a002700000b','2020-06-30','rb123'),('341d9bf2-9b5f-4636-ba92-42b88989180f','54cc1dea-b21c-11ea-828b-0a002700000b','2020-06-30','s0202'),('4ad29dbc-8bda-4d85-9946-ee7c125ddb8e','54cc1dea-b21c-11ea-828b-0a002700000b','2020-06-30','s0101'),('6a4d44a1-a4b6-4372-b899-66e224a5d7c1','354e6205-b21c-11ea-828b-0a002700000b','2020-07-01','rb122'),('716c4b17-9990-4726-b6f3-99bd405812bd','b46a03be-b21b-11ea-828b-0a002700000b','2020-07-03','8877'),('a13149de-b398-4718-b32c-827fd8a51f9d','1c09a5c9-b21c-11ea-828b-0a002700000b','2020-07-01','1231'),('a4fe8a17-2659-4ca4-b289-e739f94ca496','1c09a5c9-b21c-11ea-828b-0a002700000b','2020-06-29','123'),('d8669264-e337-43a9-96e9-7d289301d10c','6dea1d9e-b21c-11ea-828b-0a002700000b','2020-07-02','3322'),('f711525a-0db2-49f9-9c1e-d7fe2c246156','1c09a5c9-b21c-11ea-828b-0a002700000b','2020-06-30','222'),('fd6cc659-acf2-485b-8627-19bd9ae20215','54cc1dea-b21c-11ea-828b-0a002700000b','2020-06-30','asda');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-12 21:28:34
+-- Dump completed on 2020-06-26  1:25:11

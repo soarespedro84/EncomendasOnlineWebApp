@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `db_amf_web_platform` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `db_amf_web_platform`;
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
--- Host: localhost    Database: db_amf_web_platform
+-- Host: 127.0.0.1    Database: db_amf_web_platform
 -- ------------------------------------------------------
--- Server version	8.0.19
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +27,9 @@ CREATE TABLE `movement` (
   `fk_cliente` char(36) NOT NULL,
   `state` int NOT NULL DEFAULT '1',
   `dtReg` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`idMovement`)
+  PRIMARY KEY (`idMovement`),
+  KEY `fk_movement_company1_idx` (`fk_cliente`),
+  CONSTRAINT `fk_movement_company1` FOREIGN KEY (`fk_cliente`) REFERENCES `company` (`idCompany`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,6 +39,7 @@ CREATE TABLE `movement` (
 
 LOCK TABLES `movement` WRITE;
 /*!40000 ALTER TABLE `movement` DISABLE KEYS */;
+INSERT INTO `movement` VALUES ('044205a7-7a6e-49b4-aa95-82174788f721','ea758203-b077-11ea-8a5e-0a002700000b',1,'2020-06-25 09:18:44'),('19e86f19-dea4-4e4b-9773-6a5d4886cd74','2e34314d-ad4c-11ea-ab9d-0a002700000b',1,'2020-06-24 19:43:57'),('341d9bf2-9b5f-4636-ba92-42b88989180f','b563bd9b-ad4b-11ea-ab9d-0a002700000b',1,'2020-06-24 21:24:35'),('4ad29dbc-8bda-4d85-9946-ee7c125ddb8e','b563bd9b-ad4b-11ea-ab9d-0a002700000b',1,'2020-06-24 19:07:15'),('6a4d44a1-a4b6-4372-b899-66e224a5d7c1','2e34314d-ad4c-11ea-ab9d-0a002700000b',1,'2020-06-25 11:41:26'),('716c4b17-9990-4726-b6f3-99bd405812bd','ea758203-b077-11ea-8a5e-0a002700000b',1,'2020-06-25 11:45:08'),('a13149de-b398-4718-b32c-827fd8a51f9d','965a0e9f-b3ff-11ea-94d7-0a002700000b',1,'2020-06-25 02:45:12'),('a4fe8a17-2659-4ca4-b289-e739f94ca496','2e358a84-ad4c-11ea-ab9d-0a002700000b',1,'2020-06-25 02:35:36'),('d8669264-e337-43a9-96e9-7d289301d10c','2e358a84-ad4c-11ea-ab9d-0a002700000b',1,'2020-06-25 11:43:30'),('f711525a-0db2-49f9-9c1e-d7fe2c246156','ea758203-b077-11ea-8a5e-0a002700000b',1,'2020-06-25 02:47:10'),('fd6cc659-acf2-485b-8627-19bd9ae20215','b563bd9b-ad4b-11ea-ab9d-0a002700000b',1,'2020-06-24 21:38:12');
 /*!40000 ALTER TABLE `movement` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-12 21:28:34
+-- Dump completed on 2020-06-26  1:25:11
