@@ -146,7 +146,88 @@
             
             
                     
-                    
+<!-- Add Product MODAL-->
+
+     <div class="modal fade" id="addProductModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="card">
+                <div class="card-body">                 
+                    <form id="regForm" action="products" method="POST">
+                    <input type="hidden" name="route" value="addProduct"/>
+                        <div class="form-group">
+                          <input type="text" name="ref" placeholder="Product Ref" class="form-control form-control-lg text-white bg-dark" />
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="Product Name"
+                            class="form-control form-control-lg text-white bg-dark" 
+                          />
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            name="description"
+                            placeholder="Product Description"
+                            class="form-control form-control-lg text-white bg-dark" 
+                          />
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            name="price"
+                            placeholder="Price"
+                            class="form-control form-control-lg text-white bg-dark" 
+                          /> 
+                        </div>
+                    <div class="form-group">
+                          <input
+                            type="text"
+                            name="color"
+                            placeholder="Color"
+                            class="form-control form-control-lg text-white bg-dark" 
+                          /> 
+                        </div>
+                    <div class="form-group">
+                          <input
+                            type="text"
+                            name="initSize"
+                            placeholder="Lowest Size"
+                            class="form-control form-control-lg text-white bg-dark" 
+                          /> 
+                        </div>
+                    <div class="form-group">
+                          <input
+                            type="text"
+                            name="finSize"
+                            placeholder="Highest Size"
+                            class="form-control form-control-lg text-white bg-dark" 
+                          /> 
+                        </div>
+                    <div class="form-group">
+                          <input
+                            type="file"
+                            name="photo"
+                            id="photo"
+                            accept="image/*"
+                            class="form-control form-control-lg text-white bg-dark" 
+                          /> 
+                        </div>
+                            <div class="form-group">
+                    <button
+                    type="submit"
+                    value="Add Product" 
+                    class="btn btn-lg btn-info btn-block"
+                    >Add Product</button></div>
+               </form>
+               </div>
+             
+           </div>
+          </div>
+        </div>
+      </div>                    
                         
                       
    

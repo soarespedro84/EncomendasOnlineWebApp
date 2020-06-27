@@ -147,6 +147,31 @@ public class ProductDao {
         }                
      }
 
+      public void addProduct(ProductBean product) throws Exception{
+        Connection con = null;
+        PreparedStatement prepStat = null;
+        try{
+            con = dbConnection.createConnection();
+            String sql = "INSERT INTO product (ref, name, description, color, initSize, finSize, price, foto) VALUES (?,?,?,?,?,?,?,?)";
+            prepStat = con.prepareStatement(sql);
+            prepStat.setString(1, product.getRef());
+            prepStat.setString(2, product.getName());
+            prepStat.setString(3, product.getDescription());
+            prepStat.setString(4, product.getColor());
+            prepStat.setInt(5, product.getInitSize());
+            prepStat.setInt(6, product.getFinSize());
+            prepStat.setDouble(7, product.getPrice());
+            prepStat.setString(8, product.getFoto());                        
+            
+            prepStat.executeUpdate();                        
+        }
+        finally{
+            close(con, prepStat, null);
+        }
+        
+    } 
+    
+    
     private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
         try {
             if (myRs != null) myRs.close();

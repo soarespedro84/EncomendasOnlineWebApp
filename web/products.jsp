@@ -70,7 +70,7 @@
                             <h4 class="card-title pricing-card-title">${item.getName()} <small class="text-muted">/ ${item.getRef()}</small></h4>
 
                         </div>
-                        <img style="height: 250px; object-fit: cover; object-position: bottom;" src="images/produtos/${item.getFoto()}" class="img-thumbnail card-img-top" alt="">
+                        <img style="height: 250px; object-fit: cover; object-position: bottom; " src="images/produtos/${item.getFoto()}" class="img-fluid card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text align-middel left">${item.getColor()} ${item.getDescription()}</p>                                
                         <c:if test="${ContaAtiva.permission >= 1}">

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 // Ajax+JSON
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -67,10 +68,23 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        try{
+            String route = request.getParameter("route");
+            
         if(request.getSession().getAttribute("ContaAtiva") == null){
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
-         
+          switch (route) {			 
+                case "addProduct":
+                    addProduct(request, response);
+                    break;
+               
+                default:
+                    //listProduct(request, response);
+                }            
+        }catch (Exception ex) {
+            throw new ServletException(ex);
+        }
     }
     
     //LIST
@@ -147,6 +161,38 @@ public class ProductController extends HttpServlet {
         String json = gson.toJson(personMap);
         response.getWriter().write(json);             
     }
+    
+       //REGISTER
+    private void addProduct(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {        
+        
+        ProductDao _productDao = new ProductDao();
+        
+        String ref = request.getParameter("ref");
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        double price=Double.parseDouble(request.getParameter("price"));
+        String color = request.getParameter("color");
+        int initSize = Integer.parseInt(request.getParameter("initSize"));
+        int finSize = Integer.parseInt(request.getParameter("finSize"));
+        String photo = request.getParameter("photo");
+        
+	ProductBean product = new ProductBean();
+    
+        product.setRef(ref);
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setColor(color);
+        product.setInitSize(initSize);
+        product.setFinSize(finSize);
+        product.setFoto(photo);
+                
+        _productDao.addProduct(product);
+        listProduct(request, response);
+
+    }
+    
     
     @Override
     public String getServletInfo() {
