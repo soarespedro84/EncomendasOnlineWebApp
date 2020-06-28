@@ -49,7 +49,7 @@
     </section>
 
     <!-- Products -->
-    <section id="productList mb-5 pb-5">
+    <section id="productList" style="margin-bottom: 40px">
       <div class="container">
         <div class="row" >
           <div class="col-md-12">
@@ -74,7 +74,7 @@
                       
                       <c:forEach var="item" items="${lstProduct}">
                          <c:url var="tempLink" value="products">
-                            <c:param name="route" value="GetProduct" />
+                            <c:param name="route" value="productDetail" />
                             <c:param name="idProduct" value="${item.idProduct}" />
                          </c:url>
                           <a href="#${item.getIdProduct()}" id="productListContente" data-parent="#accordion" data-toggle="collapse">
@@ -93,7 +93,7 @@
                                         <h5>${item.getPrice()} €</h5>
                                     </div>
                                 </div>
-                            </div>
+                            </div>     </a>
                             <div id="${item.getIdProduct()}" class="collapse row mb-3 text-dark">
                                 <div class="col-md-4">
                                     <img id="foto" style="max-width: 80%; height: 250px; object-fit: cover; object-position: bottom;" class="img img-fluid" src="images/produtos/${item.getFoto()}"/>
@@ -124,7 +124,7 @@
                                             <tr>
                                                 <th scope="row">Sizes</th>
                                                 <td colspan="2"  id="price">${item.getInitSize()} - ${item.getFinSize()}</td>
-                                                <td colspan="1"  id="price"><a href="#" class="btn btn-secondary btn-block text-white" id="editProduct">EDIT</a></td>
+                                                <td colspan="1"  id="price"><a href="${tempLink}" class="btn btn-info btn-block text-white" id="editProduct">EDIT </a></td>
 
                                             </tr>
                                             
@@ -135,7 +135,7 @@
                                     </table>
                                 </div>           
                             </div>
-                        </a>
+                   
                       </c:forEach>
               </div>
              </div>
@@ -152,6 +152,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="card">
+              
                 <div class="card-body">                 
                     <form id="regForm" action="products" method="POST">
                     <input type="hidden" name="route" value="addProduct"/>
@@ -229,11 +230,11 @@
         </div>
       </div>                    
                         
-                      
    
+                      
 
       <!-- Product Collapse -->          
-<
+
   
 <script type="text/javascript">
 //Buscar produto

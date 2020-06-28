@@ -60,7 +60,7 @@
 
 <!-- PRODUCTS  -->
 
-<section id="products">        
+<section id="products mb-5">        
     <div class="container">
         <div id='productListContente' class="card-deck mb-3 text-center">
             <c:forEach var="item" items="${lstProduct}">

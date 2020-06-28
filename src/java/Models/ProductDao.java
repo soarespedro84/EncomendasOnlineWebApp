@@ -170,7 +170,52 @@ public class ProductDao {
         }
         
     } 
+      public void updateProduct(ProductBean productToUptate) throws Exception{
+
+        Connection con = null;
+        PreparedStatement prepStat=null;
+        try{
+            con = dbConnection.createConnection();
+            String sql = "UPDATE product SET ref=?, name=?, description=?, color=?, initSize=?, finSize=?, price=? WHERE idProduct=?";
+            prepStat = con.prepareStatement(sql);
+            prepStat.setString(1, productToUptate.getRef());
+            prepStat.setString(2, productToUptate.getName());
+            prepStat.setString(3, productToUptate.getDescription());
+            prepStat.setString(4, productToUptate.getColor());
+            prepStat.setInt(5, productToUptate.getInitSize());
+            prepStat.setInt(6, productToUptate.getFinSize());
+            prepStat.setDouble(7, productToUptate.getPrice());
+            prepStat.setString(8, productToUptate.getIdProduct().toString());
+          
+            prepStat.executeUpdate();
+            
+        }finally{
+            close(con, prepStat, null);
+        }
+    }
     
+      
+    public String deleteProduct(String idProduct) throws Exception{
+          
+        String res = "";
+        Connection con = null;
+        PreparedStatement prepStat=null;
+        try{
+            con = dbConnection.createConnection();
+            String sql = "DELETE FROM product WHERE idProduct=?";
+            prepStat = con.prepareStatement(sql);            
+            prepStat.setString(1, idProduct);
+
+            prepStat.executeUpdate();
+            
+        }catch (SQLException e){
+            res=e.getMessage();
+        }
+        finally{
+            close(con, prepStat, null);
+        }
+        return res;
+    }  
     
     private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
         try {

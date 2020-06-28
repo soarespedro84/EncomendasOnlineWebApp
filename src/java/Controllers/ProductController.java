@@ -53,6 +53,9 @@ public class ProductController extends HttpServlet {
                 case "GetProduct":
                    getProduct(request, response);
                     break;
+                case "productDetail":
+                   productDetail(request, response);
+                    break;
                 case "SEARCH":
                     searchProduct(request, response);
                 default:
@@ -78,7 +81,12 @@ public class ProductController extends HttpServlet {
                 case "addProduct":
                     addProduct(request, response);
                     break;
-               
+                case "updateProduct":
+                    updateProduct(request, response);
+                    break;
+                case "deleteProduct":
+                    deleteProduct(request, response);
+                    break;
                 default:
                     //listProduct(request, response);
                 }            
@@ -156,7 +164,6 @@ public class ProductController extends HttpServlet {
         personMap.put("price", ""+responseBean.getPrice());
         personMap.put("foto", responseBean.getFoto());
         
-
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(personMap);
         response.getWriter().write(json);             
@@ -194,6 +201,67 @@ public class ProductController extends HttpServlet {
     }
     
     
+     private void productDetail(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+        
+        String idProduct = request.getParameter("idProduct");
+  
+        ProductDao pd = new ProductDao ();
+        ProductBean productToEdit = pd.getProductById(idProduct);
+        
+        request.setAttribute("productToEdit", productToEdit);
+        request.getRequestDispatcher("/detailsProduct.jsp").forward(request, response);     
+        
+     }    
+    
+     private void updateProduct(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {                
+      
+        String idProduct = request.getParameter("idProduct");
+        String ref = request.getParameter("ref");
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String color = request.getParameter("color");
+        int initSize = Integer.parseInt(request.getParameter("initSize"));
+        int finSize = Integer.parseInt(request.getParameter("finSize"));
+        double price = Double.parseDouble(request.getParameter("price"));
+        
+        ProductDao pd = new ProductDao();
+        ProductBean productToEdit = pd.getProductById(idProduct);
+        productToEdit.setRef(ref);
+        productToEdit.setName(name);
+        productToEdit.setDescription(description);
+        productToEdit.setColor(color);
+        productToEdit.setInitSize(initSize);
+        productToEdit.setFinSize(finSize);
+        productToEdit.setPrice(price);
+        pd.updateProduct(productToEdit);
+        
+        request.setAttribute("productToEdit", productToEdit);
+         listAdminProduct(request, response);
+
+}
+     
+     
+//DELETE
+private String deleteProduct(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+    String idProduct = request.getParameter("idProduct");
+    ProductDao pd = new ProductDao();
+    String estado = pd.deleteProduct(idProduct);
+    if (estado == "") {
+        System.out.println("Error = "+estado);
+        request.setAttribute("errMsg", estado);
+         listAdminProduct(request, response);
+    }else{
+        System.out.println("Success");
+         listAdminProduct(request, response);
+    }
+    
+    return estado;
+}              
+     
     @Override
     public String getServletInfo() {
         return "Short description";
