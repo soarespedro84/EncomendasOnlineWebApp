@@ -56,15 +56,12 @@
                 <li class="nav-item px-2">
                 <a href="adminDash.jsp" class="nav-link"><i class="fas fa-cog"></i>  Admin Panel</a>
               </li></c:if>
-              <c:if test="${ContaAtiva.permission==2}">
+              <c:if test="${ContaAtiva.permission == 2}">
                 <li class="nav-item px-2">
                 <a href="company?route=list" class="nav-link"><i class="fa fa-handshake "></i> Clients</a>
               </li>
-              <li class="nav-item px-2" >
-                <a href="movement?route=listOrder" class="nav-link" ><i class="fas fa-receipt "></i> Orders</a>
-              </li>
               </c:if>
-              <c:if test="${ContaAtiva.permission==1}">            
+              <c:if test="${ContaAtiva.permission >= 1}">            
               <li class="nav-item px-2" >
                 <a href="movement?route=listOrder" class="nav-link" ><i class="fas fa-receipt "></i> Orders</a>
               </li>

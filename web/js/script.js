@@ -72,7 +72,14 @@ function showProduct(model){
     priceProduct = Number(model.price);
     qtdProduct = 0;
 
-    $("#total").html("");
+    $("#total").html("\
+        <th scope='row'> \n\
+            <h4>TOTAL:</h4> \n\
+        </th> \n\
+        <td colspan='3'  id='price'> \n\
+            <span class = 'count'>0 pares </span> | <b><span class = 'price text-info'>0.00 € </span></b> \n\
+        </td> \n\
+    ");
 
     //console.log(model.price);
     //console.log();
@@ -106,7 +113,7 @@ function upDateTotals(){
             <h4>TOTAL:</h4> \n\
         </th> \n\
         <td colspan='3'  id='price'> \n\
-            <b><span class = 'count'>"+qtdProduct+" pares </span> | <span class = 'price text-info'>"+(qtdProduct * priceProduct).toFixed(2)+" € </span></b> \n\
+            <span class = 'count'>"+qtdProduct+" pares </span> | <b><span class = 'price text-info'>"+(qtdProduct * priceProduct).toFixed(2)+" € </span></b> \n\
         </td> \n\
     ");
 }
@@ -174,10 +181,8 @@ function updateItemCart(ref , itemPrice){
     document.getElementById("s"+ref).removeAttribute("hidden");
     document.getElementById("c"+ref).removeAttribute("hidden");
     document.getElementById("d"+ref).setAttribute("hidden", true);
-    document.getElementById("confirmOrder").setAttribute("hidden", true);
 
-
-  confirmOrder  //Atualizar totais
+    //Atualizar totais
     var list = document.getElementsByClassName(ref);
     //console.log(list);
     var total = 0;
@@ -198,7 +203,7 @@ function getCompanysSuggestion(){
     console.log("Entrei");
     //AJAX configure
     var processData = 'JSON';
-    var route = "companySsuggestions";
+    var route = "companysSuggestions";
     $.ajax({  
         type: "GET",  
         url: "company",  
@@ -211,7 +216,7 @@ function getCompanysSuggestion(){
                 console.log(item.name);
                 availableTags.push(item.name);
             });
-            $("#companyName").autocomplete({
+            $("#companyName" ).autocomplete({
               source: availableTags
             });
 

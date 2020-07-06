@@ -136,19 +136,20 @@
                <div class="container">
                    <div class="row mb-3">
                        <div class="col-md-2">
-                           <label for="delDate" class="text-light col-form-label align-middle"><h5>Delivery Date:</h5></label></div>
-                       <div class="col-md-2">
+                           <label for="delDate" class="text-light col-form-label align-middle"><h5>Delivery Date:</h5></label>
+                       </div>
+                       <div class="col-md-3">
                        <div class="input-group">
                            <input id="dtDelivery" name="dtDelivery" style="font-size: 16px" class="form-control form-control-lg" type="date" value="" id="delDate" required>
                        </div>
                            </div>
-                       <div class="col-md-2">
+                       <div class="col-md-3">
                            <div class="input-group">
                                <input type="text" name="nrCliente" style="font-size: 16px" class="form-control form-control-lg" placeholder="Order number" required />
                            </div>
                        </div>
                        <c:if test="${ContaAtiva.permission > 1}">        
-                       <div class="col-md-6">
+                       <div class="col-md-4">
                            <div class="input-group" >
                                 <select style="font-size: 16px" class="form-control form-control-lg text-white bg-dark" id="" name="idCompany" >
                                     <option selected >Choose company</option>
@@ -160,11 +161,11 @@
                        </div>                        
                        </c:if>
                 </div>
-               <div class="row">
-                   <div class="col-md-12">
-                      <input type="submit" name="deleteYes" value="Place Order" class="btn btn-lg btn-outline-success btn-block" />
-                   </div>
-               </div>
+                <div class="row">
+                    <div class="col-md-12">
+                       <input type="submit" name="deleteYes" value="Place Order" class="btn btn-lg btn-outline-success btn-block" />
+                    </div>
+                </div>
             </div>
            </form>
            </div>
@@ -175,7 +176,7 @@
 </section>
 
 
-<!-- DELETE USER MODAL -->
+<!-- DELETE ITEM MODAL -->
 <div class="modal fade" id="deleteItemModal">
  <div class="modal-dialog modal-md">
    <div class="modal-content">
